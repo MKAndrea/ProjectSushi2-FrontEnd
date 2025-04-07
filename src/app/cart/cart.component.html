@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="cart-container">
+    <div class="cart-display">
+        @for (cibo of carrello.cart; track $index; let i = $index) {
+        <app-card-cart [item]="cibo" (remove)="removeCibo(cibo)" (decrement)="decrementCounter(cibo)"
+            (increment)="incrementCounter(cibo)"></app-card-cart>
+        }
+    </div>
+    <button id="send-order" (click)="sendOrder()">Send Order</button>
+</div>
+<app-footer></app-footer>

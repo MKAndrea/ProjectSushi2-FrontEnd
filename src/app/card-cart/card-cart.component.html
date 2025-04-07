@@ -1,0 +1,12 @@
+<div class="container">
+    <div>
+        <h2>Name: {{item.name}}</h2>
+        <p>Price: {{item.price}}</p>
+        <button class="button" (click)="removeCibo()">Remove</button>
+    </div>
+    <div class="container-number">
+        <button class="button" (click)="decrementCounter()">-</button>
+        <h2>{{item.quantity}}</h2>
+        <button class="button" (click)="incrementCounter()">+</button>
+    </div>
+</div>

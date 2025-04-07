@@ -1,0 +1,13 @@
+.footer-container{
+    box-sizing: border-box;
+    height: 10%;
+    color: white;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p{
+    margin: 0;
+}

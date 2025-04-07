@@ -1,0 +1,45 @@
+.menu-generale-container{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    margin-top: 6em;
+    padding-bottom: 2em;
+}
+
+.container{
+    width: 50%;
+    height: auto;
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 1em;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title-section{
+    font-size: 3em;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+    border-bottom: 2px solid black;
+}
+
+.title{
+    color: rgb(233, 233, 0);
+}
+
+.container-number{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    width: 50%;
+}
+
+.button{
+    border: none;
+    background-color: gray;
+    color: white;
+    font-weight: bold;
+}

@@ -1,0 +1,17 @@
+<header id="header">
+    <div class="first-container">
+       <!--Immagine-->
+       <h3 class="title">Sushi World</h3>
+    </div>
+    <div class="second-container">
+        <p class="navigation" (click)="onClick('')">Home</p>
+        <p class="navigation" (click)="onClick('menu')">Menu</p>
+        <p class="navigation" (click)="onClick('about')">About</p>
+        <div class="cart">
+            <p class="navigation" (click)="onClick('cart')">Cart</p>
+            <div class="notifica">
+                <p class="number">{{generalCounter}}</p>
+            </div>
+        </div>
+    </div>
+</header>
