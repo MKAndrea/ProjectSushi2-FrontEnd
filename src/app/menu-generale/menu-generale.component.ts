@@ -8,6 +8,7 @@ import { Cart } from '../cart';
 import { ActivatedRoute } from '@angular/router';
 import { Bevanda } from '../bevanda';
 import { Dolce } from '../dolci';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-menu-generale',
@@ -17,7 +18,7 @@ import { Dolce } from '../dolci';
 })
 export class MenuGeneraleComponent implements OnInit{
 
-  constructor(private menuService: MenuService, private cartService: CartService, private route: ActivatedRoute){}
+  constructor(private menuService: MenuService, private cartService: CartService, private route: ActivatedRoute, private apiService: ApiService){}
 
   ciboArray: Cibo[] = [];
   bevandaArray: Bevanda[] = [];
@@ -25,6 +26,8 @@ export class MenuGeneraleComponent implements OnInit{
   ciboTemp: Cibo = { name:"", procedimento:"", ingredienti:"", price: 0}
   counters: number[] = [];
   carrello: Cart = {cart: [], prodotti: []}
+
+  arrayCibiProva: Cibo[] = [];
 
   private counterSubscription: any;
 
@@ -48,6 +51,9 @@ export class MenuGeneraleComponent implements OnInit{
       this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+    })
+    this.apiService.getProduct().subscribe(data => {
+      this.arrayCibiProva = data;
     })
     // this.counterSubscription = this.menuService.getCountersObservable().subscribe(value => {
     //   this.counters = value;
