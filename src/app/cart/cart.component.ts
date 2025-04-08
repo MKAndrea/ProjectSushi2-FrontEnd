@@ -7,6 +7,7 @@ import { MenuService } from '../menu.service';
 import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../cart';
 import { Bevanda } from '../bevanda';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +17,7 @@ import { Bevanda } from '../bevanda';
 })
 export class CartComponent implements OnInit{
 
-  constructor(private cartService: CartService, private menuService: MenuService){
+  constructor(private cartService: CartService, private menuService: MenuService, private apiService: ApiService){
 
   }
   counters: number[] = [];
@@ -48,6 +49,9 @@ export class CartComponent implements OnInit{
     }
   }*/
   sendOrder(){
+    // this.apiService.getProvaPost(this.carrello).subscribe(risposta => {
+    //   console.log("Ordine inviato con successo", risposta);
+    // })
     this.menuService.sendOrder();
   }
 

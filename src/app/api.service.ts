@@ -19,6 +19,10 @@ export class ApiService {
     return this.http.get<any[]>(this.url);
   }
 
+  getProvaPost(body: any): Observable<any[]>{
+    return this.http.post<any[]>(this.url, body)
+  }
+
   getProductCibo(): Observable<Cibo[]>{
     return this.http.get<Cibo[]>(this.url);
   }
