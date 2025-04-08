@@ -2,6 +2,6 @@ import { Cibo } from "./cibo";
 import { Prodotti } from "./prodotti";
 
 export interface Cart{
-    cart: Cibo[],
+    cart: Cibo[]
     prodotti: Prodotti[]
 }

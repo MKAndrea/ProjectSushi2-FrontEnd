@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cibo } from './cibo';
 import { Prodotti } from './prodotti';
+import { Bevanda } from './bevanda';
+import { Dolce } from './dolci';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +15,18 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
+  getProva(): Observable<any[]>{
+    return this.http.get<any[]>(this.url);
+  }
 
-  getProduct(): Observable<Cibo[]>{
+  getProductCibo(): Observable<Cibo[]>{
     return this.http.get<Cibo[]>(this.url);
+  }
+  getProductBevande(): Observable<Bevanda[]>{
+    return this.http.get<Bevanda[]>(this.url);
+  }
+  getProductDolci(): Observable<Dolce[]>{
+    return this.http.get<Dolce[]>(this.url);
   }
 
   sendProduct(url:string, data: Cibo[]): Observable<Cibo[]>{

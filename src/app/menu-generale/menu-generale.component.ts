@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Bevanda } from '../bevanda';
 import { Dolce } from '../dolci';
 import { ApiService } from '../api.service';
+import { Prodotti } from '../prodotti';
 
 @Component({
   selector: 'app-menu-generale',
@@ -23,11 +24,14 @@ export class MenuGeneraleComponent implements OnInit{
   ciboArray: Cibo[] = [];
   bevandaArray: Bevanda[] = [];
   dolceArray: Dolce[] = [];
-  ciboTemp: Cibo = { name:"", procedimento:"", ingredienti:"", price: 0}
   counters: number[] = [];
   carrello: Cart = {cart: [], prodotti: []}
 
-  arrayCibiProva: Cibo[] = [];
+  arrayCibiProva: Prodotti= {
+    cibo: this.ciboArray,
+    bevanda: this.bevandaArray,
+    dolce: this.dolceArray
+  };
 
   private counterSubscription: any;
 
@@ -43,7 +47,7 @@ export class MenuGeneraleComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.ciboArray = this.menuService.getCiboArray();
+    //this.ciboArray = this.menuService.getCiboArray();
     this.bevandaArray = this.menuService.getBevandaArray();
     this.dolceArray = this.menuService.getDolceArray();
     this.menuService.getCarrelloAsObservable().subscribe(value => {
@@ -52,9 +56,27 @@ export class MenuGeneraleComponent implements OnInit{
       this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
     })
-    this.apiService.getProduct().subscribe(data => {
-      this.arrayCibiProva = data;
+    this.apiService.getProva().subscribe(prodottiCibo => {
+      this.ciboArray = prodottiCibo;
     })
+
+    // this.apiService.getProva().subscribe(prodottiCibo => {
+    //   prodottiCibo.map(elemento => {
+    //     switch(elemento.category){
+    //       case "Cibo":
+    //         return this.ciboArray.push(elemento)
+    //         break;
+    //       case "Bevanda":
+    //         return this.bevandaArray.push(elemento)
+    //         break;
+    //       case "Dolci":
+    //         return this.dolceArray.push(elemento)
+    //         break;
+    //       default:
+    //         return true;
+    //     }
+    //   })
+    // })
     // this.counterSubscription = this.menuService.getCountersObservable().subscribe(value => {
     //   this.counters = value;
     // });
@@ -84,14 +106,18 @@ export class MenuGeneraleComponent implements OnInit{
     //this.counters[id]++;
   }
 
-  incrementCounter2(bevanda: Bevanda){
-    this.menuService.incrementCounter2(bevanda);
+  /*incrementCounter2(bevanda: Bevanda){
+    this.menuService.incrementCounter(bevanda);
     //this.counters[id]++;
-  }
+  }*/
 
-  incrementCounter3(dolce: Dolce){
+  /*incrementCounter3(dolce: Dolce){
     this.menuService.incrementCounter3(dolce);
     //this.counters[id]++;
+  }*/
+
+  incrementCounterProdotti(prodotti: Prodotti, id: number){
+    this.menuService.incrementCounterProdotti(prodotti, id);
   }
 
   decrementCounter(cibo: Cibo){

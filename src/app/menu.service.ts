@@ -16,16 +16,7 @@ export class MenuService {
   constructor(private http: HttpClient) { }
 
   ciboArray: Cibo[] = [
-    {name: "Nigiri al Salmone", price: 3, ingredienti: "salmone, riso, aceto di riso", procedimento: "Cuocere il riso con aceto di riso e zucchero, modellare una piccola pallina di riso e adagiare una fetta di salmone sopra."},
-    {name: "Maki di Tonno", price: 4, ingredienti: "alga nori, riso, tonno, wasabi", procedimento: "Stendere l'alga nori su una superficie, aggiungere riso e tonno, arrotolare con l'aiuto di un tappetino di bambù, tagliare in pezzi e servire con wasabi."},
-    {name: "Uramaki con Avocado", price: 5, ingredienti: "alga nori, riso, avocado, cetriolo, sesamo", procedimento: "Stendere il riso sopra l'alga nori, aggiungere avocado e cetriolo, arrotolare al contrario in modo che il riso sia all'esterno, cospargere con sesamo."},
-    {name: "Temaki di Gamberi", price: 5, ingredienti: "alga nori, riso, gamberi, avocado, cetriolo", procedimento: "Posizionare riso, gamberi, avocado e cetriolo sull'alga nori, arrotolare a forma di cono e servire."},
-    {name: "Sushi di Ebi (Gamberi)", price: 3, ingredienti: "gamberi, riso, aceto di riso", procedimento: "Cuocere il riso con aceto di riso e zucchero, cuocere i gamberi, adagiarli sopra le palline di riso e servire."},
-    {name: "Sashimi di Tonno", price: 6, ingredienti: "tonno fresco", procedimento: "Tagliare il tonno fresco in fettine sottili e servire senza riso."},
-    {name: "Maki di Salmone e Cetriolo", price: 4, ingredienti: "alga nori, riso, salmone, cetriolo, wasabi", procedimento: "Stendere l'alga nori, aggiungere riso, salmone e cetriolo, arrotolare e tagliare in pezzi, servire con wasabi."},
-    {name: "Nigiri di Gamberi", price: 3, ingredienti: "gamberi, riso, aceto di riso", procedimento: "Cuocere il riso con aceto di riso, modellare il riso in piccole palline e adagiare un gambero sopra."},
-    {name: "Uramaki Rainbow", price: 7, ingredienti: "alga nori, riso, salmone, tonno, avocado, cetriolo", procedimento: "Arrotolare alga nori con riso, salmone, tonno e cetriolo, guarnire con fettine di pesce e avocado sopra, tagliare in pezzi."},
-    {name: "Sushi Vegetariano", price: 4, ingredienti: "riso, avocado, cetriolo, carote, alga nori", procedimento: "Stendere riso su alga nori, aggiungere avocado, cetriolo e carote, arrotolare e servire."}
+
   ];
   
 
@@ -104,6 +95,32 @@ export class MenuService {
     this.carrello.next(carTemp);
   }
 
+  incrementCounterProdotti(prodottiDaAggiungere: Prodotti, id: number) {
+    let cartTemp = this.carrello.getValue();
+    const indexCibo = cartTemp.prodotti.findIndex(prodotto => prodotto.cibo[id].name == prodottiDaAggiungere.cibo[id].name)
+    if(indexCibo != -1){
+      cartTemp.prodotti[indexCibo].cibo[id].quantity! += 1
+    } else {
+      prodottiDaAggiungere.cibo[id].quantity = 1;
+      cartTemp.prodotti.push(prodottiDaAggiungere)
+    }
+    const indexBevanda = cartTemp.prodotti.findIndex(prodotto => prodotto.bevanda[id].name == prodottiDaAggiungere.bevanda[id].name)
+    if(indexBevanda != -1){
+      cartTemp.prodotti[indexBevanda].bevanda[id].quantity! += 1
+    } else {
+      prodottiDaAggiungere.bevanda[id].quantity = 1;
+      cartTemp.prodotti.push(prodottiDaAggiungere)
+    }
+    const indexDolce = cartTemp.prodotti.findIndex(prodotto => prodotto.dolce[id].name == prodottiDaAggiungere.dolce[id].name)
+    if(indexDolce != -1){
+      cartTemp.prodotti[indexDolce].dolce[id].quantity! += 1
+    } else {
+      prodottiDaAggiungere.dolce[id].quantity = 1;
+      cartTemp.prodotti.push(prodottiDaAggiungere)
+    }
+    this.carrello.next(cartTemp)
+  }
+
   incrementCounter(ciboDaAggiungere: Cibo) {
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaAggiungere.name)
@@ -116,7 +133,7 @@ export class MenuService {
     this.carrello.next(cartTemp)
   }
 
-  incrementCounter2(bevandaDaAggiungere: Bevanda) {
+  /*incrementCounter2(bevandaDaAggiungere: Bevanda) {
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(bevanda => bevanda.name == bevandaDaAggiungere.name)
     if(index != -1){
@@ -126,9 +143,9 @@ export class MenuService {
       cartTemp.cart.push(bevandaDaAggiungere)
     }
     this.carrello.next(cartTemp)
-  }
+  }*/
 
-  incrementCounter3(dolceDaAggiungere: Dolce) {
+  /*incrementCounter3(dolceDaAggiungere: Dolce) {
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(dolce => dolce.name == dolceDaAggiungere.name)
     if(index != -1){
@@ -138,7 +155,7 @@ export class MenuService {
       cartTemp.cart.push(dolceDaAggiungere)
     }
     this.carrello.next(cartTemp)
-  }
+  }*/
 
   /*incrementCounter2(prodotti: Prodotti[]) {
     let cartTemp = this.carrello.getValue();
