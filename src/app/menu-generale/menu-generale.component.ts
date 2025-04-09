@@ -10,6 +10,7 @@ import { Bevanda } from '../bevanda';
 import { Dolce } from '../dolci';
 import { ApiService } from '../api.service';
 import { Prodotti } from '../prodotti';
+import { CiboDTO } from '../../ciboDTO';
 
 @Component({
   selector: 'app-menu-generale',
@@ -48,17 +49,29 @@ export class MenuGeneraleComponent implements OnInit{
 
   ngOnInit(){
     //this.ciboArray = this.menuService.getCiboArray();
-    this.bevandaArray = this.menuService.getBevandaArray();
-    this.dolceArray = this.menuService.getDolceArray();
+    // this.bevandaArray = this.menuService.getBevandaArray();
+    // this.dolceArray = this.menuService.getDolceArray();
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.carrello.cart = value.cart;
       this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
     })
-    this.apiService.getProva().subscribe(prodottiCibo => {
-      this.ciboArray = prodottiCibo;
+    this.apiService.getCibo("http://localhost:8080/product/category/Cibo").subscribe(prodotti => {
+      this.ciboArray = prodotti;
+      this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
     })
+    this.apiService.getCibo("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
+      this.bevandaArray = prodotti;
+      this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+
+    })
+    this.apiService.getCibo("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
+      this.dolceArray = prodotti;
+      this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+
+    })
+
 
     // this.apiService.getProva().subscribe(prodottiCibo => {
     //   prodottiCibo.map(elemento => {
@@ -82,6 +95,25 @@ export class MenuGeneraleComponent implements OnInit{
     // });
   }
 
+  // prodotti: CiboDTO[] = this.mapDtoCibo(this.ciboArray)
+
+  // mapDtoCibo(ciboArray: Cibo[]): CiboDTO[]{
+  //   if(ciboArray.length > 0) {
+  //     let ciboToBeSanitize = ciboArray.map(value => ({
+  //       name: value.name ??  '',
+  //       immagine: value.immagine?? '',
+  //       price: value.price?? 0
+  //     }))
+  //     ciboToBeSanitize.forEach((elem) => {
+  //       if ((Object.values(elem) == null) || (Object.values(elem) == undefined)) {
+  //         //delete elem.
+  //       }
+  //     })
+  //     return [];
+  //     //TODO return ciboToBeSanitize
+  //   }
+  //   else return []
+  // }
 
   // removeCibo(id: number){
   //   this.cartService.removeCart(id);

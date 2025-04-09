@@ -5,6 +5,8 @@ import { Cibo } from './cibo';
 import { Prodotti } from './prodotti';
 import { Bevanda } from './bevanda';
 import { Dolce } from './dolci';
+import { orderDTO } from '../orderDTO';
+import { orderDetailsDTO } from '../orderDetailsDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,12 @@ export class ApiService {
     return this.http.get<any[]>(this.url);
   }
 
-  getProvaPost(body: any): Observable<any[]>{
-    return this.http.post<any[]>(this.url, body)
+  getProvaPost(url:string, body: orderDetailsDTO): Observable<orderDetailsDTO[]>{
+    return this.http.post<orderDetailsDTO[]>(url, body)
+  }
+
+  getCibo(url: string): Observable<Cibo[]>{
+    return this.http.get<Cibo[]>(`${url}`)
   }
 
   getProductCibo(): Observable<Cibo[]>{

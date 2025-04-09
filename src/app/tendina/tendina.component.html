@@ -1,0 +1,12 @@
+@if (isDropDownVisible) {
+    <div class="tendina" [ngStyle]="{'top': dropdownPosition.top, 'left': dropdownPosition.left}">
+        <p>inserisci l'id del prodotto che vuoi modificare o eliminare</p>
+        <input type="text" readonly>
+        <div>
+            <button>Modifica</button>
+            <button>Elimina</button>
+        </div>
+    </div>
+}
+
+

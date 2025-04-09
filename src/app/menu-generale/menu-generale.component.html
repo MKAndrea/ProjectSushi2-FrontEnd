@@ -39,7 +39,7 @@
                <div class="container-number">
                    <button class="button" (click)="decrementCounter2(cibo)">-</button>
                    <h2>{{ cibo.quantity || 0 }}</h2>
-                   <!--<button class="button" (click)="incrementCounter2(cibo)">+</button>-->
+                   <button class="button" (click)="incrementCounter(cibo)">+</button>
                </div>
            </div>
         }
@@ -50,7 +50,7 @@
            <div class="container">
                <div>
                    <h2 class="title">{{cibo.name}}</h2>
-                   <h3>Ingredients: {{cibo.ingredienti}}</h3>
+                   <h3>Ingredients: {{cibo.ingredients}}</h3>
                    <p>Price: {{cibo.price}}</p>
                    <!-- <div>
                        <button (click)="addCibo(ciboArray[i], i)">Add</button>
@@ -60,7 +60,7 @@
                <div class="container-number">
                    <button class="button" (click)="decrementCounter3(cibo)">-</button>
                    <h2>{{ cibo.quantity || 0 }}</h2>
-                   <!--<button class="button" (click)="incrementCounter3(cibo)">+</button>-->
+                   <button class="button" (click)="incrementCounter(cibo)">+</button>
                </div>
            </div>
         }

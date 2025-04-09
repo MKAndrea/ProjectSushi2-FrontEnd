@@ -8,6 +8,9 @@ import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../cart';
 import { Bevanda } from '../bevanda';
 import { ApiService } from '../api.service';
+import { error } from 'console';
+import { orderDTO } from '../../orderDTO';
+import { orderDetailsDTO } from '../../orderDetailsDTO';
 
 @Component({
   selector: 'app-cart',
@@ -24,6 +27,9 @@ export class CartComponent implements OnInit{
 
   private counterSubscription: any;
   carrello: Cart = {cart: [], prodotti: []};
+  orderDetailsDTO: orderDetailsDTO = {ciboDTO:{name: "Prova", immagine: "path", price: 2},quantity: 1}
+
+
   ngOnInit(): void {
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.carrello.cart = value.cart;
@@ -53,6 +59,11 @@ export class CartComponent implements OnInit{
     //   console.log("Ordine inviato con successo", risposta);
     // })
     this.menuService.sendOrder();
+    this.apiService.getProvaPost("http://localhost:8080/Orders", this.orderDetailsDTO).subscribe(response => {
+      console.log(response);
+    }, error => {
+      console.log(error);
+    })
   }
 
    removeCibo(cibo: Cibo){

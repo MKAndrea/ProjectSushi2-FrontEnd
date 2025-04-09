@@ -20,32 +20,32 @@ export class MenuService {
   ];
   
 
-  bevandaArray: Bevanda[] = [
-    {name: "Coca Cola", price: 2},
-    {name: "Fanta", price: 2},
-    {name: "Acqua Naturale", price: 1},
-    {name: "Acqua Frizzante", price: 1},
-    {name: "Sprite", price: 2},
-    {name: "Tè Freddo al Limone", price: 3},
-    {name: "Succhi di Frutta (Arancia)", price: 2.5},
-    {name: "Birra", price: 4},
-    {name: "Sake", price: 5},
-    {name: "Shandy", price: 3}
-  ];
+  // bevandaArray: Bevanda[] = [
+  //   {name: "Coca Cola", price: 2},
+  //   {name: "Fanta", price: 2},
+  //   {name: "Acqua Naturale", price: 1},
+  //   {name: "Acqua Frizzante", price: 1},
+  //   {name: "Sprite", price: 2},
+  //   {name: "Tè Freddo al Limone", price: 3},
+  //   {name: "Succhi di Frutta (Arancia)", price: 2.5},
+  //   {name: "Birra", price: 4},
+  //   {name: "Sake", price: 5},
+  //   {name: "Shandy", price: 3}
+  // ];
   
 
-  dolceArray: Dolce[] = [
-    {name: "Tiramisu", price: 2, ingredienti: "uova, caffè, mascarpone, zucchero, savoiardi, cacao", procedimento: "Mescolare mascarpone con zucchero e uova, inzuppare i savoiardi nel caffè, alternare strati di crema e savoiardi, spolverare con cacao e refrigerare per qualche ora."},
-    {name: "Mochi", price: 1, ingredienti: "farina di riso, zucchero, acqua, frutta", procedimento: "Mescolare la farina di riso con acqua e zucchero, cuocere fino a ottenere una consistenza densa, modellare il composto in piccoli dolcetti e riempirli con frutta fresca."},
-    {name: "Cheesecake", price: 3, ingredienti: "formaggio cremoso, biscotti, burro, zucchero, panna", procedimento: "Preparare la base con biscotti tritati e burro fuso, stendere sopra una crema di formaggio cremoso, zucchero e panna, refrigerare per alcune ore."},
-    {name: "Gelato al Matcha", price: 4, ingredienti: "panna, zucchero, matcha", procedimento: "Mescolare panna, zucchero e polvere di matcha, congelare il composto e mescolare ogni 30 minuti fino a raggiungere la consistenza di gelato."},
-    {name: "Dorayaki", price: 2, ingredienti: "farina, uova, zucchero, miele, anko (pasta di fagioli rossi)", procedimento: "Preparare una pastella con farina, uova, zucchero e miele, cuocere dei piccoli pancake e farcirli con anko."},
-    {name: "Kue Cubir", price: 1.5, ingredienti: "farina, zucchero, burro, colorante alimentare", procedimento: "Impastare farina, burro e zucchero, aggiungere colorante per ottenere colori vivaci, formare piccoli cubi e cuocere."},
-    {name: "Anmitsu", price: 3, ingredienti: "gelatina, frutta, sciroppo di zucchero, fagioli rossi", procedimento: "Preparare la gelatina, servire con frutta fresca, fagioli rossi dolci e sciroppo di zucchero."},
-    {name: "Panna Cotta", price: 3, ingredienti: "panna, zucchero, gelatina, vaniglia", procedimento: "Sciogliere la gelatina nella panna calda, aggiungere zucchero e vaniglia, versare in stampi e refrigerare fino a quando non si rassoda."},
-    {name: "Millefoglie", price: 4, ingredienti: "pasta sfoglia, crema pasticcera, zucchero", procedimento: "Cuocere la pasta sfoglia, farcire con crema pasticcera e sovrapporre le sfoglie, spolverare con zucchero a velo."},
-    {name: "Kakigori", price: 2.5, ingredienti: "ghiaccio tritato, sciroppo di frutta, latte condensato", procedimento: "Tritare il ghiaccio e servirlo con sciroppo di frutta e latte condensato."}
-  ];
+  // dolceArray: Dolce[] = [
+  //   {name: "Tiramisu", price: 2, ingredienti: "uova, caffè, mascarpone, zucchero, savoiardi, cacao", procedimento: "Mescolare mascarpone con zucchero e uova, inzuppare i savoiardi nel caffè, alternare strati di crema e savoiardi, spolverare con cacao e refrigerare per qualche ora."},
+  //   {name: "Mochi", price: 1, ingredienti: "farina di riso, zucchero, acqua, frutta", procedimento: "Mescolare la farina di riso con acqua e zucchero, cuocere fino a ottenere una consistenza densa, modellare il composto in piccoli dolcetti e riempirli con frutta fresca."},
+  //   {name: "Cheesecake", price: 3, ingredienti: "formaggio cremoso, biscotti, burro, zucchero, panna", procedimento: "Preparare la base con biscotti tritati e burro fuso, stendere sopra una crema di formaggio cremoso, zucchero e panna, refrigerare per alcune ore."},
+  //   {name: "Gelato al Matcha", price: 4, ingredienti: "panna, zucchero, matcha", procedimento: "Mescolare panna, zucchero e polvere di matcha, congelare il composto e mescolare ogni 30 minuti fino a raggiungere la consistenza di gelato."},
+  //   {name: "Dorayaki", price: 2, ingredienti: "farina, uova, zucchero, miele, anko (pasta di fagioli rossi)", procedimento: "Preparare una pastella con farina, uova, zucchero e miele, cuocere dei piccoli pancake e farcirli con anko."},
+  //   {name: "Kue Cubir", price: 1.5, ingredienti: "farina, zucchero, burro, colorante alimentare", procedimento: "Impastare farina, burro e zucchero, aggiungere colorante per ottenere colori vivaci, formare piccoli cubi e cuocere."},
+  //   {name: "Anmitsu", price: 3, ingredienti: "gelatina, frutta, sciroppo di zucchero, fagioli rossi", procedimento: "Preparare la gelatina, servire con frutta fresca, fagioli rossi dolci e sciroppo di zucchero."},
+  //   {name: "Panna Cotta", price: 3, ingredienti: "panna, zucchero, gelatina, vaniglia", procedimento: "Sciogliere la gelatina nella panna calda, aggiungere zucchero e vaniglia, versare in stampi e refrigerare fino a quando non si rassoda."},
+  //   {name: "Millefoglie", price: 4, ingredienti: "pasta sfoglia, crema pasticcera, zucchero", procedimento: "Cuocere la pasta sfoglia, farcire con crema pasticcera e sovrapporre le sfoglie, spolverare con zucchero a velo."},
+  //   {name: "Kakigori", price: 2.5, ingredienti: "ghiaccio tritato, sciroppo di frutta, latte condensato", procedimento: "Tritare il ghiaccio e servirlo con sciroppo di frutta e latte condensato."}
+  // ];
   
 
 
@@ -70,13 +70,13 @@ export class MenuService {
     return this.ciboArray;
   }
 
-  getBevandaArray(){
-    return this.bevandaArray;
-  }
+  // getBevandaArray(){
+  //   return this.bevandaArray;
+  // }
 
-  getDolceArray(){
-    return this.dolceArray;
-  }
+  // getDolceArray(){
+  //   return this.dolceArray;
+  // }
 
 
   sendOrder(){
