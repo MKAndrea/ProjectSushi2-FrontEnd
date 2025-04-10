@@ -57,22 +57,19 @@ export class MenuGeneraleComponent implements OnInit{
       this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
     })
-    this.apiService.getCibo("http://localhost:8080/product/category/Cibo").subscribe(prodotti => {
+    this.apiService.getProdotto("http://localhost:8080/product/category/Cibo").subscribe(prodotti => {
       this.ciboArray = prodotti;
       this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
     })
-    this.apiService.getCibo("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
+    this.apiService.getProdotto("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
       this.bevandaArray = prodotti;
       this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
 
     })
-    this.apiService.getCibo("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
+    this.apiService.getProdotto("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
       this.dolceArray = prodotti;
       this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
-
     })
-
-
     // this.apiService.getProva().subscribe(prodottiCibo => {
     //   prodottiCibo.map(elemento => {
     //     switch(elemento.category){
@@ -162,6 +159,23 @@ export class MenuGeneraleComponent implements OnInit{
 
   decrementCounter3(dolce: Dolce){
     this.menuService.decrementCounter3(dolce);
+  }
+
+  deleteProduct(id: number){
+    this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() =>{
+      this.apiService.getProdotto("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
+        this.dolceArray = prodotti;
+        this.dolceArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+      })
+      this.apiService.getProdotto("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
+        this.bevandaArray = prodotti;
+        this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+      })
+      this.apiService.getProdotto("http://localhost:8080/product/category/Cibi").subscribe(prodotti =>{
+        this.ciboArray = prodotti;
+        this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
+      })
+    })
   }
 
 }

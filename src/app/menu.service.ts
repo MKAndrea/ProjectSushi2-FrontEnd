@@ -91,6 +91,7 @@ export class MenuService {
     this.carrello.next(carTemp);
   }
 
+
   incrementCounterProdotti(prodottiDaAggiungere: Prodotti, id: number) {
     let cartTemp = this.carrello.getValue();
     const indexCibo = cartTemp.prodotti.findIndex(prodotto => prodotto.cibo[id].name == prodottiDaAggiungere.cibo[id].name)

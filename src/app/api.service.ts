@@ -25,7 +25,7 @@ export class ApiService {
     return this.http.post<orderDetailsDTO[]>(url, body)
   }
 
-  getCibo(url: string): Observable<Cibo[]>{
+  getProdotto(url: string): Observable<Cibo[]>{
     return this.http.get<Cibo[]>(`${url}`)
   }
 
@@ -43,11 +43,11 @@ export class ApiService {
     return this.http.post<Cibo[]>(url, data);
   }
 
-  updateProduct(url: string, id: number, data: Cibo): Observable<Cibo>{
+  updateProductById(url: string, id: number, data: Cibo): Observable<Cibo>{
     return this.http.put<Cibo>(`${url}/${id}`, data);
   }
 
-  deleteProduct(url: string, data: Prodotti[]): Observable<Prodotti[]>{
-    return this.http.delete<Prodotti[]>(url, {body: data});
+  deleteProductById(url: string): Observable<Cibo>{
+    return this.http.delete<Cibo>(url);
   }
 }

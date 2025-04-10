@@ -12,6 +12,7 @@ import { error } from 'console';
 import { orderDTO } from '../../orderDTO';
 import { orderDetailsDTO } from '../../orderDetailsDTO';
 import { BehaviorSubject } from 'rxjs';
+import { CiboDTO } from '../../ciboDTO';
 
 @Component({
   selector: 'app-cart',
@@ -28,6 +29,7 @@ export class CartComponent implements OnInit{
 
   private counterSubscription: any;
   carrello: Cart = {cart: [], prodotti: []};
+  ciboDTO: CiboDTO[] = [];
   orderDetailsDTO: orderDetailsDTO = {ciboDTO:{name: "Prova", immagine: "path", price: 2},quantity: 1}
 
   totalPrice: number = 0;
@@ -49,6 +51,8 @@ export class CartComponent implements OnInit{
     this.menuService.decrementCounter(cibo);
     this.cdr.detectChanges()
   }
+
+
 
   /*sendOrder(){
     if(this.menuService.generalCounter != 0){

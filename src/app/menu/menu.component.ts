@@ -8,6 +8,7 @@ import { TendinaComponent } from "../tendina/tendina.component";
 import { EditDeleteService } from '../edit-delete.service';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
+import { error } from 'console';
 
 @Component({
   selector: 'app-menu',
@@ -62,6 +63,33 @@ export class MenuComponent implements OnInit{
       this.solidBorder[index] = this.border;
     }
   }
+
+    deleteProduct(id: number){
+      if(confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")){
+        this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() => {
+          this.apiService.getProdotto("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
+            this.ciboArray = prodotti;
+          })
+          this.apiService.getProdotto("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
+            this.ciboArray = prodotti;
+          })
+          this.apiService.getProdotto("http://localhost:8080/product/category/Cibi").subscribe(prodotti =>{
+            this.ciboArray = prodotti;
+          })
+        }, error => {
+          alert("Il prodootto non è stato cancellato correttamente")
+        })
+        alert("Prodotto rimosso")
+      }
+    }
+
+    updateProduct(id: number, data:Cibo){
+      this.apiService.updateProductById(`http://localhost:8080/product`,id, data).subscribe(() => {
+
+      }, error => {
+        alert("Il prodotto non è stato aggiornato correttamente")
+      })
+    }
 
   toggleMEnu(){
     this.isOpen = !this.isOpen
