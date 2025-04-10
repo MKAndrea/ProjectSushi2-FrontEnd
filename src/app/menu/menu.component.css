@@ -85,11 +85,40 @@
 
 .larghezza{
     width: 50%;
-    border: 1px solid red;
+    border: 3px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     box-sizing: border-box;
     margin-bottom: 2em;
+    gap: 1em;
+    padding: 2em;
+}
+
+.button-container{
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.button{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 3px;
+}
+
+.button:hover{
+    color: rgb(233, 233, 0);
+}
+
+.input{
+    width: 50%;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-size: 1em;
 }

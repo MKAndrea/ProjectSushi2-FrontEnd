@@ -22,18 +22,20 @@
         </div>
     </div>
     <div class="container-edit-delete">
-        <h2>Aggiungi ed elimina prodotti</h2>
-        @for (cibo of ciboArray; track $index; let i = $index) {
-            <div class="larghezza" (click)="showTendina($event)">
-                <h2>{{cibo.name}}</h2>
-                <p>{{cibo.description}}</p>
-                <p>{{cibo.price}}</p>
-            </div>
+        <h2 class="ordina-text" (click)="toggleMEnu()">Modifica ed elimina prodotti</h2>
+        @if (isOpen) {
+            @for (cibo of ciboArray; track $index; let i = $index) {
+                <div class="larghezza" (click)="showTendina($event)">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'name_'+ i" class="input" type="text" [(ngModel)]="cibo.name" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'description_' + i" class="input" type="text" [(ngModel)]="cibo.description" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'price_' + i" class="input" type="text" [(ngModel)]="cibo.price" [readOnly]="isReadOnly[i]">
+                    <div class="button-container">
+                        <button class="button" (click)="changeInput(i)">Modifica</button>
+                        <button class="button">Elimina</button>
+                    </div>
+                </div>
+            }
         }
-        <div>
-            <button>Modifica</button>
-            <button>Elimina</button>
-        </div>
         <!-- <app-tendina></app-tendina> -->
     </div>
 </div>

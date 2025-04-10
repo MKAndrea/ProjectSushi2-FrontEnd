@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { CartService } from '../cart.service';
@@ -11,6 +11,7 @@ import { ApiService } from '../api.service';
 import { error } from 'console';
 import { orderDTO } from '../../orderDTO';
 import { orderDetailsDTO } from '../../orderDetailsDTO';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -20,7 +21,7 @@ import { orderDetailsDTO } from '../../orderDetailsDTO';
 })
 export class CartComponent implements OnInit{
 
-  constructor(private cartService: CartService, private menuService: MenuService, private apiService: ApiService){
+  constructor(private cartService: CartService, private menuService: MenuService, private apiService: ApiService, private cdr: ChangeDetectorRef){
 
   }
   counters: number[] = [];
@@ -29,20 +30,24 @@ export class CartComponent implements OnInit{
   carrello: Cart = {cart: [], prodotti: []};
   orderDetailsDTO: orderDetailsDTO = {ciboDTO:{name: "Prova", immagine: "path", price: 2},quantity: 1}
 
+  totalPrice: number = 0;
 
   ngOnInit(): void {
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.carrello.cart = value.cart;
+      this.getPrezzoTotale();
     })
   }
 
   incrementCounter(cibo: Cibo){
     this.menuService.incrementCounter(cibo);
+    this.cdr.detectChanges()
     //this.counters[id]++;
   }
 
   decrementCounter(cibo: Cibo){
     this.menuService.decrementCounter(cibo);
+    this.cdr.detectChanges()
   }
 
   /*sendOrder(){
@@ -58,7 +63,7 @@ export class CartComponent implements OnInit{
     // this.apiService.getProvaPost(this.carrello).subscribe(risposta => {
     //   console.log("Ordine inviato con successo", risposta);
     // })
-    this.menuService.sendOrder();
+    this.menuService.sendOrder(this.totalPrice);
     this.apiService.getProvaPost("http://localhost:8080/Orders", this.orderDetailsDTO).subscribe(response => {
       console.log(response);
     }, error => {
@@ -70,5 +75,10 @@ export class CartComponent implements OnInit{
     this.menuService.removeCibo(cibo);
    }
 
-  
+   getPrezzoTotale(){
+    this.totalPrice = 0;
+    this.carrello.cart.forEach(prodotto => {
+      this.totalPrice += prodotto.price! * prodotto.quantity!;
+      })
+   }
 }

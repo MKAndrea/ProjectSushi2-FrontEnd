@@ -79,13 +79,9 @@ export class MenuService {
   // }
 
 
-  sendOrder(){
+  sendOrder(prezzoTotale: number){
     let carTemp = this.carrello.getValue();
-    if (carTemp.cart.length === 0) {
-      alert("Il carrello è vuoto! Aggiungi degli articoli prima di inviare l'ordine.");
-      return;
-    }
-    if(confirm("Stai per inviare l'ordine sei sicuro?")){
+    if(confirm(`Stai per inviare l'ordine sei sicuro?\nIl prezzo totale è di ${prezzoTotale}$`)){
       alert("Ordine inviato!")
       carTemp.cart.forEach(element => {
         element.quantity = 0;
