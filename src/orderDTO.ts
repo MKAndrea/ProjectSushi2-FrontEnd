@@ -1,8 +1,8 @@
 import { Cart } from "./app/cart";
-import { Cibo } from "./app/cibo";
+import { Cibo } from "./app/ProductDTO";
 import { orderDetailsDTO } from "./orderDetailsDTO";
 
 export interface orderDTO{
-    id: number
+    id?: number
     orderDetails: orderDetailsDTO[]
 }

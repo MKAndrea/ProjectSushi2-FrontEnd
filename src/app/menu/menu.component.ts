@@ -3,7 +3,7 @@ import { HeaderComponent } from "../header/header.component";
 import { Router } from '@angular/router';
 import { IntroduzioneComponent } from "../introduzione/introduzione.component";
 import { ApiService } from '../api.service';
-import { Cibo } from '../cibo';
+import { Cibo } from '../ProductDTO';
 import { TendinaComponent } from "../tendina/tendina.component";
 import { EditDeleteService } from '../edit-delete.service';
 import { FormsModule } from "@angular/forms";
@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit{
   solidBorder: string[] = [];
   border: string = "";
   isOpen = false;
+  changeButton = false;
 
   ngOnInit(): void {
     this.apiService.getProva().subscribe(prodottiCibo => {
@@ -56,6 +57,7 @@ export class MenuComponent implements OnInit{
       this.isReadOnly[index] = !this.isReadOnly[index];
       this.border = "1px solid black";
       this.solidBorder[index] = this.border;
+      this.changeButton = true
     }
     else{
       this.isReadOnly[index] = !this.isReadOnly[index];
@@ -84,8 +86,10 @@ export class MenuComponent implements OnInit{
     }
 
     updateProduct(id: number, data:Cibo){
+      this.isReadOnly[id] = !this.isReadOnly[id];
+      this.border = "none";
+      this.solidBorder[id] = this.border;
       this.apiService.updateProductById(`http://localhost:8080/product`,id, data).subscribe(() => {
-
       }, error => {
         alert("Il prodotto non è stato aggiornato correttamente")
       })

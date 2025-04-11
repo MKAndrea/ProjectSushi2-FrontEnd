@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from './cibo';
+import { Cibo } from './ProductDTO';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MenuService } from './menu.service';
 import { Cart } from './cart';

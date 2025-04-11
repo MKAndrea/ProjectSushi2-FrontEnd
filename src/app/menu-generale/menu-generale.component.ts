@@ -1,8 +1,8 @@
-import { Component, numberAttribute, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, numberAttribute, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { MenuService } from '../menu.service';
-import { Cibo } from '../cibo';
+import { Cibo } from '../ProductDTO';
 import { CartService } from '../cart.service';
 import { Cart } from '../cart';
 import { ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ import { CiboDTO } from '../../ciboDTO';
   templateUrl: './menu-generale.component.html',
   styleUrl: './menu-generale.component.css'
 })
-export class MenuGeneraleComponent implements OnInit{
+export class MenuGeneraleComponent implements OnInit, OnDestroy{
 
   constructor(private menuService: MenuService, private cartService: CartService, private route: ActivatedRoute, private apiService: ApiService){}
 
@@ -176,6 +176,10 @@ export class MenuGeneraleComponent implements OnInit{
         this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       })
     })
+  }
+
+  ngOnDestroy() {
+    this.menuService.getCarrelloAsObservable().unsubscribe()
   }
 
 }

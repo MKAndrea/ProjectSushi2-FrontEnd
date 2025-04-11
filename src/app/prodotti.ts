@@ -1,5 +1,5 @@
 import { Bevanda } from "./bevanda";
-import { Cibo } from "./cibo";
+import { Cibo } from "./ProductDTO";
 import { Dolce } from "./dolci";
 
 export interface Prodotti{

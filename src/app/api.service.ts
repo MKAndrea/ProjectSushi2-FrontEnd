@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cibo } from './cibo';
+import { Cibo } from './ProductDTO';
 import { Prodotti } from './prodotti';
 import { Bevanda } from './bevanda';
 import { Dolce } from './dolci';
@@ -39,8 +39,8 @@ export class ApiService {
     return this.http.get<Dolce[]>(this.url);
   }
 
-  sendProduct(url:string, data: Cibo[]): Observable<Cibo[]>{
-    return this.http.post<Cibo[]>(url, data);
+  sendProduct(url:string, data: orderDTO): Observable<orderDTO>{
+    return this.http.post<orderDTO>(url, data);
   }
 
   updateProductById(url: string, id: number, data: Cibo): Observable<Cibo>{

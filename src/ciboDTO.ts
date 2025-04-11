@@ -1,4 +1,4 @@
-import { Cibo } from "./app/cibo";
+import { Cibo } from "./app/ProductDTO";
 
 export interface CiboDTO{
     name?: string,

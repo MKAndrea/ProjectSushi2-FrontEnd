@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from './cibo';
+import { Cibo } from './ProductDTO';
 import { BehaviorSubject, retry, Subject } from 'rxjs';
 import { Cart } from './cart';
 import { HttpClient } from '@angular/common/http';
@@ -78,8 +78,8 @@ export class MenuService {
   //   return this.dolceArray;
   // }
 
-
-  sendOrder(prezzoTotale: number){
+  // questo fa ->> questa cosa
+  sendOrder(prezzoTotale: number): void{
     let carTemp = this.carrello.getValue();
     if(confirm(`Stai per inviare l'ordine sei sicuro?\nIl prezzo totale è di ${prezzoTotale}$`)){
       alert("Ordine inviato!")
