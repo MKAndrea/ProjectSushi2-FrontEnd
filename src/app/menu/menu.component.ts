@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { Router } from '@angular/router';
 import { IntroduzioneComponent } from "../introduzione/introduzione.component";
-import { ApiService } from '../api.service';
+import { ApiService } from '../../services/api.service';
 import { Cibo } from '../ProductDTO';
 import { TendinaComponent } from "../tendina/tendina.component";
-import { EditDeleteService } from '../edit-delete.service';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 import { error } from 'console';
+import { EditDeleteService } from '../../services/edit-delete.service';
 
 @Component({
   selector: 'app-menu',
@@ -26,6 +26,15 @@ export class MenuComponent implements OnInit{
   border: string = "";
   isOpen = false;
   changeButton = false;
+
+  createProduct: Cibo = {
+    name: "",
+    ingredients:"",
+    description: "",
+    price: 0,
+    productImage:"",
+    category: ""
+  }
 
   ngOnInit(): void {
     this.apiService.getProva().subscribe(prodottiCibo => {
@@ -66,6 +75,20 @@ export class MenuComponent implements OnInit{
     }
   }
 
+    addProduct(){
+      this.apiService.addProduct(this.createProduct).subscribe((newProduct: Cibo) => {
+        this.ciboArray.push(newProduct);
+        this.createProduct = {
+          name: "",
+          ingredients:"",
+          description: "",
+          price: 0,
+          productImage:"",
+          category: ""
+        };
+      });
+    }
+
     deleteProduct(id: number){
       if(confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")){
         this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() => {
@@ -75,7 +98,7 @@ export class MenuComponent implements OnInit{
           this.apiService.getProdotto("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
             this.ciboArray = prodotti;
           })
-          this.apiService.getProdotto("http://localhost:8080/product/category/Cibi").subscribe(prodotti =>{
+          this.apiService.getProdotto("http://localhost:8080/product/category/Cibo").subscribe(prodotti =>{
             this.ciboArray = prodotti;
           })
         }, error => {

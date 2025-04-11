@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from './ProductDTO';
+import { Cibo } from '../app/ProductDTO';
 import { BehaviorSubject, retry, Subject } from 'rxjs';
-import { Cart } from './cart';
+import { Cart } from '../app/cart';
 import { HttpClient } from '@angular/common/http';
-import { Prodotti } from './prodotti';
-import { Bevanda } from './bevanda';
-import { Dolce } from './dolci';
+import { Prodotti } from '../app/prodotti';
+import { Bevanda } from '../app/bevanda';
+import { Dolce } from '../app/dolci';
 
 
 @Injectable({
@@ -89,6 +89,11 @@ export class MenuService {
       });
     }
     this.carrello.next(carTemp);
+  }
+
+  resetCarrello() {
+    const nuovoCarrello: Cart = { cart: [], prodotti: [] };
+    this.carrello.next(nuovoCarrello);
   }
 
 

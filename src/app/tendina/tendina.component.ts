@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { EditDeleteService } from '../edit-delete.service';
 import { CommonModule } from '@angular/common';
+import { EditDeleteService } from '../../services/edit-delete.service';
 
 @Component({
   selector: 'app-tendina',

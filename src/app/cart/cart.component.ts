@@ -1,18 +1,19 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { HeaderComponent } from "../header/header.component";
+import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from "../footer/footer.component";
-import { CartService } from '../cart.service';
+import { CartService } from '../../services/cart.service';
 import { Cibo } from '../ProductDTO';
-import { MenuService } from '../menu.service';
 import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../cart';
 import { Bevanda } from '../bevanda';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../services/api.service';
 import { error } from 'console';
 import { orderDTO } from '../../orderDTO';
 import { orderDetailsDTO } from '../../orderDetailsDTO';
 import { BehaviorSubject } from 'rxjs';
 import { CiboDTO } from '../../ciboDTO';
+import { MenuService } from '../../services/menu.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -88,22 +89,22 @@ export class CartComponent implements OnInit{
       alert("Non hai prodotti nel carrello!");
     }
   }*/
-  sendOrder(){
-    // this.apiService.getProvaPost(this.carrello).subscribe(risposta => {
-    //   console.log("Ordine inviato con successo", risposta);
-    // })
-    this.menuService.sendOrder(this.totalPrice);
-    this.menuService.getCarrelloAsObservable().subscribe(value => {
-      this.carrello.cart = value.cart;
-
-      const ORDERDTO = this.mapperForDTO(this.carrello.cart);
-      console.log('DEV', ORDERDTO);
-
-      this.apiService.sendProduct("http://localhost:8080/Orders/cart", ORDERDTO).subscribe(() => {
-        console.log(this.order);
-      })
-    })
-  }
+    sendOrder() {
+      this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+        this.carrello.cart = value.cart;
+    
+        const ORDERDTO = this.mapperForDTO(this.carrello.cart);
+        if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
+          this.apiService.sendProductCart("http://localhost:8080/Orders/cart", ORDERDTO).subscribe(() => {
+            alert("Ordine inviato!");
+            this.carrello.cart.forEach(() => {
+              this.menuService.resetCarrello()
+            });
+            this.carrello.cart = [];
+          });
+        }
+      });
+    }
 
    removeCibo(cibo: Cibo){
     this.menuService.removeCibo(cibo);

@@ -36,6 +36,18 @@
                     </div>
                 </div>
             }
+            <div>
+                <h2>Aggiungi prodotto</h2>
+                <form (ngSubmit)="addProduct()">
+                    <input type="text" placeholder="name" name="name" [(ngModel)]="createProduct.name">
+                    <input type="text" placeholder="ingredients" name="ingredients" [(ngModel)]="createProduct.ingredients">
+                    <input type="text" placeholder="description" name="description" [(ngModel)]="createProduct.description">
+                    <input type="text" placeholder="price" name="price" [(ngModel)]="createProduct.price">
+                    <input type="text" placeholder="productImage" name="productImage" [(ngModel)]="createProduct.productImage">
+                    <input type="text" placeholder="category" name="category" [(ngModel)]="createProduct.category">
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
         }
         <!-- <app-tendina></app-tendina> -->
     </div>

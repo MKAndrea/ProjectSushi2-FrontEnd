@@ -1,16 +1,16 @@
 import { Component, numberAttribute, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
-import { MenuService } from '../menu.service';
 import { Cibo } from '../ProductDTO';
-import { CartService } from '../cart.service';
+import { CartService } from '../../services/cart.service';
 import { Cart } from '../cart';
 import { ActivatedRoute } from '@angular/router';
 import { Bevanda } from '../bevanda';
 import { Dolce } from '../dolci';
-import { ApiService } from '../api.service';
+import { ApiService } from '../../services/api.service';
 import { Prodotti } from '../prodotti';
 import { CiboDTO } from '../../ciboDTO';
+import { MenuService } from '../../services/menu.service';
 
 @Component({
   selector: 'app-menu-generale',
@@ -171,15 +171,15 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy{
         this.bevandaArray = prodotti;
         this.bevandaArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       })
-      this.apiService.getProdotto("http://localhost:8080/product/category/Cibi").subscribe(prodotti =>{
+      this.apiService.getProdotto("http://localhost:8080/product/category/Cibo").subscribe(prodotti =>{
         this.ciboArray = prodotti;
         this.ciboArray.forEach(elem => elem.quantity = this.carrello.cart.find(cibo => cibo.name == elem.name)?.quantity || 0)
       })
     })
   }
 
-  ngOnDestroy() {
-    this.menuService.getCarrelloAsObservable().unsubscribe()
+  ngOnDestroy(){
+    this.menuService.getCarrelloAsObservable().subscribe()
   }
 
 }

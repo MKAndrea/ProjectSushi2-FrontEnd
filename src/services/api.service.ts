@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cibo } from './ProductDTO';
-import { Prodotti } from './prodotti';
-import { Bevanda } from './bevanda';
-import { Dolce } from './dolci';
+import { Cibo } from '../app/ProductDTO';
+import { Prodotti } from '../app/prodotti';
+import { Bevanda } from '../app/bevanda';
+import { Dolce } from '../app/dolci';
 import { orderDTO } from '../orderDTO';
 import { orderDetailsDTO } from '../orderDetailsDTO';
+import { CiboDTO } from '../ciboDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,16 @@ export class ApiService {
     return this.http.get<Dolce[]>(this.url);
   }
 
-  sendProduct(url:string, data: orderDTO): Observable<orderDTO>{
+  sendProductCart(url:string, data: orderDTO): Observable<orderDTO>{
     return this.http.post<orderDTO>(url, data);
+  }
+
+  updateProductCart(id: number, data: orderDTO): Observable<orderDTO>{
+    return this.http.put<orderDTO>(`http://localhost:8080/Orders/cart/${id}`,data)
+  }
+
+  addProduct(data: Cibo){
+    return this.http.post<Cibo>(this.url, data)
   }
 
   updateProductById(url: string, id: number, data: Cibo): Observable<Cibo>{

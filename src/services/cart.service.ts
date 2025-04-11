@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from './ProductDTO';
+import { Cibo } from '../app/ProductDTO';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MenuService } from './menu.service';
-import { Cart } from './cart';
+import { Cart } from '../app/cart';
 
 @Injectable({
   providedIn: 'root'
