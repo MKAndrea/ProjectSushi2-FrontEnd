@@ -3,7 +3,7 @@ import { HeaderComponent } from "../header/header.component";
 import { Router } from '@angular/router';
 import { IntroduzioneComponent } from "../introduzione/introduzione.component";
 import { ApiService } from '../../services/api.service';
-import { Cibo } from '../ProductDTO';
+import { Cibo } from '../../modules/product';
 import { TendinaComponent } from "../tendina/tendina.component";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';

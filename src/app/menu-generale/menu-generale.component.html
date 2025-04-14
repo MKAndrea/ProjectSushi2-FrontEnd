@@ -10,10 +10,6 @@
                    <h3>Ingredients: {{cibo.ingredients}}</h3>
                    <p>Description: {{cibo.description}}</p>
                    <p>Price: {{cibo.price}}$</p>
-                   <!-- <div>
-                       <button (click)="addCibo(ciboArray[i], i)">Add</button>
-                       <button (click)="removeCibo(i)">Remove</button>
-                   </div> -->
                </div>
                <div class="container-number">
                    <button class="button" (click)="decrementCounter(cibo)">-</button>
@@ -25,44 +21,38 @@
     </section>
     <section id="bevande" fragment="section2">
         <h2 class="title-section">Bevande:</h2>
-        @for (cibo of bevandaArray; track $index; let i = $index) {
+        @for (bevanda of bevandaArray; track $index; let i = $index) {
            <div class="container">
                <div>
-                   <h2 class="title">{{cibo.name}}</h2>
-                   <p>{{cibo.id}}</p>
-                   <!--<h3>Ingredients: {{cibo.ingredienti}}</h3>
-                   <p>Procedimento: {{cibo.procedimento}}</p>-->
-                   <p>Price: {{cibo.price}}$</p>
-                   <!-- <div>
-                       <button (click)="addCibo(ciboArray[i], i)">Add</button>
-                       <button (click)="removeCibo(i)">Remove</button>
-                   </div> -->
+                <h2 class="title">{{bevanda.name}}</h2>
+                <p>id: {{bevanda.id}}</p>
+                <h3>Ingredients: {{bevanda.ingredients}}</h3>
+                <p>Description: {{bevanda.description}}</p>
+                <p>Price: {{bevanda.price}}$</p>
                </div>
                <div class="container-number">
-                   <button class="button" (click)="decrementCounter2(cibo)">-</button>
-                   <h2>{{ cibo.quantity || 0 }}</h2>
-                   <button class="button" (click)="incrementCounter(cibo)">+</button>
+                   <button class="button" (click)="decrementCounter(bevanda)">-</button>
+                   <h2>{{ bevanda.quantity || 0 }}</h2>
+                   <button class="button" (click)="incrementCounter(bevanda)">+</button>
                </div>
            </div>
         }
     </section>
     <section id="dolci">
         <h2 class="title-section">Dolci:</h2>
-        @for (cibo of dolceArray; track $index; let i = $index) {
+        @for (dolce of dolceArray; track $index; let i = $index) {
            <div class="container">
                <div>
-                   <h2 class="title">{{cibo.name}}</h2>
-                   <h3>Ingredients: {{cibo.ingredients}}</h3>
-                   <p>Price: {{cibo.price}}$</p>
-                   <!-- <div>
-                       <button (click)="addCibo(ciboArray[i], i)">Add</button>
-                       <button (click)="removeCibo(i)">Remove</button>
-                   </div> -->
+                <h2 class="title">{{dolce.name}}</h2>
+                <p>id: {{dolce.id}}</p>
+                <h3>Ingredients: {{dolce.ingredients}}</h3>
+                <p>Description: {{dolce.description}}</p>
+                <p>Price: {{dolce.price}}$</p>
                </div>
                <div class="container-number">
-                   <button class="button" (click)="decrementCounter3(cibo)">-</button>
-                   <h2>{{ cibo.quantity || 0 }}</h2>
-                   <button class="button" (click)="incrementCounter(cibo)">+</button>
+                   <button class="button" (click)="decrementCounter(dolce)">-</button>
+                   <h2>{{ dolce.quantity || 0 }}</h2>
+                   <button class="button" (click)="incrementCounter(dolce)">+</button>
                </div>
            </div>
         }

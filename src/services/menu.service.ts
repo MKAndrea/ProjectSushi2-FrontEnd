@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from '../app/ProductDTO';
+import { Cibo } from '../modules/product';
 import { BehaviorSubject, retry, Subject } from 'rxjs';
-import { Cart } from '../app/cart';
+import { Cart } from '../modules/cart';
 import { HttpClient } from '@angular/common/http';
-import { Prodotti } from '../app/prodotti';
-import { Bevanda } from '../app/bevanda';
-import { Dolce } from '../app/dolci';
+import { Bevanda } from '../modules/bevanda';
+import { Dolce } from '../modules/dolci';
 
 
 @Injectable({
@@ -52,7 +51,7 @@ export class MenuService {
   counters: number[] = Array(this.ciboArray.length).fill(0);
 
   // counterSubject: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(this.counters);
-  carrello: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: [], prodotti: []})
+  carrello: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: []})
 
   generalCounter: number = 0;
 
@@ -92,36 +91,36 @@ export class MenuService {
   }
 
   resetCarrello() {
-    const nuovoCarrello: Cart = { cart: [], prodotti: [] };
+    const nuovoCarrello: Cart = { cart: []};
     this.carrello.next(nuovoCarrello);
   }
 
 
-  incrementCounterProdotti(prodottiDaAggiungere: Prodotti, id: number) {
-    let cartTemp = this.carrello.getValue();
-    const indexCibo = cartTemp.prodotti.findIndex(prodotto => prodotto.cibo[id].name == prodottiDaAggiungere.cibo[id].name)
-    if(indexCibo != -1){
-      cartTemp.prodotti[indexCibo].cibo[id].quantity! += 1
-    } else {
-      prodottiDaAggiungere.cibo[id].quantity = 1;
-      cartTemp.prodotti.push(prodottiDaAggiungere)
-    }
-    const indexBevanda = cartTemp.prodotti.findIndex(prodotto => prodotto.bevanda[id].name == prodottiDaAggiungere.bevanda[id].name)
-    if(indexBevanda != -1){
-      cartTemp.prodotti[indexBevanda].bevanda[id].quantity! += 1
-    } else {
-      prodottiDaAggiungere.bevanda[id].quantity = 1;
-      cartTemp.prodotti.push(prodottiDaAggiungere)
-    }
-    const indexDolce = cartTemp.prodotti.findIndex(prodotto => prodotto.dolce[id].name == prodottiDaAggiungere.dolce[id].name)
-    if(indexDolce != -1){
-      cartTemp.prodotti[indexDolce].dolce[id].quantity! += 1
-    } else {
-      prodottiDaAggiungere.dolce[id].quantity = 1;
-      cartTemp.prodotti.push(prodottiDaAggiungere)
-    }
-    this.carrello.next(cartTemp)
-  }
+  // incrementCounterProdotti(prodottiDaAggiungere: Prodotti, id: number) {
+  //   let cartTemp = this.carrello.getValue();
+  //   const indexCibo = cartTemp.prodotti.findIndex(prodotto => prodotto.cibo[id].name == prodottiDaAggiungere.cibo[id].name)
+  //   if(indexCibo != -1){
+  //     cartTemp.prodotti[indexCibo].cibo[id].quantity! += 1
+  //   } else {
+  //     prodottiDaAggiungere.cibo[id].quantity = 1;
+  //     cartTemp.prodotti.push(prodottiDaAggiungere)
+  //   }
+  //   const indexBevanda = cartTemp.prodotti.findIndex(prodotto => prodotto.bevanda[id].name == prodottiDaAggiungere.bevanda[id].name)
+  //   if(indexBevanda != -1){
+  //     cartTemp.prodotti[indexBevanda].bevanda[id].quantity! += 1
+  //   } else {
+  //     prodottiDaAggiungere.bevanda[id].quantity = 1;
+  //     cartTemp.prodotti.push(prodottiDaAggiungere)
+  //   }
+  //   const indexDolce = cartTemp.prodotti.findIndex(prodotto => prodotto.dolce[id].name == prodottiDaAggiungere.dolce[id].name)
+  //   if(indexDolce != -1){
+  //     cartTemp.prodotti[indexDolce].dolce[id].quantity! += 1
+  //   } else {
+  //     prodottiDaAggiungere.dolce[id].quantity = 1;
+  //     cartTemp.prodotti.push(prodottiDaAggiungere)
+  //   }
+  //   this.carrello.next(cartTemp)
+  // }
 
   incrementCounter(ciboDaAggiungere: Cibo) {
     let cartTemp = this.carrello.getValue();

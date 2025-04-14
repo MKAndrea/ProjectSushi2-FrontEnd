@@ -1,5 +1,5 @@
-import { Cart } from "./app/cart";
-import { Cibo } from "./app/ProductDTO";
+import { Cart } from "./cart";
+import { Cibo } from "./product";
 import { orderDetailsDTO } from "./orderDetailsDTO";
 
 export interface orderDTO{

@@ -1,4 +1,4 @@
-import { Cibo } from "./app/ProductDTO";
+import { Cibo } from "./product";
 import { CiboDTO } from "./ciboDTO";
 
 

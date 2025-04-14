@@ -1,17 +1,15 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from "../footer/footer.component";
-import { CartService } from '../../services/cart.service';
-import { Cibo } from '../ProductDTO';
+import { Cibo } from '../../modules/product';
 import { CardCartComponent } from "../card-cart/card-cart.component";
-import { Cart } from '../cart';
-import { Bevanda } from '../bevanda';
+import { Cart } from '../../modules/cart';
+import { Bevanda } from '../../modules/bevanda';
 import { ApiService } from '../../services/api.service';
 import { error } from 'console';
-import { orderDTO } from '../../orderDTO';
-import { orderDetailsDTO } from '../../orderDetailsDTO';
+import { orderDTO } from '../../modules/orderDTO';
+import { orderDetailsDTO } from '../../modules/orderDetailsDTO';
 import { BehaviorSubject } from 'rxjs';
-import { CiboDTO } from '../../ciboDTO';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
 
@@ -23,15 +21,14 @@ import { take } from 'rxjs';
 })
 export class CartComponent implements OnInit{
 
-  constructor(private cartService: CartService, private menuService: MenuService, private apiService: ApiService, private cdr: ChangeDetectorRef){
+  constructor(private menuService: MenuService, private apiService: ApiService, private cdr: ChangeDetectorRef){
 
   }
   counters: number[] = [];
 
   private counterSubscription: any;
-  carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: [], prodotti: []})
-  carrello: Cart = {cart: [], prodotti: []};
-  ciboDTO: CiboDTO[] = [];
+  carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: []})
+  carrello: Cart = {cart: []};
 
   order: orderDTO = {
     orderDetails: []
@@ -78,24 +75,13 @@ export class CartComponent implements OnInit{
     this.cdr.detectChanges()
   }
 
-
-
-  /*sendOrder(){
-    if(this.menuService.generalCounter != 0){
-      this.cartService.sendOrder(this.carrello)
-      // this.menuService.resetCountersGeneral();
-    }
-    else{
-      alert("Non hai prodotti nel carrello!");
-    }
-  }*/
     sendOrder() {
       this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
         this.carrello.cart = value.cart;
     
         const ORDERDTO = this.mapperForDTO(this.carrello.cart);
         if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
-          this.apiService.sendProductCart("http://localhost:8080/Orders/cart", ORDERDTO).subscribe(() => {
+          this.apiService.sendProductCart(ORDERDTO).subscribe(() => {
             alert("Ordine inviato!");
             this.carrello.cart.forEach(() => {
               this.menuService.resetCarrello()

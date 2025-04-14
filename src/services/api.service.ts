@@ -1,25 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Cibo } from '../app/ProductDTO';
-import { Prodotti } from '../app/prodotti';
-import { Bevanda } from '../app/bevanda';
-import { Dolce } from '../app/dolci';
-import { orderDTO } from '../orderDTO';
-import { orderDetailsDTO } from '../orderDetailsDTO';
-import { CiboDTO } from '../ciboDTO';
+import { Cibo } from '../modules/product';
+import { Bevanda } from '../modules/bevanda';
+import { Dolce } from '../modules/dolci';
+import { orderDTO } from '../modules/orderDTO';
+import { orderDetailsDTO } from '../modules/orderDetailsDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private url = "http://localhost:8080/product";
+  private urls = {
+    urlGetProduct: "http://localhost:8080/product",
+    urlUpdateCart: "http://localhost:8080/Orders/cart",
+    urlGetCart: "http://localhost:8080/Orders/"
+  }
 
   constructor(private http: HttpClient) { }
 
   getProva(): Observable<any[]>{
-    return this.http.get<any[]>(this.url);
+    return this.http.get<any[]>(this.urls.urlGetProduct);
   }
 
   getProvaPost(url:string, body: orderDetailsDTO): Observable<orderDetailsDTO[]>{
@@ -31,25 +33,19 @@ export class ApiService {
   }
 
   getProductCibo(): Observable<Cibo[]>{
-    return this.http.get<Cibo[]>(this.url);
-  }
-  getProductBevande(): Observable<Bevanda[]>{
-    return this.http.get<Bevanda[]>(this.url);
-  }
-  getProductDolci(): Observable<Dolce[]>{
-    return this.http.get<Dolce[]>(this.url);
+    return this.http.get<Cibo[]>(this.urls.urlGetProduct);
   }
 
-  sendProductCart(url:string, data: orderDTO): Observable<orderDTO>{
-    return this.http.post<orderDTO>(url, data);
+  sendProductCart(data: orderDTO): Observable<orderDTO>{
+    return this.http.post<orderDTO>(this.urls.urlUpdateCart, data);
   }
 
   updateProductCart(id: number, data: orderDTO): Observable<orderDTO>{
-    return this.http.put<orderDTO>(`http://localhost:8080/Orders/cart/${id}`,data)
+    return this.http.put<orderDTO>(`${this.urls.urlUpdateCart}/${id}`,data)
   }
 
   addProduct(data: Cibo){
-    return this.http.post<Cibo>(this.url, data)
+    return this.http.post<Cibo>(this.urls.urlGetProduct, data)
   }
 
   updateProductById(url: string, id: number, data: Cibo): Observable<Cibo>{
