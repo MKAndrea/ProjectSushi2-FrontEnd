@@ -3,7 +3,7 @@ import { HeaderComponent } from "../header/header.component";
 import { Router } from '@angular/router';
 import { IntroduzioneComponent } from "../introduzione/introduzione.component";
 import { ApiService } from '../../services/api.service';
-import { Cibo } from '../../modules/product';
+import { Prodotto } from '../../modules/product';
 import { TendinaComponent } from "../tendina/tendina.component";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ import { EditDeleteService } from '../../services/edit-delete.service';
 })
 export class MenuComponent implements OnInit{
 
-  ciboArray: Cibo[] = [];
+  ciboArray: Prodotto[] = [];
   isDropDownVisible = false;
   dropdownPosition = { top: '0px', left: '0px' };
   isReadOnly: boolean[] = [];
@@ -27,7 +27,7 @@ export class MenuComponent implements OnInit{
   isOpen = false;
   changeButton = false;
 
-  createProduct: Cibo = {
+  createProduct: Prodotto = {
     name: "",
     ingredients:"",
     description: "",
@@ -35,9 +35,10 @@ export class MenuComponent implements OnInit{
     productImage:"",
     category: ""
   }
+  
 
   ngOnInit(): void {
-    this.apiService.getProva().subscribe(prodottiCibo => {
+    this.apiService.getProduct().subscribe(prodottiCibo => {
       this.ciboArray = prodottiCibo;
     })
     this.editDeleteService.isDropdownVisible$.subscribe(visible => {
@@ -76,7 +77,7 @@ export class MenuComponent implements OnInit{
   }
 
     addProduct(): void{
-      this.apiService.addProduct(this.createProduct).subscribe((newProduct: Cibo) => {
+      this.apiService.addProductt(this.createProduct).subscribe((newProduct: Prodotto) => {
         this.ciboArray.push(newProduct);
         this.createProduct = {
           name: "",
@@ -91,15 +92,15 @@ export class MenuComponent implements OnInit{
 
     deleteProduct(id: number): void{
       if(confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")){
-        this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() => {
-          this.apiService.getProductDolci().subscribe(prodotti =>{
-            this.ciboArray = prodotti;
+        this.apiService.deleteProducttById(id).subscribe(() => {
+          this.apiService.getProductDolcii().subscribe(dolci =>{
+            this.ciboArray = [...this.ciboArray, ...dolci];
           })
-          this.apiService.getProductBevande().subscribe(prodotti =>{
-            this.ciboArray = prodotti;
+          this.apiService.getProductBevandee().subscribe(bevande =>{
+            this.ciboArray = [...this.ciboArray, ...bevande];
           })
-          this.apiService.getProductCibo().subscribe(prodotti =>{
-            this.ciboArray = prodotti;
+          this.apiService.getProductCiboo().subscribe(cibo =>{
+            this.ciboArray = [...this.ciboArray, ...cibo];
           })
         }, error => {
           alert("Il prodootto non è stato cancellato correttamente")
@@ -108,11 +109,11 @@ export class MenuComponent implements OnInit{
       }
     }
 
-    updateProduct(id: number, data:Cibo): void{
+    updateProduct(id: number, body: Prodotto): void{
       this.isReadOnly[id] = !this.isReadOnly[id];
       this.border = "none";
       this.solidBorder[id] = this.border;
-      this.apiService.updateProductById(`http://localhost:8080/product`,id, data).subscribe(() => {
+      this.apiService.updateProducttById(id, body).subscribe(() => {
       }, error => {
         alert("Il prodotto non è stato aggiornato correttamente")
       })

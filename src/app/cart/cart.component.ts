@@ -1,17 +1,16 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from "../footer/footer.component";
-import { Cibo } from '../../modules/product';
+import { Prodotto } from '../../modules/product';
 import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../../modules/cart';
 import { ApiService } from '../../services/api.service';
 import { error } from 'console';
 import { orderDTO } from '../../modules/orderDTO';
-import { orderDetailsDTO } from '../../modules/orderDetailsDTO';
+import { OrderDetails } from '../../modules/orderDetails';
 import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
-import { CiboDTO } from '../../modules/ciboDTO';
 
 @Component({
   selector: 'app-cart',
@@ -35,7 +34,7 @@ export class CartComponent implements OnInit{
     orderDetails: []
   }
 
-  mapperForDTO(carrello: Cibo[]): orderDTO {
+  mapperForDTO(carrello: Prodotto[]): orderDTO {
     this.order = {
       orderDetails: carrello.map(cibo => ({
         quantity: cibo.quantity!,
@@ -63,7 +62,7 @@ export class CartComponent implements OnInit{
       console.log(this.carrello.cart)
       this.getPrezzoTotale();
     })
-    this.apiService.getProductCart().subscribe(values => {
+    this.apiService.getProductCartt().subscribe(values => {
       values.forEach(value => {
         this.orderCart.push(value);
       })
@@ -71,16 +70,43 @@ export class CartComponent implements OnInit{
   }
 
   //Incrementa il counter presente nella scheda menu-component
-  incrementCounter(cibo: Cibo): void{
+  incrementCounter(cibo: Prodotto): void{
     this.menuService.incrementCounter(cibo);
     this.cdr.detectChanges()
     //this.counters[id]++;
   }
 
-  decrementCounter(cibo: Cibo): void{
+  decrementCounter(cibo: Prodotto): void{
     this.menuService.decrementCounter(cibo);
     this.cdr.detectChanges()
   }
+
+    // sendOrder(): void {
+    //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+    //     this.carrello.cart = value.cart;
+    
+    //     const ORDERDTO = this.mapperForDTO(this.carrello.cart);
+    //     if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
+    //       alert("Ordine inviato!");
+    //       if(this.orderCart.length > 0){
+    //         this.apiService.updateProductCartt(this.order.id!, ORDERDTO).subscribe(() => {
+    //           this.carrello.cart.forEach(() => {
+    //             this.menuService.resetCarrello()
+    //           });
+    //           this.carrello.cart = [];
+    //         })
+    //       }
+    //       else{
+    //         this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
+    //           this.carrello.cart.forEach(() => {
+    //             this.menuService.resetCarrello()
+    //           });
+    //           this.carrello.cart = [];
+    //         });
+    //       }
+    //     }
+    //   });
+    // }
 
     sendOrder(): void {
       this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
@@ -88,18 +114,26 @@ export class CartComponent implements OnInit{
     
         const ORDERDTO = this.mapperForDTO(this.carrello.cart);
         if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
-          this.apiService.sendProductCart(ORDERDTO).subscribe(() => {
-            alert("Ordine inviato!");
-            this.carrello.cart.forEach(() => {
-              this.menuService.resetCarrello()
+          // if(this.orderCart.length > 0){
+          //   this.apiService.updateProductCartt(this.order.id!, ORDERDTO).subscribe(() => {
+          //     this.carrello.cart.forEach(() => {
+          //       this.menuService.resetCarrello()
+          //     });
+          //     this.carrello.cart = [];
+          //   })
+          // }
+            this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
+              this.carrello.cart.forEach(() => {
+                this.menuService.resetCarrello()
+              });
+              this.carrello.cart = [];
+              alert("Ordine inviato!");
             });
-            this.carrello.cart = [];
-          });
         }
       });
     }
 
-   removeCibo(cibo: Cibo): void{
+   removeCibo(cibo: Prodotto): void{
     this.menuService.removeCibo(cibo);
    }
 

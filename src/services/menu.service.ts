@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Cibo } from '../modules/product';
+import { Prodotto } from '../modules/product';
 import { BehaviorSubject, Observable, retry, Subject } from 'rxjs';
 import { Cart } from '../modules/cart';
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +14,7 @@ export class MenuService {
 
   constructor(private http: HttpClient, private apiService: ApiService) { }
 
-  ciboArray: Cibo[] = [
+  ciboArray: Prodotto[] = [
 
   ];
 
@@ -30,7 +30,7 @@ export class MenuService {
     return this.carrello.asObservable();
   }
 
-  getCiboArray(): Cibo[]{
+  getCiboArray(): Prodotto[]{
     return this.ciboArray;
   }
 
@@ -51,7 +51,7 @@ export class MenuService {
     this.carrello.next(nuovoCarrello);
   }
 
-  incrementCounter(ciboDaAggiungere: Cibo): void {
+  incrementCounter(ciboDaAggiungere: Prodotto): void {
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaAggiungere.name)
     if(index != -1){
@@ -63,7 +63,7 @@ export class MenuService {
     this.carrello.next(cartTemp)
   }
 
-  decrementCounter(ciboDaRimuovere: Cibo): void{
+  decrementCounter(ciboDaRimuovere: Prodotto): void{
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaRimuovere.name)
     if(index != -1 && cartTemp.cart[index].quantity! > 1){
@@ -74,7 +74,7 @@ export class MenuService {
     this.carrello.next(cartTemp)
   }
 
-  removeCibo(ciboDaRimuovere: Cibo): void{
+  removeCibo(ciboDaRimuovere: Prodotto): void{
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaRimuovere.name)
     if (index != -1) {

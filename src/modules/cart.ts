@@ -1,6 +1,6 @@
 import { orderDTO } from "./orderDTO";
-import { Cibo } from "./product";
+import { Prodotto } from "./product";
 
 export interface Cart{
-    cart: Cibo[]
+    cart: Prodotto[]
 }
