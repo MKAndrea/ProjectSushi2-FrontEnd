@@ -81,14 +81,14 @@ export class CartComponent implements OnInit{
     this.cdr.detectChanges()
   }
 
-    // sendOrder(): void {
+    // sendOrderProva(): void {
     //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
     //     this.carrello.cart = value.cart;
     
     //     const ORDERDTO = this.mapperForDTO(this.carrello.cart);
     //     if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
     //       alert("Ordine inviato!");
-    //       if(this.orderCart.length > 0){
+    //       if(this.order.id){
     //         this.apiService.updateProductCartt(this.order.id!, ORDERDTO).subscribe(() => {
     //           this.carrello.cart.forEach(() => {
     //             this.menuService.resetCarrello()
