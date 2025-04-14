@@ -1,4 +1,5 @@
 
+
 export interface CiboDTO{
     name?: string,
     immagine?: string,

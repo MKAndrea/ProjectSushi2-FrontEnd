@@ -2,21 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cibo } from '../modules/product';
-import { Bevanda } from '../modules/bevanda';
-import { Dolce } from '../modules/dolci';
 import { orderDTO } from '../modules/orderDTO';
 import { orderDetailsDTO } from '../modules/orderDetailsDTO';
+import { url } from 'inspector';
+import { CiboDTO } from '../modules/ciboDTO';
+import { Endpoint } from '../app/apiCatalog/endpoint';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private urls = {
+  private urls ={
+    //"http://localhost:8080/"
     urlGetProduct: "http://localhost:8080/product",
     urlGetProductCibo: "http://localhost:8080/product/category/Cibo",
     urlGetProductBevande: "http://localhost:8080/product/category/Bevande",
     urlGetProductDolci: "http://localhost:8080/product/category/Dolci",
+    urlGetProductCart: "http://localhost:8080/Orders",
     urlUpdateCart: "http://localhost:8080/Orders/cart",
     urlGetCart: "http://localhost:8080/Orders/"
   }
@@ -45,6 +48,10 @@ export class ApiService {
 
   getProductDolci(): Observable<Cibo[]>{
     return this.http.get<Cibo[]>(this.urls.urlGetProductDolci);
+  }
+
+  getProductCart(): Observable<orderDTO[]>{
+    return this.http.get<orderDTO[]>(this.urls.urlGetProductCart);
   }
 
   sendProductCart(data: orderDTO): Observable<orderDTO>{

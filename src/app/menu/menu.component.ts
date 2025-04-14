@@ -53,15 +53,15 @@ export class MenuComponent implements OnInit{
 
   constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService){}
 
-  navigateToProdotti(section: string){
+  navigateToProdotti(section: string): void{
     this.router.navigate(['/menu'], {fragment: section})
   }
 
-  showTendina(event: MouseEvent){
+  showTendina(event: MouseEvent): void{
     this.editDeleteService.showTendina(event)
   }
 
-  changeInput(index: number) {
+  changeInput(index: number): void {
     if(this.isReadOnly[index]){
       this.isReadOnly[index] = !this.isReadOnly[index];
       this.border = "1px solid black";
@@ -75,7 +75,7 @@ export class MenuComponent implements OnInit{
     }
   }
 
-    addProduct(){
+    addProduct(): void{
       this.apiService.addProduct(this.createProduct).subscribe((newProduct: Cibo) => {
         this.ciboArray.push(newProduct);
         this.createProduct = {
@@ -89,7 +89,7 @@ export class MenuComponent implements OnInit{
       });
     }
 
-    deleteProduct(id: number){
+    deleteProduct(id: number): void{
       if(confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")){
         this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() => {
           this.apiService.getProductDolci().subscribe(prodotti =>{
@@ -108,7 +108,7 @@ export class MenuComponent implements OnInit{
       }
     }
 
-    updateProduct(id: number, data:Cibo){
+    updateProduct(id: number, data:Cibo): void{
       this.isReadOnly[id] = !this.isReadOnly[id];
       this.border = "none";
       this.solidBorder[id] = this.border;
@@ -118,7 +118,7 @@ export class MenuComponent implements OnInit{
       })
     }
 
-  toggleMEnu(){
+  toggleMEnu(): void{
     this.isOpen = !this.isOpen
   }
 }

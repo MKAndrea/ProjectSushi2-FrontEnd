@@ -4,8 +4,6 @@ import { FooterComponent } from "../footer/footer.component";
 import { Cibo } from '../../modules/product';
 import { Cart } from '../../modules/cart';
 import { ActivatedRoute } from '@angular/router';
-import { Bevanda } from '../../modules/bevanda';
-import { Dolce } from '../../modules/dolci';
 import { ApiService } from '../../services/api.service';
 import { MenuService } from '../../services/menu.service';
 
@@ -20,8 +18,8 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy{
   constructor(private menuService: MenuService, private route: ActivatedRoute, private apiService: ApiService){}
 
   ciboArray: Cibo[] = [];
-  bevandaArray: Bevanda[] = [];
-  dolceArray: Dolce[] = [];
+  bevandaArray: Cibo[] = [];
+  dolceArray: Cibo[] = [];
   counters: number[] = [];
   carrello: Cart = {cart: []}
 
@@ -60,16 +58,16 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy{
     })
   }
 
-  incrementCounter(cibo: Cibo){
+  incrementCounter(cibo: Cibo): void{
     this.menuService.incrementCounter(cibo);
     //this.counters[id]++;
   }
 
-  decrementCounter(cibo: Cibo){
+  decrementCounter(cibo: Cibo): void{
     this.menuService.decrementCounter(cibo);
   }
 
-  deleteProduct(id: number){
+  deleteProduct(id: number): void{
     this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() =>{
       this.apiService.getProductDolci().subscribe(prodotti =>{
         this.dolceArray = prodotti;

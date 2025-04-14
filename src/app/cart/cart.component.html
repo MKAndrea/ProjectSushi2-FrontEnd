@@ -18,4 +18,19 @@
         </div>
     }
 </div>
+<div>
+    <h2>Visualizza Ordine</h2>
+    <div>
+        @for (order of orderCart; track $index) {
+            <p>{{order.id}}</p>
+            @for (item of order.orderDetails; track $index) {
+                <div class="container-box">
+                    <p>{{item.product.name}}</p>
+                    <p>{{item.product.productImage}}</p>
+                    <p>{{item.product.price}}</p>
+                </div>
+            }
+        }
+    </div>
+</div>
 <app-footer></app-footer>

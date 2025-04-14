@@ -4,7 +4,6 @@ import { FooterComponent } from "../footer/footer.component";
 import { Cibo } from '../../modules/product';
 import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../../modules/cart';
-import { Bevanda } from '../../modules/bevanda';
 import { ApiService } from '../../services/api.service';
 import { error } from 'console';
 import { orderDTO } from '../../modules/orderDTO';
@@ -12,6 +11,7 @@ import { orderDetailsDTO } from '../../modules/orderDetailsDTO';
 import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
+import { CiboDTO } from '../../modules/ciboDTO';
 
 @Component({
   selector: 'app-cart',
@@ -26,9 +26,10 @@ export class CartComponent implements OnInit{
   }
   counters: number[] = [];
 
-  private counterSubscription: any;
   carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: []})
   carrello: Cart = {cart: []};
+
+  orderCart: orderDTO[] = [];
 
   order: orderDTO = {
     orderDetails: []
@@ -62,20 +63,26 @@ export class CartComponent implements OnInit{
       console.log(this.carrello.cart)
       this.getPrezzoTotale();
     })
+    this.apiService.getProductCart().subscribe(values => {
+      values.forEach(value => {
+        this.orderCart.push(value);
+      })
+    })
   }
 
-  incrementCounter(cibo: Cibo){
+  //Incrementa il counter presente nella scheda menu-component
+  incrementCounter(cibo: Cibo): void{
     this.menuService.incrementCounter(cibo);
     this.cdr.detectChanges()
     //this.counters[id]++;
   }
 
-  decrementCounter(cibo: Cibo){
+  decrementCounter(cibo: Cibo): void{
     this.menuService.decrementCounter(cibo);
     this.cdr.detectChanges()
   }
 
-    sendOrder() {
+    sendOrder(): void {
       this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
         this.carrello.cart = value.cart;
     
@@ -92,11 +99,11 @@ export class CartComponent implements OnInit{
       });
     }
 
-   removeCibo(cibo: Cibo){
+   removeCibo(cibo: Cibo): void{
     this.menuService.removeCibo(cibo);
    }
 
-   getPrezzoTotale(){
+   getPrezzoTotale(): void{
     this.totalPrice = 0;
     this.carrello.cart.forEach(prodotto => {
       this.totalPrice += prodotto.price! * prodotto.quantity!;

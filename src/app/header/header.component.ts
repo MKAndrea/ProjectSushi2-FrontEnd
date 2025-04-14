@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit{
     })
   }
 
-  onClick(url: string){
+  onClick(url: string): void{
     this.router.navigateByUrl(url);
   }
 }
