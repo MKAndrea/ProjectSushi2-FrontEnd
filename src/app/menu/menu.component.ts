@@ -92,13 +92,13 @@ export class MenuComponent implements OnInit{
     deleteProduct(id: number){
       if(confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")){
         this.apiService.deleteProductById(`http://localhost:8080/product/${id}`).subscribe(() => {
-          this.apiService.getProdotto("http://localhost:8080/product/category/Dolci").subscribe(prodotti =>{
+          this.apiService.getProductDolci().subscribe(prodotti =>{
             this.ciboArray = prodotti;
           })
-          this.apiService.getProdotto("http://localhost:8080/product/category/Bevande").subscribe(prodotti =>{
+          this.apiService.getProductBevande().subscribe(prodotti =>{
             this.ciboArray = prodotti;
           })
-          this.apiService.getProdotto("http://localhost:8080/product/category/Cibo").subscribe(prodotti =>{
+          this.apiService.getProductCibo().subscribe(prodotti =>{
             this.ciboArray = prodotti;
           })
         }, error => {

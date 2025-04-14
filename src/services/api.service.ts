@@ -14,6 +14,9 @@ export class ApiService {
 
   private urls = {
     urlGetProduct: "http://localhost:8080/product",
+    urlGetProductCibo: "http://localhost:8080/product/category/Cibo",
+    urlGetProductBevande: "http://localhost:8080/product/category/Bevande",
+    urlGetProductDolci: "http://localhost:8080/product/category/Dolci",
     urlUpdateCart: "http://localhost:8080/Orders/cart",
     urlGetCart: "http://localhost:8080/Orders/"
   }
@@ -28,12 +31,20 @@ export class ApiService {
     return this.http.post<orderDetailsDTO[]>(url, body)
   }
 
-  getProdotto(url: string): Observable<Cibo[]>{
-    return this.http.get<Cibo[]>(`${url}`)
+  getProdotto(): Observable<Cibo[]>{
+    return this.http.get<Cibo[]>(`${this.urls.urlGetProduct}`)
   }
 
   getProductCibo(): Observable<Cibo[]>{
-    return this.http.get<Cibo[]>(this.urls.urlGetProduct);
+    return this.http.get<Cibo[]>(this.urls.urlGetProductCibo);
+  }
+
+  getProductBevande(): Observable<Cibo[]>{
+    return this.http.get<Cibo[]>(this.urls.urlGetProductBevande);
+  }
+
+  getProductDolci(): Observable<Cibo[]>{
+    return this.http.get<Cibo[]>(this.urls.urlGetProductDolci);
   }
 
   sendProductCart(data: orderDTO): Observable<orderDTO>{
