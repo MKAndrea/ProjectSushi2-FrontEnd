@@ -1,42 +1,52 @@
 <app-header></app-header>
+
 <div class="cart-container">
-    <div class="cart-display">
-        @if (carrello.cart.length != 0) {
-            @for (cibo of carrello.cart; track $index; let i = $index) {
-                <app-card-cart [item]="cibo" (remove)="removeCibo(cibo)" (decrement)="decrementCounter(cibo)"
-                    (increment)="incrementCounter(cibo)"></app-card-cart>
-                }
-        }
-        @else {
-            <h2 class="h2-text">Aggiungi dei prodotti per visualizzarli nel carrello!</h2>
-        }
-    </div>
-    @if (carrello.cart.length != 0) {
-        <div class="total-order-container">
-            <button id="send-order" (click)="sendOrderProva()">Send Order</button>
-            <h2>Price: {{totalPrice}}$</h2>
-        </div>
+  <div class="cart-display">
+    @if (carrello.cart.length !== 0) {
+      @for (cibo of carrello.cart; track $index; let i = $index) {
+        <!-- cibo è di tipo OrderDetails -->
+        <app-card-cart
+          [item]="cibo"
+          (remove)="removeCibo(cibo)"
+          (decrement)="decrementCounter(cibo)"
+          (increment)="incrementCounter(cibo)">
+        </app-card-cart>
+      }
     }
-</div>
-<div>
-    <h2>Visualizza Ordine</h2>
-    <div>
-        @for (order of orderCart; track $index) {
-            <p>{{order.id}}</p>
-            <div>
-                @for (item of order.orderDetails; track $index) {
-                    <div class="container-box">
-                        <p>{{item.product.name}}</p>
-                        <p>{{item.product.productImage}}</p>
-                        <p>{{item.product.price}}</p>
-                    </div>
-                }
-                <div>
-                    <button>Modifica</button>
-                    <button>Elimina</button>
-                </div>
-            </div>
-        }
+    @else {
+      <h2 class="h2-text">Aggiungi dei prodotti per visualizzarli nel carrello!</h2>
+    }
+  </div>
+
+  @if (carrello.cart.length !== 0) {
+    <div class="total-order-container">
+      <button id="send-order" (click)="sendOrderProva()">Send Order</button>
+      <h2>Price: {{ totalPrice }}$</h2>
     </div>
+  }
 </div>
+
+<div>
+  <h2>Visualizza Ordine</h2>
+  <div>
+    @for (order of orderCart; track $index) {
+      <p>Ordine ID: {{ order.id }}</p>
+      <div>
+        @for (item of order.orderDetails; track $index) {
+          <div class="container-box">
+            <p>Nome: {{ item.product.name }}</p>
+            <img [src]="item.product.productImage" alt="{{ item.product.name }}" width="100" />
+            <p>Prezzo: {{ item.product.price }}$</p>
+            <p>Quantità: {{ item.quantity }}</p>
+          </div>
+        }
+        <div class="order-actions">
+          <button>Modifica</button>
+          <button>Elimina</button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
 <app-footer></app-footer>
