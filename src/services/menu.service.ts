@@ -26,10 +26,12 @@ export class MenuService {
 
   endpoint = Endpoint;
 
+  //Restituisce un observable leggibile del carrello, così che i componenti possano reagire ai cambiamenti del carrello
   getCarrelloAsObservable(): Observable<Cart> {
     return this.carrello.asObservable();
   }
 
+  //Ritorna un array di tipo "Prodotto"
   getCiboArray(): Prodotto[]{
     return this.ciboArray;
   }
@@ -46,11 +48,13 @@ export class MenuService {
     this.carrello.next(carTemp);
   }
 
+  //Azzera il carrello
   resetCarrello(): void {
     const nuovoCarrello: Cart = { cart: []};
     this.carrello.next(nuovoCarrello);
   }
 
+  //Incrementa il counter (Aggiunge prodotti al carrello)
   incrementCounter(ciboDaAggiungere: Prodotto): void {
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaAggiungere.name)
@@ -63,6 +67,7 @@ export class MenuService {
     this.carrello.next(cartTemp)
   }
 
+  //Decrementa il counter (Rimuove prodotti dal carrello)
   decrementCounter(ciboDaRimuovere: Prodotto): void{
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaRimuovere.name)
@@ -74,6 +79,7 @@ export class MenuService {
     this.carrello.next(cartTemp)
   }
 
+  //Rimuove prodotti dal carrello
   removeCibo(ciboDaRimuovere: Prodotto): void{
     let cartTemp = this.carrello.getValue();
     const index = cartTemp.cart.findIndex(cibo => cibo.name == ciboDaRimuovere.name)

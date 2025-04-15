@@ -1,8 +1,7 @@
-import { Cart } from "./cart";
-import { Prodotto } from "./product";
+
 import { OrderDetails } from "./orderDetails";
 
-export interface orderDTO{
+export interface order{
     id?: number
     orderDetails: OrderDetails[]
 }

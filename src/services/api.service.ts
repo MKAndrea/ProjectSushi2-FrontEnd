@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Prodotto } from '../modules/product';
-import { orderDTO } from '../modules/orderDTO';
+import { order } from '../modules/order';
 import { OrderDetails } from '../modules/orderDetails';
 import { url } from 'inspector';
 import { Endpoint } from '../app/apiCatalog/endpoint';
@@ -30,92 +30,55 @@ export class ApiService {
 
   private endpoint = Endpoint;
 
+  //ritorna tutti i prodotti del DB
   getProduct(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT)
   }
 
+  //ritorna tutti i prodotti che hanno la categoria "Cibo"
   getProductCiboo(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.CIBO)
   }
 
+  //ritorna tutti i prodotti che hanno la categoria "Bevande"
   getProductBevandee(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.BEVANDE)
   }
 
+  //ritorna tutti i prodotti che hanno la categoria "Dolci"
   getProductDolcii(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.DOLCI)
   }
 
-  getProductCartt(): Observable<orderDTO[]>{
+  //ritorna tutti i prodotti contenuti nel carrello (quelli inviati nel carrello)
+  getProductCartt(): Observable<order[]>{
     return this.mainApiService.generalGet(this.endpoint.ORDERS)
   }
 
-  sendProductCartt(body: orderDTO): Observable<orderDTO>{
+  //Invia gli elementi al DB riguardo l'ordine effettuato
+  sendProductCartt(body: order): Observable<order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPost(this.endpoint.ORDERS_CART, body)
   }
 
-  updateProductCartt(id: number, body: orderDTO): Observable<orderDTO>{
+  //Aggiorna gli elementi già contenuti nel DB riguardo l'ordine effettuato
+  updateProductCartt(id: number, body: order): Observable<order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPut(`${finalEndpoint}/${id}`, body)
   }
 
+  //Aggiunge un prodotto al DB
   addProductt(body: Prodotto): Observable<Prodotto>{
     return this.mainApiService.generalPost(this.endpoint.PRODUCT, body)
   }
+
+  //Aggiorna un prodotto nel DB
   updateProducttById(id: number, body: Prodotto): Observable<Prodotto>{
     return this.mainApiService.generalPut(`${this.endpoint.PRODUCT}/${id}`, body);
   }
 
+  //ELmina un prodotto nel DB
   deleteProducttById(id: number): Observable<Prodotto>{
     return this.mainApiService.generalDelete(`${this.endpoint.PRODUCT}/${id}`)
   }
-
-//   getProva(): Observable<any[]>{
-//     return this.http.get<any[]>(this.urls.urlGetProduct);
-//   }
-
-//   getProvaPost(url:string, body: OrderDetails): Observable<OrderDetails[]>{
-//     return this.http.post<OrderDetails[]>(url, body)
-//   }
-
-//   getProdotto(): Observable<Prodotto[]>{
-//     return this.http.get<Prodotto[]>(`${this.urls.urlGetProduct}`)
-//   }
-
-//   getProductCibo(): Observable<Prodotto[]>{
-//     return this.http.get<Prodotto[]>(this.urls.urlGetProductCibo);
-//   }
-
-//   getProductBevande(): Observable<Prodotto[]>{
-//     return this.http.get<Prodotto[]>(this.urls.urlGetProductBevande);
-//   }
-
-//   getProductDolci(): Observable<Prodotto[]>{
-//     return this.http.get<Prodotto[]>(this.urls.urlGetProductDolci);
-//   }
-
-//   getProductCart(): Observable<orderDTO[]>{
-//     return this.http.get<orderDTO[]>(this.urls.urlGetProductCart);
-//   }
-
-//   sendProductCart(data: orderDTO): Observable<orderDTO>{
-//     return this.http.post<orderDTO>(this.urls.urlUpdateCart, data);
-//   }
-
-//   updateProductCart(id: number, data: orderDTO): Observable<orderDTO>{
-//     return this.http.put<orderDTO>(`${this.urls.urlUpdateCart}/${id}`,data)
-//   }
-
-//   addProduct(data: Prodotto){
-//     return this.http.post<Prodotto>(this.urls.urlGetProduct, data)
-//   }
-
-//   updateProductById(url: string, id: number, data: Prodotto): Observable<Prodotto>{
-//     return this.http.put<Prodotto>(`${url}/${id}`, data);
-//   }
-
-//   deleteProductById(url: string): Observable<Prodotto>{
-//     return this.http.delete<Prodotto>(url);
-//   }
 }

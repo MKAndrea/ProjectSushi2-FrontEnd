@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { Route, Router } from '@angular/router';
 import { MenuComponent } from "../menu/menu.component";
 import { FooterComponent } from "../footer/footer.component";
 

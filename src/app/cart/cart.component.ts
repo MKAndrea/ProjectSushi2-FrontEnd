@@ -6,7 +6,7 @@ import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../../modules/cart';
 import { ApiService } from '../../services/api.service';
 import { error } from 'console';
-import { orderDTO } from '../../modules/orderDTO';
+import { order } from '../../modules/order';
 import { OrderDetails } from '../../modules/orderDetails';
 import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
@@ -28,13 +28,14 @@ export class CartComponent implements OnInit{
   carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({cart: []})
   carrello: Cart = {cart: []};
 
-  orderCart: orderDTO[] = [];
+  orderCart: order[] = [];
 
-  order: orderDTO = {
+  order: order = {
     orderDetails: []
   }
 
-  mapperForDTO(carrello: Prodotto[]): orderDTO {
+  //Gestisco un array di tipo Prodotto convertendolo attraverso un map in tipo order
+  mapperForDTO(carrello: Prodotto[]): order {
     this.order = {
       orderDetails: carrello.map(cibo => ({
         quantity: cibo.quantity!,
@@ -56,16 +57,23 @@ export class CartComponent implements OnInit{
   totalPrice: number = 0;
 
   ngOnInit(): void {
+    //Riceve i dati per il carrello
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       console.log('Dati del carrello ricevuti:', value);
       this.carrello.cart = value.cart;
       console.log(this.carrello.cart)
       this.getPrezzoTotale();
+    }, error => {
+      alert("i prodotti nel carrello non sono stati inviati correttamente")
     })
+    //Visualizza tutti gli elementi contenuti nel carrello
     this.apiService.getProductCartt().subscribe(values => {
       values.forEach(value => {
         this.orderCart.push(value);
       })
+      this.orderCart = [...this.orderCart];
+    }, error => {
+      alert("i prodotti nel carrello non sono stati caricati correttamente")
     })
   }
 
@@ -108,6 +116,7 @@ export class CartComponent implements OnInit{
     //   });
     // }
 
+    //Invia l'ordine appena premi il pulsante send order
     sendOrder(): void {
       this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
         this.carrello.cart = value.cart;
@@ -123,20 +132,27 @@ export class CartComponent implements OnInit{
           //   })
           // }
             this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
-              this.carrello.cart.forEach(() => {
-                this.menuService.resetCarrello()
-              });
+              this.menuService.resetCarrello()
               this.carrello.cart = [];
               alert("Ordine inviato!");
+              this.apiService.getProductCartt().subscribe((ordini => {
+                this.orderCart = ordini;
+              }))
+            }, error => {
+              alert("ordine non inviato correttamente riprova")
             });
         }
+      }, error => {
+        alert("i prodotti non sono stati caricati correttamente")
       });
     }
 
+  //Rimuovi il cibo dal carrello
    removeCibo(cibo: Prodotto): void{
     this.menuService.removeCibo(cibo);
    }
 
+   //Somma del prezzo totale dei prodotti contenuti nel carrello
    getPrezzoTotale(): void{
     this.totalPrice = 0;
     this.carrello.cart.forEach(prodotto => {

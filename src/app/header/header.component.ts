@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Cart } from '../../modules/cart';
+import { Router } from '@angular/router';
 import { MenuService } from '../../services/menu.service';
 
 @Component({
@@ -20,12 +19,14 @@ export class HeaderComponent implements OnInit{
   generalCounter: number = 0;
 
   ngOnInit(): void {
+    //Aumenta il counter del carrello contenuto nell'header
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.generalCounter = 0;
       value.cart.forEach(cibo => this.generalCounter += cibo.quantity!)
     })
   }
 
+  //Quando clicchi su un buttone ti porta ad un'altra pagina
   onClick(url: string): void{
     this.router.navigateByUrl(url);
   }
