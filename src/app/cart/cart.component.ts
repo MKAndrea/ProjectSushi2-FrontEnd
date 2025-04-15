@@ -95,16 +95,48 @@ export class CartComponent implements OnInit {
       }
     });
   }
+  // modificaOrdine(orderDaModificare: order): void {
+
+  //   this.carrello.cart = [...orderDaModificare.orderDetails];
+  
+  //   this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
+  
+  //   if (orderDaModificare.id) {
+  //     this.apiService.updateProductCartt(orderDaModificare.id, {
+  //       id: orderDaModificare.id,     
+  //       orderDetails: this.carrello.cart
+  //     }).subscribe(() =>{
+  //         this.getPrezzoTotale();
+  //       },
+  //       error => {
+  //         alert("non ha aggiunto i prodotti correttamente al carrello, riprova")
+  //       }
+  //     );
+  //   } else {
+  //     alert("Errore, l'id non è specificato");
+  //   }
+  //   console.log(this.carrello.cart);
+  //   this.isEditing = true;
+  // }
 
   modificaOrdine(orderDaModificare: order): void {
+    this.carrello.cart = [...orderDaModificare.orderDetails];
+    this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
+    this.getPrezzoTotale();
+    this.isEditing = true;
+    this.order = orderDaModificare;
+    console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.cart);
+  }
+  
+  
 
+  orderUpdate(orderDaModificare: order): void{
     this.carrello.cart = [...orderDaModificare.orderDetails];
   
     this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
   
     if (orderDaModificare.id) {
-      this.apiService.updateProductCartt(orderDaModificare.id, {
-        id: orderDaModificare.id,     
+      this.apiService.updateProductCartt(orderDaModificare.id, {    
         orderDetails: this.carrello.cart
       }).subscribe(() =>{
           this.getPrezzoTotale();
@@ -117,11 +149,9 @@ export class CartComponent implements OnInit {
       alert("Errore, l'id non è specificato");
     }
     console.log(this.carrello.cart);
-    this.isEditing = true;
-  }
-
-  orderUpdate(){
     this.isEditing = false;
+    this.menuService.resetCarrello();
+    this.carrello.cart = [];
   }
   
 
