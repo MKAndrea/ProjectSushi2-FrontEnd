@@ -35,10 +35,11 @@ export class CartComponent implements OnInit {
     orderDetails: []
   }
 
+  isEditing: boolean = false;
+
   totalPrice: number = 0;
 
   ngOnInit(): void {
-    // Riceve i dati per il carrello
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       console.log('Dati del carrello ricevuti:', value);
       this.carrello.cart = value.cart;
@@ -70,6 +71,7 @@ export class CartComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  // Invia l'ordine appena premi il pulsante send order
   sendOrderProva(): void {
     this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
       this.carrello.cart = value.cart;
@@ -80,51 +82,48 @@ export class CartComponent implements OnInit {
 
       if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
         this.apiService.sendProductCartt(ORDERDTO).subscribe((response: any) => {
-          // Aggiorna ORDERDTO con l'id e gli orderDetails restituiti dal backend
           ORDERDTO.id = response.id;
           ORDERDTO.orderDetails = response.orderDetails;
-
           this.orderCart.push(ORDERDTO);
-
-          // Reset del carrello
           this.menuService.resetCarrello();
           this.carrello.cart = [];
-
           console.log(this.orderCart);
           alert("Ordine inviato!");
         }, error => {
-          console.error("Errore nell'invio dell'ordine", error);
-          alert("Si è verificato un errore nell'invio dell'ordine. Riprova!");
+          alert("Si è verificato un errore")
         });
       }
     });
   }
 
-  // Invia l'ordine appena premi il pulsante send order
-  sendOrder(): void {
-    this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
-      this.carrello.cart = value.cart;
+  modificaOrdine(orderDaModificare: order): void {
 
-      const ORDERDTO: order = {
+    this.carrello.cart = [...orderDaModificare.orderDetails];
+  
+    this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
+  
+    if (orderDaModificare.id) {
+      this.apiService.updateProductCartt(orderDaModificare.id, {
+        id: orderDaModificare.id,     
         orderDetails: this.carrello.cart
-      };
-
-      if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
-        this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
-          this.menuService.resetCarrello();
-          this.carrello.cart = [];
-          alert("Ordine inviato!");
-          this.apiService.getProductCartt().subscribe(ordini => {
-            this.orderCart = ordini;
-          });
-        }, error => {
-          alert("Ordine non inviato correttamente. Riprova.");
-        });
-      }
-    }, error => {
-      alert("I prodotti non sono stati caricati correttamente");
-    });
+      }).subscribe(() =>{
+          this.getPrezzoTotale();
+        },
+        error => {
+          alert("non ha aggiunto i prodotti correttamente al carrello, riprova")
+        }
+      );
+    } else {
+      alert("Errore, l'id non è specificato");
+    }
+    console.log(this.carrello.cart);
+    this.isEditing = true;
   }
+
+  orderUpdate(){
+    this.isEditing = false;
+  }
+  
 
   // Rimuovi il prodotto dal carrello
   removeCibo(cibo: OrderDetails): void {
@@ -139,3 +138,28 @@ export class CartComponent implements OnInit {
     });
   }
 }
+
+  // sendOrder(): void {
+  //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+  //     this.carrello.cart = value.cart;
+
+  //     const ORDERDTO: order = {
+  //       orderDetails: this.carrello.cart
+  //     };
+
+  //     if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
+  //       this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
+  //         this.menuService.resetCarrello();
+  //         this.carrello.cart = [];
+  //         alert("Ordine inviato!");
+  //         this.apiService.getProductCartt().subscribe(ordini => {
+  //           this.orderCart = ordini;
+  //         });
+  //       }, error => {
+  //         alert("Ordine non inviato correttamente. Riprova.");
+  //       });
+  //     }
+  //   }, error => {
+  //     alert("I prodotti non sono stati caricati correttamente");
+  //   });
+  // }

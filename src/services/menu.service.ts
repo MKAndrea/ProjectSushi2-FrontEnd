@@ -90,4 +90,8 @@ export class MenuService {
       this.carrello.next(carTemp);
     }
   }
+
+  setCarrello(nuovoCarrello: Cart): void {
+    this.carrello.next(nuovoCarrello);  // Aggiorna il valore del carrello
+  }
 }

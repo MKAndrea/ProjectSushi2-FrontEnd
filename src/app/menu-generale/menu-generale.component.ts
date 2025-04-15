@@ -47,7 +47,6 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("I prodotti non sono stati caricati correttamente nel carrello");
     });
 
-    // Carica i cibi
     this.apiService.getProductCiboo().subscribe(prodotti => {
       this.ciboArray = prodotti;
       this.aggiornaQuantitaVisuale();
@@ -55,7 +54,6 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("I cibi non sono stati caricati correttamente");
     });
 
-    // Carica le bevande
     this.apiService.getProductBevandee().subscribe(prodotti => {
       this.bevandaArray = prodotti;
       this.aggiornaQuantitaVisuale();
@@ -63,7 +61,6 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("Le bevande non sono state caricate correttamente");
     });
 
-    // Carica i dolci
     this.apiService.getProductDolcii().subscribe(prodotti => {
       this.dolceArray = prodotti;
       this.aggiornaQuantitaVisuale();
@@ -74,17 +71,22 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
 
   // Funzione per aggiornare la quantità visiva dei prodotti
   aggiornaQuantitaVisuale(): void {
-    const aggiorna = (array: Prodotto[]) => {
-      array.forEach(elem => {
-        const dettaglio = this.carrello.cart.find(c => c.product.name === elem.name);
-        elem.quantity = dettaglio ? dettaglio.quantity : 0;
-      });
-    };
+    this.ciboArray.forEach(prodotto => {
+      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+    });
+  
+    this.bevandaArray.forEach(prodotto => {
+      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+    });
 
-    aggiorna(this.ciboArray);
-    aggiorna(this.bevandaArray);
-    aggiorna(this.dolceArray);
+    this.dolceArray.forEach(prodotto => {
+      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+    });
   }
+  
 
   // Incrementa la quantità dell'elemento selezionato
   incrementCounter(cibo: Prodotto): void {
@@ -97,7 +99,6 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Evita memory leak
     if (this.counterSubscription) {
       this.counterSubscription.unsubscribe();
     }

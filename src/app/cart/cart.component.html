@@ -3,14 +3,17 @@
 <div class="cart-container">
   <div class="cart-display">
     @if (carrello.cart.length !== 0) {
-      @for (cibo of carrello.cart; track $index; let i = $index) {
+      @for (prodotto of carrello.cart; track $index; let i = $index) {
         <!-- cibo è di tipo OrderDetails -->
         <app-card-cart
-          [item]="cibo"
-          (remove)="removeCibo(cibo)"
-          (decrement)="decrementCounter(cibo)"
-          (increment)="incrementCounter(cibo)">
+          [item]="prodotto"
+          (remove)="removeCibo(prodotto)"
+          (decrement)="decrementCounter(prodotto)"
+          (increment)="incrementCounter(prodotto)">
         </app-card-cart>
+      }
+      @if (isEditing) {
+        <button (click)="orderUpdate()">Aggiorna</button>
       }
     }
     @else {
@@ -35,13 +38,12 @@
         @for (item of order.orderDetails; track $index) {
           <div class="container-box">
             <p>Nome: {{ item.product.name }}</p>
-            <img [src]="item.product.productImage" alt="{{ item.product.name }}" width="100" />
             <p>Prezzo: {{ item.product.price }}$</p>
             <p>Quantità: {{ item.quantity }}</p>
           </div>
         }
         <div class="order-actions">
-          <button>Modifica</button>
+          <button (click)="modificaOrdine(order)">Modifica</button>
           <button>Elimina</button>
         </div>
       </div>

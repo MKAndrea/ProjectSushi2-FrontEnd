@@ -16,14 +16,14 @@ export class CardCartComponent {
   @Output() increment = new EventEmitter<Prodotto>();
 
   removeCibo() {
-    this.remove.emit(this.item); // Emit the full OrderDetails
+    this.remove.emit(this.item);
   }
 
   decrementCounter() {
-    this.decrement.emit(this.item.product); // Emit only the Prodotto
+    this.decrement.emit(this.item.product);
   }
 
   incrementCounter() {
-    this.increment.emit(this.item.product); // Emit only the Prodotto
+    this.increment.emit(this.item.product);
   }
 }
