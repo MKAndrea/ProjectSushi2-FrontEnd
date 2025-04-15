@@ -105,7 +105,6 @@ export class CartComponent implements OnInit{
           alert("Ordine inviato!");
         });
       }
-      console.log(this.order)
     });
   }
 
