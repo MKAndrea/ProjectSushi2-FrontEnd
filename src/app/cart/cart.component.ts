@@ -152,6 +152,7 @@ export class CartComponent implements OnInit {
     this.isEditing = false;
     this.menuService.resetCarrello();
     this.carrello.cart = [];
+    alert("Prodotto Modificato")
   }
   
 
