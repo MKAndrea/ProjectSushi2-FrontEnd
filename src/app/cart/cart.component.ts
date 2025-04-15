@@ -89,32 +89,25 @@ export class CartComponent implements OnInit{
     this.cdr.detectChanges()
   }
 
-    // sendOrderProva(): void {
-    //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
-    //     this.carrello.cart = value.cart;
-    
-    //     const ORDERDTO = this.mapperForDTO(this.carrello.cart);
-    //     if (confirm(`Stai per inviare l'ordine sei sicuro?`)) {
-    //       alert("Ordine inviato!");
-    //       if(this.order.id){
-    //         this.apiService.updateProductCartt(this.order.id!, ORDERDTO).subscribe(() => {
-    //           this.carrello.cart.forEach(() => {
-    //             this.menuService.resetCarrello()
-    //           });
-    //           this.carrello.cart = [];
-    //         })
-    //       }
-    //       else{
-    //         this.apiService.sendProductCartt(ORDERDTO).subscribe(() => {
-    //           this.carrello.cart.forEach(() => {
-    //             this.menuService.resetCarrello()
-    //           });
-    //           this.carrello.cart = [];
-    //         });
-    //       }
-    //     }
-    //   });
-    // }
+  sendOrderProva(): void {
+    this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+      this.carrello.cart = value.cart;
+  
+      const ORDERDTO = this.mapperForDTO(this.carrello.cart);
+  
+      if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
+        this.apiService.sendProductCartt(ORDERDTO).subscribe((response: any) => {
+          this.order.id = response.id;
+          this.order.orderDetails = response.orderDetails;
+          this.menuService.resetCarrello();
+          this.carrello.cart = [];
+  
+          alert("Ordine inviato!");
+        });
+      }
+      console.log(this.order)
+    });
+  }
 
     //Invia l'ordine appena premi il pulsante send order
     sendOrder(): void {
