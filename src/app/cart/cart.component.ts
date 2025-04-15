@@ -97,16 +97,27 @@ export class CartComponent implements OnInit{
   
       if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
         this.apiService.sendProductCartt(ORDERDTO).subscribe((response: any) => {
-          this.order.id = response.id;
-          this.order.orderDetails = response.orderDetails;
+          // Aggiorna ORDERDTO con l'id e gli orderDetails restituiti dal backend
+          ORDERDTO.id = response.id;
+          ORDERDTO.orderDetails = response.orderDetails;
+  
+          // Aggiungi ORDERDTO all'array orderCart
+          this.orderCart.push(ORDERDTO);  // Aggiungi il nuovo ordine all'array orderCart
+  
+          // Reset del carrello
           this.menuService.resetCarrello();
           this.carrello.cart = [];
   
+          console.log(this.orderCart);  // Controlla che l'array venga aggiornato correttamente
           alert("Ordine inviato!");
+        }, error => {
+          console.error("Errore nell'invio dell'ordine", error);
+          alert("Si è verificato un errore nell'invio dell'ordine. Riprova!");
         });
       }
     });
   }
+  
 
     //Invia l'ordine appena premi il pulsante send order
     sendOrder(): void {
