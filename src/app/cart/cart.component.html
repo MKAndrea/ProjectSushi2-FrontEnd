@@ -4,7 +4,6 @@
   <div class="cart-display">
     @if (carrello.cart.length !== 0) {
       @for (prodotto of carrello.cart; track $index; let i = $index) {
-        <!-- cibo è di tipo OrderDetails -->
         <app-card-cart
           [item]="prodotto"
           (remove)="removeCibo(prodotto)"

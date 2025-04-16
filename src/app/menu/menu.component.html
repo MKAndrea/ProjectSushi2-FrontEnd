@@ -22,6 +22,7 @@
         </div>
     </div>
     <div class="container-edit-delete">
+        <app-admin></app-admin>
         <h2 class="ordina-text" (click)="toggleMEnu()">Modifica ed elimina prodotti</h2>
         @if (isOpen) {
             @for (cibo of ciboArray; track $index; let i = $index) {

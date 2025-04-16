@@ -91,7 +91,8 @@ export class MenuService {
     }
   }
 
+  //Aggiorna il valore del carrello
   setCarrello(nuovoCarrello: Cart): void {
-    this.carrello.next(nuovoCarrello);  // Aggiorna il valore del carrello
+    this.carrello.next(nuovoCarrello); 
   }
 }

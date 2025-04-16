@@ -10,10 +10,11 @@ import { CommonModule } from '@angular/common';
 import { error } from 'console';
 import { EditDeleteService } from '../../services/edit-delete.service';
 import { forkJoin } from 'rxjs';
+import { AdminComponent } from "../admin/admin.component";
 
 @Component({
   selector: 'app-menu',
-  imports: [HeaderComponent, IntroduzioneComponent, TendinaComponent, FormsModule, CommonModule],
+  imports: [HeaderComponent, IntroduzioneComponent, TendinaComponent, FormsModule, CommonModule, AdminComponent],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
