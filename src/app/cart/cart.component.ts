@@ -28,6 +28,7 @@ export class CartComponent implements OnInit {
   counters: number[] = [];
 
   carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({ cart: [] });
+  ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
   carrello: Cart = { cart: [] };
 
   orderCart: order[] = [];
@@ -36,7 +37,7 @@ export class CartComponent implements OnInit {
     orderDetails: []
   }
 
-  isEditing: boolean = false;
+  isEditing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   totalPrice: number = 0;
 
@@ -59,6 +60,11 @@ export class CartComponent implements OnInit {
     }, error => {
       alert("I prodotti nel carrello non sono stati caricati correttamente");
     });
+
+    const savedId = localStorage.getItem('ordineInModificaId');
+    if (savedId) {
+      this.ordineInModificaId.next(Number(savedId));
+    }
   }
 
   // Incrementa il counter presente nella scheda menu-component
@@ -124,51 +130,52 @@ export class CartComponent implements OnInit {
     this.carrello.cart = [...orderDaModificare.orderDetails];
     this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
     this.getPrezzoTotale();
-    this.isEditing = true;
-    this.order = orderDaModificare;
+  
+    this.isEditing.next(true);
+  
+    this.ordineInModificaId.next(orderDaModificare.id ?? null);
+    localStorage.setItem('ordineInModificaId', String(orderDaModificare.id));
+  
     console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.cart);
   }
   
   
+  
+  
 
-  orderUpdate(orderDaModificare: order): void {
-    // Filtra solo i prodotti con quantità maggiore di 0
-    const prodottiValidi = this.carrello.cart.filter(item => item.quantity > 0);
+  orderUpdate(): void {
+    const idOrdine = this.ordineInModificaId.value;
   
-    this.menuService.setCarrello({ cart: prodottiValidi });
-  
-    if (orderDaModificare.id) {
-      const ordineAggiornato: order = {
-        id: orderDaModificare.id,
-        orderDetails: prodottiValidi
-      };
-  
-      this.apiService.updateProductCartt(orderDaModificare.id, ordineAggiornato)
-        .subscribe(() => {
-          this.getPrezzoTotale();
-  
-          const index = this.orderCart.findIndex(o => o.id === ordineAggiornato.id);
-          if (index !== -1) {
-            this.orderCart[index] = { ...ordineAggiornato };
-  
-            this.orderCart[index].orderDetails = prodottiValidi;
-  
-            this.orderCart = [...this.orderCart];
-          }
-  
-          alert("Ordine modificato con successo!");
-        }, error => {
-          alert("Errore durante l'aggiornamento dell'ordine.");
-        });
-  
-    } else {
+    if (!idOrdine) {
       alert("Errore: ID ordine mancante.");
+      return;
     }
+  
+    const prodottiValidi = this.carrello.cart.filter(item => item.quantity > 0);
+    const ordineAggiornato: order = {
+      id: idOrdine,
+      orderDetails: prodottiValidi
+    };
+  
+    this.apiService.updateProductCartt(idOrdine, ordineAggiornato)
+      .subscribe(() => {
+        this.getPrezzoTotale();
+        const index = this.orderCart.findIndex(o => o.id === idOrdine);
+        if (index !== -1) {
+          this.orderCart[index] = ordineAggiornato;
+          this.orderCart = [...this.orderCart];
+        }
+        alert("Ordine modificato con successo!");
+      }, error => {
+        alert("Errore durante l'aggiornamento dell'ordine.");
+      });
   
     this.menuService.resetCarrello();
     this.carrello.cart = [];
-    this.isEditing = false;
+    this.isEditing.next(false);
+    this.ordineInModificaId.next(null);
   }
+  
   
   
 
