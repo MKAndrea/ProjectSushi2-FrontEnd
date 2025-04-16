@@ -14,7 +14,7 @@ export class AdminComponent {
   onSubmit() {
     console.log('Username:', this.username);
     console.log('Password:', this.password);
-    if(this.username == "admin" && this.password == "admin"){
+    if(this.username == "admin" && this.password == "adminpass"){
       console.log("Password corretta e username corretto")
     }
     else{

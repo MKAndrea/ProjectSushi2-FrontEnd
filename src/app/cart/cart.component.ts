@@ -179,6 +179,19 @@ export class CartComponent implements OnInit {
   }
   
   
+  deleteOrder(id: number) {
+    if (!confirm("Sei sicuro di voler eliminare questo ordine?")) return;
+  
+    this.apiService.deleteOrder(id).subscribe({
+      next: () => {
+        this.orderCart = this.orderCart.filter(order => order.id !== id);
+        alert("Ordine eliminato con successo");
+      },
+      error: (err) => {
+        console.error('Errore durante l\'eliminazione dell\'ordine:', err);
+      }
+    });
+  }
   
 
   // Rimuovi il prodotto dal carrello

@@ -36,6 +36,10 @@
   <div>
     @for (order of orderCart; track $index) {
       <p>Ordine ID: {{ order.id }}</p>
+      <div class="order-actions">
+        <button (click)="modificaOrdine(order)">Modifica</button>
+        <button (click)="deleteOrder(order.id!)">Elimina</button>
+      </div>
       <div>
         @for (item of order.orderDetails; track $index) {
           <div class="container-box">
@@ -44,10 +48,6 @@
             <p>Quantità: {{ item.quantity }}</p>
           </div>
         }
-        <div class="order-actions">
-          <button (click)="modificaOrdine(order)">Modifica</button>
-          <button>Elimina</button>
-        </div>
       </div>
     }
   </div>

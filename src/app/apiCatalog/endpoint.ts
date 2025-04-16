@@ -6,5 +6,7 @@ export enum Endpoint {
     DOLCI = "/category/Dolci",
     ORDERS = "/Orders",
     CART = "/cart",
-    ORDERS_CART = "/Orders/cart"
+    ORDERS_CART = "/Orders/cart",
+    ADD_PRODUCT = "/product?username=admin&password=adminpass",
+    DELETE_UPDATE = "username=admin&password=adminpass"
 }

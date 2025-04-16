@@ -69,16 +69,20 @@ export class ApiService {
 
   //Aggiunge un prodotto al DB
   addProductt(body: Prodotto): Observable<Prodotto>{
-    return this.mainApiService.generalPost(this.endpoint.PRODUCT, body)
+    return this.mainApiService.generalPost(this.endpoint.ADD_PRODUCT, body)
   }
 
   //Aggiorna un prodotto nel DB
   updateProducttById(id: number, body: Prodotto): Observable<Prodotto>{
-    return this.mainApiService.generalPut(`${this.endpoint.PRODUCT}/${id}`, body);
+    return this.mainApiService.generalPut(`${this.endpoint.PRODUCT}/${id}?${this.endpoint.DELETE_UPDATE}`, body);
   }
 
   //ELmina un prodotto nel DB
   deleteProducttById(id: number): Observable<Prodotto>{
-    return this.mainApiService.generalDelete(`${this.endpoint.PRODUCT}/${id}`)
+    return this.mainApiService.generalDelete(`${this.endpoint.PRODUCT}/${id}?${this.endpoint.DELETE_UPDATE}`)
+  }
+
+  deleteOrder(id: number): Observable<order>{
+    return this.mainApiService.generalDelete(`${this.endpoint.ORDERS}/${id}`)
   }
 }
