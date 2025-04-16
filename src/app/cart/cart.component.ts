@@ -9,10 +9,11 @@ import { OrderDetails } from '../../modules/orderDetails';
 import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
-  imports: [HeaderComponent, FooterComponent, CardCartComponent],
+  imports: [HeaderComponent, FooterComponent, CardCartComponent, FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
@@ -130,30 +131,37 @@ export class CartComponent implements OnInit {
   
   
 
-  orderUpdate(orderDaModificare: order): void{
-    this.carrello.cart = [...orderDaModificare.orderDetails];
-  
-    this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
-  
+  orderUpdate(orderDaModificare: order): void {
+    const prodottiValidi = this.carrello.cart.filter(item => item.quantity > 0);
+    this.menuService.setCarrello({ cart: prodottiValidi });
     if (orderDaModificare.id) {
-      this.apiService.updateProductCartt(orderDaModificare.id, {    
-        orderDetails: this.carrello.cart
-      }).subscribe(() =>{
+      const ordineAggiornato: order = {
+        id: orderDaModificare.id,
+        orderDetails: prodottiValidi
+      };
+  
+      this.apiService.updateProductCartt(orderDaModificare.id, ordineAggiornato)
+        .subscribe(() => {
           this.getPrezzoTotale();
-        },
-        error => {
-          alert("non ha aggiunto i prodotti correttamente al carrello, riprova")
-        }
-      );
+          const index = this.orderCart.findIndex(o => o.id === ordineAggiornato.id);
+          if (index !== -1) {
+            this.orderCart[index] = ordineAggiornato;
+          }
+  
+          alert("Ordine modificato con successo!");
+        }, error => {
+          alert("Errore durante l'aggiornamento dell'ordine.");
+        });
     } else {
-      alert("Errore, l'id non è specificato");
+      alert("Errore: ID ordine mancante.");
     }
-    console.log(this.carrello.cart);
-    this.isEditing = false;
+  
+    // Ripristina lo stato
     this.menuService.resetCarrello();
     this.carrello.cart = [];
-    alert("Prodotto Modificato")
+    this.isEditing = false;
   }
+  
   
 
   // Rimuovi il prodotto dal carrello
