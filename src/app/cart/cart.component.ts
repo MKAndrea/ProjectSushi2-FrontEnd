@@ -132,8 +132,11 @@ export class CartComponent implements OnInit {
   
 
   orderUpdate(orderDaModificare: order): void {
+    // Filtra solo i prodotti con quantità maggiore di 0
     const prodottiValidi = this.carrello.cart.filter(item => item.quantity > 0);
+  
     this.menuService.setCarrello({ cart: prodottiValidi });
+  
     if (orderDaModificare.id) {
       const ordineAggiornato: order = {
         id: orderDaModificare.id,
@@ -143,20 +146,25 @@ export class CartComponent implements OnInit {
       this.apiService.updateProductCartt(orderDaModificare.id, ordineAggiornato)
         .subscribe(() => {
           this.getPrezzoTotale();
+  
           const index = this.orderCart.findIndex(o => o.id === ordineAggiornato.id);
           if (index !== -1) {
-            this.orderCart[index] = ordineAggiornato;
+            this.orderCart[index] = { ...ordineAggiornato };
+  
+            this.orderCart[index].orderDetails = prodottiValidi;
+  
+            this.orderCart = [...this.orderCart];
           }
   
           alert("Ordine modificato con successo!");
         }, error => {
           alert("Errore durante l'aggiornamento dell'ordine.");
         });
+  
     } else {
       alert("Errore: ID ordine mancante.");
     }
   
-    // Ripristina lo stato
     this.menuService.resetCarrello();
     this.carrello.cart = [];
     this.isEditing = false;
