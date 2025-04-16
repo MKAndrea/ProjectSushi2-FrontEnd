@@ -49,21 +49,30 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
 
     this.apiService.getProductCiboo().subscribe(prodotti => {
       this.ciboArray = prodotti;
-      this.aggiornaQuantitaVisuale();
+      this.ciboArray.forEach(prodotto => {
+        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+      });
     }, error => {
       alert("I cibi non sono stati caricati correttamente");
     });
 
     this.apiService.getProductBevandee().subscribe(prodotti => {
       this.bevandaArray = prodotti;
-      this.aggiornaQuantitaVisuale();
+      this.bevandaArray.forEach(prodotto => {
+        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+      });
     }, error => {
       alert("Le bevande non sono state caricate correttamente");
     });
 
     this.apiService.getProductDolcii().subscribe(prodotti => {
       this.dolceArray = prodotti;
-      this.aggiornaQuantitaVisuale();
+      this.dolceArray.forEach(prodotto => {
+        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+      });
     }, error => {
       alert("I dolci non sono stati caricati correttamente");
     });

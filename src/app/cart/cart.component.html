@@ -11,9 +11,6 @@
           (increment)="incrementCounter(prodotto)">
         </app-card-cart>
       }
-      @if (isEditing) {
-        <button (click)="orderUpdate()">Aggiorna</button>
-      }
     }
     @else {
       <h2 class="h2-text">Aggiungi dei prodotti per visualizzarli nel carrello!</h2>
@@ -22,7 +19,13 @@
 
   @if (carrello.cart.length !== 0) {
     <div class="total-order-container">
-      <button id="send-order" (click)="sendOrderProva()">Send Order</button>
+      @if (isEditing) {
+        <button id="send-order" (click)="orderUpdate()">Update Order</button>
+      }
+      @else {
+        <button id="send-order" (click)="sendOrderProva()">Send Order</button>
+      }
+
       <h2>Price: {{ totalPrice }}$</h2>
     </div>
   }

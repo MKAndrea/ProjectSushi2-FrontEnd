@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 export class CartComponent implements OnInit {
 
   constructor(
+    private storageService: StorageService,
     private menuService: MenuService,
     private apiService: ApiService,
     private cdr: ChangeDetectorRef
@@ -37,7 +39,7 @@ export class CartComponent implements OnInit {
     orderDetails: []
   }
 
-  isEditing: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isEditing: boolean = false;
 
   totalPrice: number = 0;
 
@@ -61,7 +63,7 @@ export class CartComponent implements OnInit {
       alert("I prodotti nel carrello non sono stati caricati correttamente");
     });
 
-    const savedId = localStorage.getItem('ordineInModificaId');
+    const savedId = this.storageService.getItem('ordineInModificaId');
     if (savedId) {
       this.ordineInModificaId.next(Number(savedId));
     }
@@ -131,10 +133,10 @@ export class CartComponent implements OnInit {
     this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
     this.getPrezzoTotale();
   
-    this.isEditing.next(true);
+    this.isEditing= true;
   
     this.ordineInModificaId.next(orderDaModificare.id ?? null);
-    localStorage.setItem('ordineInModificaId', String(orderDaModificare.id));
+    this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
   
     console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.cart);
   }
@@ -172,8 +174,8 @@ export class CartComponent implements OnInit {
   
     this.menuService.resetCarrello();
     this.carrello.cart = [];
-    this.isEditing.next(false);
-    this.ordineInModificaId.next(null);
+    this.isEditing = false;
+    this.ordineInModificaId.next(null); // pulisci ID dopo modifica
   }
   
   
