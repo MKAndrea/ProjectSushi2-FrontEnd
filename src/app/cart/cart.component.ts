@@ -189,6 +189,7 @@ export class CartComponent implements OnInit {
     this.menuService.resetCart();
     this.carrello.orderDetails = [];
     this.isEditing = false;
+    this.menuService.setIsEditing(false);
     this.ordineInModificaId.next(null); // pulisci ID dopo modifica
   }
   
