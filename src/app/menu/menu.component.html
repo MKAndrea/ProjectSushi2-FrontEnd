@@ -2,7 +2,7 @@
  <app-introduzione></app-introduzione>
 <div class="container-menu">
     <div>
-        <h2 class="ordina-text">Ordina!</h2>
+        <h2 class="ordina-text">Order Now!</h2>
     </div>
     <div class="navigazione">
         <div class="border" (click)="navigateToProdotti('cibi')">
@@ -23,7 +23,7 @@
     </div>
     <div class="container-edit-delete">
         <app-admin></app-admin>
-        <h2 class="ordina-text" (click)="toggleMEnu()">Modifica ed elimina prodotti</h2>
+        <h2 class="ordina-text" (click)="toggleMEnu()">Edit and Delete products</h2>
         @if (isOpen) {
             @for (cibo of ciboArray; track $index; let i = $index) {
                 <div class="larghezza" (click)="showTendina($event)">

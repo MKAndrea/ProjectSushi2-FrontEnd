@@ -13,7 +13,7 @@
       }
     }
     @else {
-      <h2 class="h2-text">Aggiungi dei prodotti per visualizzarli nel carrello!</h2>
+      <h2 class="h2-text">Add products to view them in your cart!</h2>
     }
   </div>
 
@@ -43,9 +43,9 @@
       <div>
         @for (item of order.orderDetails; track $index) {
           <div class="container-box">
-            <p>Nome: {{ item.product.name }}</p>
-            <p>Prezzo: {{ item.product.price }}$</p>
-            <p>Quantità: {{ item.quantity }}</p>
+            <p>Name: {{ item.product.name }}</p>
+            <p>Price: {{ item.product.price }}$</p>
+            <p>Quantity: {{ item.quantity }}</p>
           </div>
         }
       </div>
