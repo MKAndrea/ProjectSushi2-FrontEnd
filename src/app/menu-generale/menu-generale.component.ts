@@ -41,7 +41,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Carica i prodotti selezionati nel carrello
     this.menuService.getCarrelloAsObservable().subscribe(value => {
-      this.carrello.cart = value.cart;
+      this.carrello.cart = value.orderDetails;
       this.aggiornaQuantitaVisuale();
     }, error => {
       alert("I prodotti non sono stati caricati correttamente nel carrello");

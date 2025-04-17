@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit{
     //Aumenta il counter del carrello contenuto nell'header
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.generalCounter = 0;
-      value.cart.forEach(cibo => this.generalCounter += cibo.quantity!)
+      value.orderDetails.forEach(cibo => this.generalCounter += cibo.quantity!)
     })
   }
 

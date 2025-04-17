@@ -11,16 +11,22 @@ import { MenuService } from '../../services/menu.service';
 import { take } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { StorageService } from '../../services/storage.service';
+import { TendinaComponent } from "../tendina/tendina.component";
+import { OrderHistoryComponent } from "../order-history/order-history.component";
+import { routes } from '../app.routes';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
-  imports: [HeaderComponent, FooterComponent, CardCartComponent, FormsModule],
+  imports: [HeaderComponent, FooterComponent, CardCartComponent, FormsModule, TendinaComponent, OrderHistoryComponent],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
 
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private storageService: StorageService,
     private menuService: MenuService,
     private apiService: ApiService,
@@ -29,9 +35,9 @@ export class CartComponent implements OnInit {
 
   counters: number[] = [];
 
-  carrelloSubject: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({ cart: [] });
+  carrelloSubject: BehaviorSubject<order> = new BehaviorSubject<order>({ orderDetails: [] });
   ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
-  carrello: Cart = { cart: [] };
+  carrello: order = { orderDetails: [] };
 
   orderCart: order[] = [];
 
@@ -44,10 +50,16 @@ export class CartComponent implements OnInit {
   totalPrice: number = 0;
 
   ngOnInit(): void {
+
+    this.menuService.isEditing$.subscribe(isEditing => {
+      this.isEditing = isEditing;
+      this.cdr.detectChanges();  // Assicurati che il cambiamento venga rilevato
+    });
+    
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       console.log('Dati del carrello ricevuti:', value);
-      this.carrello.cart = value.cart;
-      console.log(this.carrello.cart);
+      this.carrello.orderDetails = value.orderDetails;
+      console.log(this.carrello.orderDetails);
       this.getTotalPrice();
     }, error => {
       alert("I prodotti nel carrello non sono stati inviati correttamente");
@@ -83,10 +95,10 @@ export class CartComponent implements OnInit {
   // Invia l'ordine appena premi il pulsante send order
   sendOrder(): void {
     this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
-      this.carrello.cart = value.cart;
+      this.carrello.orderDetails = value.orderDetails;
 
       const ORDERDTO: order = {
-        orderDetails: this.carrello.cart
+        orderDetails: this.carrello.orderDetails
       };
 
       if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
@@ -95,7 +107,7 @@ export class CartComponent implements OnInit {
           ORDERDTO.orderDetails = response.orderDetails;
           this.orderCart.push(ORDERDTO);
           this.menuService.resetCart();
-          this.carrello.cart = [];
+          this.carrello.orderDetails = [];
           console.log(this.orderCart);
           alert("Ordine inviato!");
         }, error => {
@@ -129,8 +141,8 @@ export class CartComponent implements OnInit {
   // }
 
   editOrder(orderDaModificare: order): void {
-    this.carrello.cart = [...orderDaModificare.orderDetails];
-    this.menuService.setCart({ cart: [...orderDaModificare.orderDetails] });
+    this.carrello.orderDetails = [...orderDaModificare.orderDetails];
+    this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
     this.getTotalPrice();
   
     this.isEditing= true;
@@ -138,11 +150,13 @@ export class CartComponent implements OnInit {
     this.ordineInModificaId.next(orderDaModificare.id ?? null);
     this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
   
-    console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.cart);
+    console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.orderDetails);
   }
   
   
-  
+  navigateToShowOrder(){
+    this.router.navigate(['/order-history'])
+  }
   
 
   orderUpdate(): void {
@@ -153,7 +167,7 @@ export class CartComponent implements OnInit {
       return;
     }
   
-    const prodottiValidi = this.carrello.cart.filter(item => item.quantity > 0);
+    const prodottiValidi = this.carrello.orderDetails.filter(item => item.quantity > 0);
     const ordineAggiornato: order = {
       id: idOrdine,
       orderDetails: prodottiValidi
@@ -173,7 +187,7 @@ export class CartComponent implements OnInit {
       });
   
     this.menuService.resetCart();
-    this.carrello.cart = [];
+    this.carrello.orderDetails = [];
     this.isEditing = false;
     this.ordineInModificaId.next(null); // pulisci ID dopo modifica
   }
@@ -202,7 +216,7 @@ export class CartComponent implements OnInit {
   // Somma del prezzo totale dei prodotti contenuti nel carrello
   getTotalPrice(): void {
     this.totalPrice = 0;
-    this.carrello.cart.forEach(dettaglio => {
+    this.carrello.orderDetails.forEach(dettaglio => {
       this.totalPrice += dettaglio.product.price! * dettaglio.quantity!;
     });
   }

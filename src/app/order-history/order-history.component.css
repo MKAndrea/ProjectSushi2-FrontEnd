@@ -1,0 +1,31 @@
+h2 {
+    text-align: center;
+  }
+  
+  .order-actions {
+    margin-top: 10px;
+  }
+  
+  button {
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .container-box {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .container-box p {
+    margin: 5px 0;
+  }
+  

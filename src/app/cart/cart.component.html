@@ -1,9 +1,9 @@
 <app-header></app-header>
-
+<button (click)="navigateToShowOrder()">Show Order</button>
 <div class="cart-container">
   <div class="cart-display">
-    @if (carrello.cart.length !== 0) {
-      @for (prodotto of carrello.cart; track $index; let i = $index) {
+    @if (carrello.orderDetails.length !== 0) {
+      @for (prodotto of carrello.orderDetails; track $index; let i = $index) {
         <app-card-cart
           [item]="prodotto"
           (remove)="removeProduct(prodotto)"
@@ -17,7 +17,7 @@
     }
   </div>
 
-  @if (carrello.cart.length !== 0) {
+  @if (carrello.orderDetails.length !== 0) {
     <div class="total-order-container">
       @if (isEditing) {
         <button id="send-order" (click)="orderUpdate()">Update Order</button>
@@ -29,28 +29,6 @@
       <h2>Price: {{ totalPrice }}$</h2>
     </div>
   }
-</div>
-
-<div>
-  <h2>Visualizza Ordine</h2>
-  <div>
-    @for (order of orderCart; track $index) {
-      <p>Ordine ID: {{ order.id }}</p>
-      <div class="order-actions">
-        <button (click)="editOrder(order)">Modifica</button>
-        <button (click)="deleteOrder(order.id!)">Elimina</button>
-      </div>
-      <div>
-        @for (item of order.orderDetails; track $index) {
-          <div class="container-box">
-            <p>Name: {{ item.product.name }}</p>
-            <p>Price: {{ item.product.price }}$</p>
-            <p>Quantity: {{ item.quantity }}</p>
-          </div>
-        }
-      </div>
-    }
-  </div>
 </div>
 
 <app-footer></app-footer>

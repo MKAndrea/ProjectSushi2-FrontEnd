@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Endpoint } from '../app/apiCatalog/endpoint';
 import { OrderDetails } from '../modules/orderDetails';
+import { order } from '../modules/order';
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +20,28 @@ export class MenuService {
 
   counters: number[] = Array(this.ciboArray.length).fill(0);
 
+  private isEditingSubject = new BehaviorSubject<boolean>(false);
+  public isEditing$ = this.isEditingSubject.asObservable();
+
   // Carrello con OrderDetails
-  carrello: BehaviorSubject<Cart> = new BehaviorSubject<Cart>({ cart: [] });
+  carrello: BehaviorSubject<order> = new BehaviorSubject<order>({ orderDetails: [] });
 
   generalCounter: number = 0;
 
   endpoint = Endpoint;
 
+    // Funzione per settare isEditing
+    setIsEditing(value: boolean): void {
+      this.isEditingSubject.next(value);
+    }
+  
+    // Funzione per ottenere il valore corrente di isEditing
+    getIsEditing(): boolean {
+      return this.isEditingSubject.value;
+    }
+
   // Restituisce un observable del carrello
-  getCarrelloAsObservable(): Observable<Cart> {
+  getCarrelloAsObservable(): Observable<order> {
     return this.carrello.asObservable();
   }
 
@@ -38,19 +52,19 @@ export class MenuService {
 
   // Azzera il carrello
   resetCart(): void {
-    const nuovoCarrello: Cart = { cart: [] };
+    const nuovoCarrello: order = { orderDetails: [] };
     this.carrello.next(nuovoCarrello);
   }
 
   // Aggiunge prodotti al carrello o incrementa la quantità se già presente
   incrementCounter(prodotto: Prodotto): void {
     const cartTemp = this.carrello.getValue();
-    const index = cartTemp.cart.findIndex(item => item.product.id === prodotto.id);
+    const index = cartTemp.orderDetails.findIndex(item => item.product.id === prodotto.id);
 
     if (index !== -1) {
-      cartTemp.cart[index].quantity += 1;
+      cartTemp.orderDetails[index].quantity += 1;
     } else {
-      cartTemp.cart.push({
+      cartTemp.orderDetails.push({
         product: prodotto,
         quantity: 1
       });
@@ -62,13 +76,13 @@ export class MenuService {
   // Rimuove quantità o elimina se quantità arriva a 0
   decrementCounter(prodotto: Prodotto): void {
     const cartTemp = this.carrello.getValue();
-    const index = cartTemp.cart.findIndex(item => item.product.id === prodotto.id);
+    const index = cartTemp.orderDetails.findIndex(item => item.product.id === prodotto.id);
 
     if (index !== -1) {
-      if (cartTemp.cart[index].quantity > 1) {
-        cartTemp.cart[index].quantity -= 1;
+      if (cartTemp.orderDetails[index].quantity > 1) {
+        cartTemp.orderDetails[index].quantity -= 1;
       } else {
-        cartTemp.cart.splice(index, 1);
+        cartTemp.orderDetails.splice(index, 1);
       }
       this.carrello.next(cartTemp);
     }
@@ -77,7 +91,7 @@ export class MenuService {
   // Rimuove completamente il prodotto dal carrello
   removeCibo(orderDetail: OrderDetails): void {
     const cartTemp = this.carrello.getValue();
-    cartTemp.cart = cartTemp.cart.filter(item => item.product.id !== orderDetail.product.id);
+    cartTemp.orderDetails = cartTemp.orderDetails.filter(item => item.product.id !== orderDetail.product.id);
     this.carrello.next(cartTemp);
   }
 
@@ -86,13 +100,13 @@ export class MenuService {
     const carTemp = this.carrello.getValue();
     if (confirm(`Stai per inviare l'ordine sei sicuro?\nIl prezzo totale è di ${prezzoTotale}€`)) {
       alert("Ordine inviato!");
-      carTemp.cart = [];
+      carTemp.orderDetails = [];
       this.carrello.next(carTemp);
     }
   }
 
   //Aggiorna il valore del carrello
-  setCart(nuovoCarrello: Cart): void {
+  setCart(nuovoCarrello: order): void {
     this.carrello.next(nuovoCarrello); 
   }
 }
