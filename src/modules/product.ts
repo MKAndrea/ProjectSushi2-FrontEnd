@@ -1,3 +1,4 @@
+import { Category } from "../app/apiCatalog/category"
 
 export interface Prodotto{
     id?: number,
@@ -8,5 +9,6 @@ export interface Prodotto{
     description?: string,
     procedimento?: string,
     quantity?: number
-    category?: string
+    category?: Category
 }
+

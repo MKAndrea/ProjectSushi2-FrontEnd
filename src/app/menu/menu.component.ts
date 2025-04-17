@@ -11,6 +11,7 @@ import { error } from 'console';
 import { EditDeleteService } from '../../services/edit-delete.service';
 import { forkJoin } from 'rxjs';
 import { AdminComponent } from "../admin/admin.component";
+import { Category } from '../apiCatalog/category';
 
 @Component({
   selector: 'app-menu',
@@ -35,7 +36,7 @@ export class MenuComponent implements OnInit{
     description: "",
     price: 0,
     productImage:"",
-    category: ""
+    category: Category.CIBO
   }
   
 
@@ -94,7 +95,7 @@ export class MenuComponent implements OnInit{
           description: "",
           price: 0,
           productImage:"",
-          category: ""
+          category: Category.CIBO
         };
       }, error => {
         alert("Il prodotto non è stato aggiunto correttamente, riprova")
