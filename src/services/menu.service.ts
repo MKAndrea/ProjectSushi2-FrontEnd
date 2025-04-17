@@ -37,7 +37,7 @@ export class MenuService {
   }
 
   // Azzera il carrello
-  resetCarrello(): void {
+  resetCart(): void {
     const nuovoCarrello: Cart = { cart: [] };
     this.carrello.next(nuovoCarrello);
   }
@@ -92,7 +92,7 @@ export class MenuService {
   }
 
   //Aggiorna il valore del carrello
-  setCarrello(nuovoCarrello: Cart): void {
+  setCart(nuovoCarrello: Cart): void {
     this.carrello.next(nuovoCarrello); 
   }
 }

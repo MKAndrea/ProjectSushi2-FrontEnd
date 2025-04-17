@@ -61,7 +61,7 @@ export class MenuComponent implements OnInit{
   constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService){}
 
   //Al click porta alla sezione dedicata
-  navigateToProdotti(section: string): void{
+  navigateToProduct(section: string): void{
     this.router.navigate(['/menu'], {fragment: section})
   }
 
@@ -86,7 +86,7 @@ export class MenuComponent implements OnInit{
 
   //Aggiunge un prodotto al DB
     addProduct(): void{
-      this.apiService.addProductt(this.createProduct).subscribe((newProduct: Prodotto) => {
+      this.apiService.addProduct(this.createProduct).subscribe((newProduct: Prodotto) => {
         this.ciboArray.push(newProduct);
         this.createProduct = {
           name: "",
@@ -122,13 +122,13 @@ export class MenuComponent implements OnInit{
 
     //ELimina un prodotto dal DB
     deleteProduct(id: number): void {
-      if (confirm("Sei sicuro di voler cancellare questo prodotto dal menu?")) {
-        this.apiService.deleteProducttById(id).subscribe(() => {
+      if (confirm("Are you sure you want to remove this item from the menu?")) {
+        this.apiService.deleteProductById(id).subscribe(() => {
           
           forkJoin({
-            dolci: this.apiService.getProductDolcii(),
-            bevande: this.apiService.getProductBevandee(),
-            cibo: this.apiService.getProductCiboo()
+            dolci: this.apiService.getProductDolci(),
+            bevande: this.apiService.getProductBevande(),
+            cibo: this.apiService.getProductCibo()
           }).subscribe(({ dolci, bevande, cibo }) => {
             this.ciboArray = [...dolci, ...bevande, ...cibo];
           });
@@ -146,7 +146,7 @@ export class MenuComponent implements OnInit{
       this.isReadOnly[id] = !this.isReadOnly[id];
       this.border = "none";
       this.solidBorder[id] = this.border;
-      this.apiService.updateProducttById(id, body).subscribe(() => {
+      this.apiService.updateProductById(id, body).subscribe(() => {
       }, error => {
         alert("Il prodotto non è stato aggiornato correttamente")
       })

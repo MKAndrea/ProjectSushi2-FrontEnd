@@ -48,13 +48,13 @@ export class CartComponent implements OnInit {
       console.log('Dati del carrello ricevuti:', value);
       this.carrello.cart = value.cart;
       console.log(this.carrello.cart);
-      this.getPrezzoTotale();
+      this.getTotalPrice();
     }, error => {
       alert("I prodotti nel carrello non sono stati inviati correttamente");
     });
 
     // Visualizza tutti gli elementi contenuti nel carrello
-    this.apiService.getProductCartt().subscribe(values => {
+    this.apiService.getProductCart().subscribe(values => {
       values.forEach(value => {
         this.orderCart.push(value);
       });
@@ -81,7 +81,7 @@ export class CartComponent implements OnInit {
   }
 
   // Invia l'ordine appena premi il pulsante send order
-  sendOrderProva(): void {
+  sendOrder(): void {
     this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
       this.carrello.cart = value.cart;
 
@@ -90,11 +90,11 @@ export class CartComponent implements OnInit {
       };
 
       if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
-        this.apiService.sendProductCartt(ORDERDTO).subscribe((response: any) => {
+        this.apiService.sendProductCart(ORDERDTO).subscribe((response: any) => {
           ORDERDTO.id = response.id;
           ORDERDTO.orderDetails = response.orderDetails;
           this.orderCart.push(ORDERDTO);
-          this.menuService.resetCarrello();
+          this.menuService.resetCart();
           this.carrello.cart = [];
           console.log(this.orderCart);
           alert("Ordine inviato!");
@@ -128,10 +128,10 @@ export class CartComponent implements OnInit {
   //   this.isEditing = true;
   // }
 
-  modificaOrdine(orderDaModificare: order): void {
+  editOrder(orderDaModificare: order): void {
     this.carrello.cart = [...orderDaModificare.orderDetails];
-    this.menuService.setCarrello({ cart: [...orderDaModificare.orderDetails] });
-    this.getPrezzoTotale();
+    this.menuService.setCart({ cart: [...orderDaModificare.orderDetails] });
+    this.getTotalPrice();
   
     this.isEditing= true;
   
@@ -159,9 +159,9 @@ export class CartComponent implements OnInit {
       orderDetails: prodottiValidi
     };
   
-    this.apiService.updateProductCartt(idOrdine, ordineAggiornato)
+    this.apiService.updateProductCart(idOrdine, ordineAggiornato)
       .subscribe(() => {
-        this.getPrezzoTotale();
+        this.getTotalPrice();
         const index = this.orderCart.findIndex(o => o.id === idOrdine);
         if (index !== -1) {
           this.orderCart[index] = ordineAggiornato;
@@ -172,7 +172,7 @@ export class CartComponent implements OnInit {
         alert("Errore durante l'aggiornamento dell'ordine.");
       });
   
-    this.menuService.resetCarrello();
+    this.menuService.resetCart();
     this.carrello.cart = [];
     this.isEditing = false;
     this.ordineInModificaId.next(null); // pulisci ID dopo modifica
@@ -195,12 +195,12 @@ export class CartComponent implements OnInit {
   
 
   // Rimuovi il prodotto dal carrello
-  removeCibo(cibo: OrderDetails): void {
-    this.menuService.removeCibo(cibo);
+  removeProduct(product: OrderDetails): void {
+    this.menuService.removeCibo(product);
   }
 
   // Somma del prezzo totale dei prodotti contenuti nel carrello
-  getPrezzoTotale(): void {
+  getTotalPrice(): void {
     this.totalPrice = 0;
     this.carrello.cart.forEach(dettaglio => {
       this.totalPrice += dettaglio.product.price! * dettaglio.quantity!;

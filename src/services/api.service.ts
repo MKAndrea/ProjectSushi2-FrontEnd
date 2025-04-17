@@ -36,49 +36,49 @@ export class ApiService {
   }
 
   //ritorna tutti i prodotti che hanno la categoria "Cibo"
-  getProductCiboo(): Observable<Prodotto[]>{
+  getProductCibo(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.CIBO)
   }
 
   //ritorna tutti i prodotti che hanno la categoria "Bevande"
-  getProductBevandee(): Observable<Prodotto[]>{
+  getProductBevande(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.BEVANDE)
   }
 
   //ritorna tutti i prodotti che hanno la categoria "Dolci"
-  getProductDolcii(): Observable<Prodotto[]>{
+  getProductDolci(): Observable<Prodotto[]>{
     return this.mainApiService.generalGet(this.endpoint.PRODUCT + this.endpoint.DOLCI)
   }
 
   //ritorna tutti i prodotti contenuti nel carrello (quelli inviati nel carrello)
-  getProductCartt(): Observable<order[]>{
+  getProductCart(): Observable<order[]>{
     return this.mainApiService.generalGet(this.endpoint.ORDERS)
   }
 
   //Invia gli elementi al DB riguardo l'ordine effettuato
-  sendProductCartt(body: order): Observable<order>{
+  sendProductCart(body: order): Observable<order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPost(this.endpoint.ORDERS_CART, body)
   }
 
   //Aggiorna gli elementi già contenuti nel DB riguardo l'ordine effettuato
-  updateProductCartt(id: number, body: order): Observable<order>{
+  updateProductCart(id: number, body: order): Observable<order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPut(`${finalEndpoint}/${id}`, body)
   }
 
   //Aggiunge un prodotto al DB
-  addProductt(body: Prodotto): Observable<Prodotto>{
+  addProduct(body: Prodotto): Observable<Prodotto>{
     return this.mainApiService.generalPost(this.endpoint.ADD_PRODUCT, body)
   }
 
   //Aggiorna un prodotto nel DB
-  updateProducttById(id: number, body: Prodotto): Observable<Prodotto>{
+  updateProductById(id: number, body: Prodotto): Observable<Prodotto>{
     return this.mainApiService.generalPut(`${this.endpoint.PRODUCT}/${id}?${this.endpoint.DELETE_UPDATE}`, body);
   }
 
   //ELmina un prodotto nel DB
-  deleteProducttById(id: number): Observable<Prodotto>{
+  deleteProductById(id: number): Observable<Prodotto>{
     return this.mainApiService.generalDelete(`${this.endpoint.PRODUCT}/${id}?${this.endpoint.DELETE_UPDATE}`)
   }
 

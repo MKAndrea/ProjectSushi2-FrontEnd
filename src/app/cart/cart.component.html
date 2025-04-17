@@ -6,7 +6,7 @@
       @for (prodotto of carrello.cart; track $index; let i = $index) {
         <app-card-cart
           [item]="prodotto"
-          (remove)="removeCibo(prodotto)"
+          (remove)="removeProduct(prodotto)"
           (decrement)="decrementCounter(prodotto)"
           (increment)="incrementCounter(prodotto)">
         </app-card-cart>
@@ -23,7 +23,7 @@
         <button id="send-order" (click)="orderUpdate()">Update Order</button>
       }
       @else {
-        <button id="send-order" (click)="sendOrderProva()">Send Order</button>
+        <button id="send-order" (click)="sendOrder()">Send Order</button>
       }
 
       <h2>Price: {{ totalPrice }}$</h2>
@@ -37,7 +37,7 @@
     @for (order of orderCart; track $index) {
       <p>Ordine ID: {{ order.id }}</p>
       <div class="order-actions">
-        <button (click)="modificaOrdine(order)">Modifica</button>
+        <button (click)="editOrder(order)">Modifica</button>
         <button (click)="deleteOrder(order.id!)">Elimina</button>
       </div>
       <div>

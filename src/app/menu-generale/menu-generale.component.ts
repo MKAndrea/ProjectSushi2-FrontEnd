@@ -47,7 +47,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("I prodotti non sono stati caricati correttamente nel carrello");
     });
 
-    this.apiService.getProductCiboo().subscribe(prodotti => {
+    this.apiService.getProductCibo().subscribe(prodotti => {
       this.ciboArray = prodotti;
       this.ciboArray.forEach(prodotto => {
         const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
@@ -57,7 +57,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("I cibi non sono stati caricati correttamente");
     });
 
-    this.apiService.getProductBevandee().subscribe(prodotti => {
+    this.apiService.getProductBevande().subscribe(prodotti => {
       this.bevandaArray = prodotti;
       this.bevandaArray.forEach(prodotto => {
         const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
@@ -67,7 +67,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       alert("Le bevande non sono state caricate correttamente");
     });
 
-    this.apiService.getProductDolcii().subscribe(prodotti => {
+    this.apiService.getProductDolci().subscribe(prodotti => {
       this.dolceArray = prodotti;
       this.dolceArray.forEach(prodotto => {
         const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);

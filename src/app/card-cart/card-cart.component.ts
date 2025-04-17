@@ -15,7 +15,7 @@ export class CardCartComponent {
   @Output() decrement = new EventEmitter<Prodotto>();
   @Output() increment = new EventEmitter<Prodotto>();
 
-  removeCibo() {
+  removeProduct() {
     this.remove.emit(this.item);
   }
 
