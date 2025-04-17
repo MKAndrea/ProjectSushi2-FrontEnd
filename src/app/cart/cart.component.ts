@@ -53,7 +53,7 @@ export class CartComponent implements OnInit {
 
     this.menuService.isEditing$.subscribe(isEditing => {
       this.isEditing = isEditing;
-      this.cdr.detectChanges();  // Assicurati che il cambiamento venga rilevato
+      this.cdr.detectChanges();
     });
     
     this.menuService.getCarrelloAsObservable().subscribe(value => {
@@ -62,7 +62,7 @@ export class CartComponent implements OnInit {
       console.log(this.carrello.orderDetails);
       this.getTotalPrice();
     }, error => {
-      alert("I prodotti nel carrello non sono stati inviati correttamente");
+      alert("The products in the cart were not sent correctly");
     });
 
     // Visualizza tutti gli elementi contenuti nel carrello
@@ -72,7 +72,7 @@ export class CartComponent implements OnInit {
       });
       this.orderCart = [...this.orderCart];
     }, error => {
-      alert("I prodotti nel carrello non sono stati caricati correttamente");
+      alert("The products in the cart were not sent correctly");
     });
 
     const savedId = this.storageService.getItem('ordineInModificaId');
@@ -101,7 +101,7 @@ export class CartComponent implements OnInit {
         orderDetails: this.carrello.orderDetails
       };
 
-      if (confirm(`Stai per inviare l'ordine, sei sicuro?`)) {
+      if (confirm(`You are about to send the order, are you sure?`)) {
         this.apiService.sendProductCart(ORDERDTO).subscribe((response: any) => {
           ORDERDTO.id = response.id;
           ORDERDTO.orderDetails = response.orderDetails;
@@ -109,9 +109,9 @@ export class CartComponent implements OnInit {
           this.menuService.resetCart();
           this.carrello.orderDetails = [];
           console.log(this.orderCart);
-          alert("Ordine inviato!");
+          alert("Order Sent!");
         }, error => {
-          alert("Si è verificato un errore")
+          alert("Error")
         });
       }
     });
@@ -163,7 +163,7 @@ export class CartComponent implements OnInit {
     const idOrdine = this.ordineInModificaId.value;
   
     if (!idOrdine) {
-      alert("Errore: ID ordine mancante.");
+      alert("Error ID.");
       return;
     }
   
@@ -181,9 +181,9 @@ export class CartComponent implements OnInit {
           this.orderCart[index] = ordineAggiornato;
           this.orderCart = [...this.orderCart];
         }
-        alert("Ordine modificato con successo!");
+        alert("Order modified successfully!");
       }, error => {
-        alert("Errore durante l'aggiornamento dell'ordine.");
+        alert("Error updating order.");
       });
   
     this.menuService.resetCart();
@@ -195,12 +195,12 @@ export class CartComponent implements OnInit {
   
   
   deleteOrder(id: number) {
-    if (!confirm("Sei sicuro di voler eliminare questo ordine?")) return;
+    if (!confirm("Are you sure you want to delete this order?")) return;
   
     this.apiService.deleteOrder(id).subscribe({
       next: () => {
         this.orderCart = this.orderCart.filter(order => order.id !== id);
-        alert("Ordine eliminato con successo");
+        alert("Order delete successfully");
       },
       error: (err) => {
         console.error('Errore durante l\'eliminazione dell\'ordine:', err);

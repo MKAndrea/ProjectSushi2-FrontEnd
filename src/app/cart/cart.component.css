@@ -25,6 +25,20 @@
     padding: 2em;
 }
 
+.navigate-order{
+    width: 7rem;
+    padding: 6px 12px;
+    margin-top: 1%;
+    margin-left: 1%;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.navigate-order:hover{
+    background-color: black;
+    color: white;
+}
+
 
 #send-order{
     width: 30%;
