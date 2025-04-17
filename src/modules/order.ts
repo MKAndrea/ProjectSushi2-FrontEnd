@@ -1,7 +1,7 @@
 
 import { OrderDetails } from "./orderDetails";
 
-export interface order{
+export interface Order{
     id?: number
     orderDetails: OrderDetails[]
 }

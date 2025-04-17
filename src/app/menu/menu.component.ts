@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit{
 
   ngOnInit(): void {
     this.menuService.isAdmin$.subscribe(response => {
-      this.isAdmin = response;
+      this.isAdmin = response
     })
 
     //Riceve tutti i prodotti contenuti nel DB

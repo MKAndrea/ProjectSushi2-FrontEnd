@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Prodotto } from '../modules/product';
-import { order } from '../modules/order';
+import { Order } from '../modules/order';
 import { OrderDetails } from '../modules/orderDetails';
 import { url } from 'inspector';
 import { Endpoint } from '../app/apiCatalog/endpoint';
@@ -51,18 +51,18 @@ export class ApiService {
   }
 
   //ritorna tutti i prodotti contenuti nel carrello (quelli inviati nel carrello)
-  getProductCart(): Observable<order[]>{
+  getProductCart(): Observable<Order[]>{
     return this.mainApiService.generalGet(this.endpoint.ORDERS)
   }
 
   //Invia gli elementi al DB riguardo l'ordine effettuato
-  sendProductCart(body: order): Observable<order>{
+  sendProductCart(body: Order): Observable<Order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPost(this.endpoint.ORDERS_CART, body)
   }
 
   //Aggiorna gli elementi già contenuti nel DB riguardo l'ordine effettuato
-  updateProductCart(id: number, body: order): Observable<order>{
+  updateProductCart(id: number, body: Order): Observable<Order>{
     const finalEndpoint = this.endpoint.ORDERS + this.endpoint.CART
     return this.mainApiService.generalPut(`${finalEndpoint}/${id}`, body)
   }
@@ -82,7 +82,7 @@ export class ApiService {
     return this.mainApiService.generalDelete(`${this.endpoint.PRODUCT}/${id}?${this.endpoint.DELETE_UPDATE}`)
   }
 
-  deleteOrder(id: number): Observable<order>{
+  deleteOrder(id: number): Observable<Order>{
     return this.mainApiService.generalDelete(`${this.endpoint.ORDERS}/${id}`)
   }
 }

@@ -1,7 +1,7 @@
 <app-header></app-header>
 <div class="menu-generale-container">
     <section id="cibi" fragment="section1"> 
-        <h2 class="title-section">Cibi:</h2>
+        <h2 class="title-section">Foods:</h2>
         @for (cibo of ciboArray; track $index; let i = $index) {
            <div class="container">
                <div>
@@ -21,7 +21,7 @@
         }
     </section>
     <section id="bevande" fragment="section2">
-        <h2 class="title-section">Bevande:</h2>
+        <h2 class="title-section">Drinks:</h2>
         @for (bevanda of bevandaArray; track $index; let i = $index) {
            <div class="container">
                <div>
@@ -40,8 +40,8 @@
            </div>
         }
     </section>
-    <section id="dolci">
-        <h2 class="title-section">Dolci:</h2>
+    <section id="dolci" fragment="section3">
+        <h2 class="title-section">Desserts:</h2>
         @for (dolce of dolceArray; track $index; let i = $index) {
            <div class="container">
                <div>

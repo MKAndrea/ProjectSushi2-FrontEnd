@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { order } from "../../modules/order";
+import { Order } from "../../modules/order";
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../services/api.service";
 import { MenuService } from "../../services/menu.service";
@@ -16,7 +16,7 @@ import { HeaderComponent } from "../header/header.component";
 })
 export class OrderHistoryComponent implements OnInit {
 
-  orderCart: order[] = [];
+  orderCart: Order[] = [];
 
   constructor(
     private router: Router,
@@ -36,7 +36,7 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
 
-  editOrder(order: order): void {
+  editOrder(order: Order): void {
     this.menuService.setCart({ orderDetails: [...order.orderDetails] });
     this.storageService.setItem('ordineInModificaId', String(order.id));
     this.menuService.setIsEditing(true);

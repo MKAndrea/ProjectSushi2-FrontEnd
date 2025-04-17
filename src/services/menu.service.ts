@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Endpoint } from '../app/apiCatalog/endpoint';
 import { OrderDetails } from '../modules/orderDetails';
-import { order } from '../modules/order';
+import { Order } from '../modules/order';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class MenuService {
   public isAdmin$ = this.isAdmin.asObservable();
 
   // Carrello con OrderDetails
-  carrello: BehaviorSubject<order> = new BehaviorSubject<order>({ orderDetails: [] });
+  carrello: BehaviorSubject<Order> = new BehaviorSubject<Order>({ orderDetails: [] });
 
   generalCounter: number = 0;
 
@@ -54,7 +54,7 @@ export class MenuService {
     }
 
   // Restituisce un observable del carrello
-  getCarrelloAsObservable(): Observable<order> {
+  getCarrelloAsObservable(): Observable<Order> {
     return this.carrello.asObservable();
   }
 
@@ -65,7 +65,7 @@ export class MenuService {
 
   // Azzera il carrello
   resetCart(): void {
-    const nuovoCarrello: order = { orderDetails: [] };
+    const nuovoCarrello: Order = { orderDetails: [] };
     this.carrello.next(nuovoCarrello);
   }
 
@@ -119,7 +119,7 @@ export class MenuService {
   }
 
   //Aggiorna il valore del carrello
-  setCart(nuovoCarrello: order): void {
+  setCart(nuovoCarrello: Order): void {
     this.carrello.next(nuovoCarrello); 
   }
 }

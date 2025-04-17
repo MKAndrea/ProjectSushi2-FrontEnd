@@ -4,7 +4,7 @@ import { FooterComponent } from "../footer/footer.component";
 import { CardCartComponent } from "../card-cart/card-cart.component";
 import { Cart } from '../../modules/cart';
 import { ApiService } from '../../services/api.service';
-import { order } from '../../modules/order';
+import { Order } from '../../modules/order';
 import { OrderDetails } from '../../modules/orderDetails';
 import { BehaviorSubject } from 'rxjs';
 import { MenuService } from '../../services/menu.service';
@@ -35,13 +35,13 @@ export class CartComponent implements OnInit {
 
   counters: number[] = [];
 
-  carrelloSubject: BehaviorSubject<order> = new BehaviorSubject<order>({ orderDetails: [] });
+  carrelloSubject: BehaviorSubject<Order> = new BehaviorSubject<Order>({ orderDetails: [] });
   ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
-  carrello: order = { orderDetails: [] };
+  carrello: Order = { orderDetails: [] };
 
-  orderCart: order[] = [];
+  orderCart: Order[] = [];
 
-  order: order = {
+  order: Order = {
     orderDetails: []
   }
 
@@ -97,7 +97,7 @@ export class CartComponent implements OnInit {
     this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
       this.carrello.orderDetails = value.orderDetails;
 
-      const ORDERDTO: order = {
+      const ORDERDTO: Order = {
         orderDetails: this.carrello.orderDetails
       };
 
@@ -140,7 +140,7 @@ export class CartComponent implements OnInit {
   //   this.isEditing = true;
   // }
 
-  editOrder(orderDaModificare: order): void {
+  editOrder(orderDaModificare: Order): void {
     this.carrello.orderDetails = [...orderDaModificare.orderDetails];
     this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
     this.getTotalPrice();
@@ -168,7 +168,7 @@ export class CartComponent implements OnInit {
     }
   
     const prodottiValidi = this.carrello.orderDetails.filter(item => item.quantity > 0);
-    const ordineAggiornato: order = {
+    const ordineAggiornato: Order = {
       id: idOrdine,
       orderDetails: prodottiValidi
     };
