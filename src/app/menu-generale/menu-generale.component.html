@@ -10,6 +10,7 @@
                    <h3>Ingredients: {{cibo.ingredients}}</h3>
                    <p>Description: {{cibo.description}}</p>
                    <p>Price: {{cibo.price}}$</p>
+                   <img class="image" [src]="'http://localhost:8080/images/' + cibo.productImage" alt="{{ cibo.name }}">
                </div>
                <div class="container-number">
                    <button class="button" (click)="decrementCounter(cibo)">-</button>
@@ -29,6 +30,7 @@
                 <h3>Ingredients: {{bevanda.ingredients}}</h3>
                 <p>Description: {{bevanda.description}}</p>
                 <p>Price: {{bevanda.price}}$</p>
+                <img class="image" [src]="'http://localhost:8080/images/' + bevanda.productImage" alt="{{ bevanda.name }}">
                </div>
                <div class="container-number">
                    <button class="button" (click)="decrementCounter(bevanda)">-</button>
@@ -48,6 +50,7 @@
                 <h3>Ingredients: {{dolce.ingredients}}</h3>
                 <p>Description: {{dolce.description}}</p>
                 <p>Price: {{dolce.price}}$</p>
+                <img class="image" [src]="'http://localhost:8080/images/' + dolce.productImage" alt="{{ dolce.name }}">
                </div>
                <div class="container-number">
                    <button class="button" (click)="decrementCounter(dolce)">-</button>

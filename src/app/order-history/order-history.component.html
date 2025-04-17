@@ -1,25 +1,24 @@
 <app-header></app-header>
-<div>
-    <h2>Order History</h2>
+<div class="general-container">
+    <h2 class="order-title">Order History</h2>
   
     @if (orderCart.length > 0) {
       @for (order of orderCart; track order.id) {
-        <div>
-          <p>Order ID: {{ order.id }}</p>
+        <div class="product-order-container">
+          <p class="order-id">Order ID: {{ order.id }}</p>
   
+          <div class="product-container">
+            @for (item of order.orderDetails; track item.product.id) {
+              <div class="product">
+                <p><span class="color-detail">Name:</span> {{ item.product.name }}</p>
+                <p><span class="color-detail">Price:</span> {{ item.product.price }}$</p>
+                <p><span class="color-detail">Quantity:</span> {{ item.quantity }}</p>
+              </div>
+            }
+          </div>
           <div class="order-actions">
             <button (click)="editOrder(order)">Edit</button>
             <button (click)="deleteOrder(order.id!)">Delete</button>
-          </div>
-  
-          <div>
-            @for (item of order.orderDetails; track item.product.id) {
-              <div>
-                <p>Name: {{ item.product.name }}</p>
-                <p>Price: {{ item.product.price }}$</p>
-                <p>Quantity: {{ item.quantity }}</p>
-              </div>
-            }
           </div>
         </div>
       }

@@ -23,12 +23,25 @@ export class MenuService {
   private isEditingSubject = new BehaviorSubject<boolean>(false);
   public isEditing$ = this.isEditingSubject.asObservable();
 
+  private isAdmin = new BehaviorSubject<boolean>(false);
+  public isAdmin$ = this.isAdmin.asObservable();
+
   // Carrello con OrderDetails
   carrello: BehaviorSubject<order> = new BehaviorSubject<order>({ orderDetails: [] });
 
   generalCounter: number = 0;
 
   endpoint = Endpoint;
+
+      // Funzione per settare isEditing
+      setIsAdmin(value: boolean): void {
+        this.isAdmin.next(value);
+      }
+    
+      // Funzione per ottenere il valore corrente di isEditing
+      getIsAdmin(): boolean {
+        return this.isAdmin.value;
+      }
 
     // Funzione per settare isEditing
     setIsEditing(value: boolean): void {

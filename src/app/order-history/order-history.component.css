@@ -1,22 +1,72 @@
 h2 {
     text-align: center;
   }
-  
-  .order-actions {
-    margin-top: 10px;
+
+  .order-title{
+    font-size: 4em;
+    color: rgb(233, 233, 0);
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5)
+  }
+
+  .order-id{
+    font-size: 3em;
+    color: rgb(233, 233, 0);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5)
+  }
+
+  .color-detail{
+    font-size: 2em;
+    color: rgb(233, 233, 0);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5)
   }
   
+  .order-actions {
+    margin: 1em;
+  }
+  
+  .general-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-order-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+  }
+
+  .product-container{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .product{
+    width: 50%;
+    border: 1px solid blue;
+  }
+
   button {
     margin-right: 10px;
     padding: 8px 15px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
     cursor: pointer;
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: black;
+    color: white;
   }
   
   .container-box {

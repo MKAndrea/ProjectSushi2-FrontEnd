@@ -1,0 +1,59 @@
+.container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    background-color: white;
+}
+
+.login-form{
+    width: 50%;
+    height: 50%;
+    border: 4px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.container-button{
+    margin-top: 0.5em;
+    width: 52%;
+    gap: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input{
+    width: 50%;
+    height: 2em;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.container-input{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.button{
+    width: 6em;
+    box-sizing: border-box;
+    padding: 5px;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.button:hover{
+    background-color: black;
+    color: white;
+}

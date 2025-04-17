@@ -6,9 +6,11 @@ import { AboutComponent } from './about/about.component';
 import { CartComponent } from './cart/cart.component';
 import { MenuGeneraleComponent } from './menu-generale/menu-generale.component';
 import { OrderHistoryComponent } from './order-history/order-history.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
     {path:"", pathMatch:"full", component: HomeComponent},
+    {path:"login", component: AdminComponent},
     {path:"menu", component: MenuGeneraleComponent},
     {path:"about", component: AboutComponent},
     {path: "order-history", component: OrderHistoryComponent},

@@ -12,6 +12,8 @@ import { EditDeleteService } from '../../services/edit-delete.service';
 import { forkJoin } from 'rxjs';
 import { AdminComponent } from "../admin/admin.component";
 import { Category } from '../apiCatalog/category';
+import { MenuService } from '../../services/menu.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-menu',
@@ -28,6 +30,7 @@ export class MenuComponent implements OnInit{
   solidBorder: string[] = [];
   border: string = "";
   isOpen = false;
+  isAdmin: boolean = false;
   changeButton = false;
 
   createProduct: Prodotto = {
@@ -41,6 +44,10 @@ export class MenuComponent implements OnInit{
   
 
   ngOnInit(): void {
+    this.menuService.isAdmin$.subscribe(response => {
+      this.isAdmin = response;
+    })
+
     //Riceve tutti i prodotti contenuti nel DB
     this.apiService.getProduct().subscribe(prodottiCibo => {
       this.ciboArray = prodottiCibo;
@@ -59,7 +66,7 @@ export class MenuComponent implements OnInit{
     this.solidBorder = this.ciboArray.map(() => "none")
   }
 
-  constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService){}
+  constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService, private menuService: MenuService){}
 
   //Al click porta alla sezione dedicata
   navigateToProduct(section: string): void{
