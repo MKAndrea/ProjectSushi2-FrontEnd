@@ -2,7 +2,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from "../footer/footer.component";
 import { CardCartComponent } from "../card-cart/card-cart.component";
-import { Cart } from '../../modules/cart';
 import { ApiService } from '../../services/api.service';
 import { Order } from '../../modules/order';
 import { OrderDetails } from '../../modules/orderDetails';
@@ -39,7 +38,7 @@ export class CartComponent implements OnInit {
   ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
   carrello: Order = { orderDetails: [] };
 
-  orderCart: Order[] = [];
+  orderCart: Order[] = []; //orderHistory
 
   order: Order = {
     orderDetails: []
@@ -221,6 +220,7 @@ export class CartComponent implements OnInit {
       this.totalPrice += dettaglio.product.price! * dettaglio.quantity!;
     });
   }
+
 }
 
   // sendOrder(): void {

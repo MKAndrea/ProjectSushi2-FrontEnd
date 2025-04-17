@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Prodotto } from '../modules/product';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Cart } from '../modules/cart';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Endpoint } from '../app/apiCatalog/endpoint';

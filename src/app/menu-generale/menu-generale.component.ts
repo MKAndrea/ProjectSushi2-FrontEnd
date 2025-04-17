@@ -2,11 +2,11 @@ import { Component, numberAttribute, OnInit, AfterViewChecked, OnDestroy } from 
 import { HeaderComponent } from "../header/header.component";
 import { FooterComponent } from "../footer/footer.component";
 import { Prodotto } from '../../modules/product';
-import { Cart } from '../../modules/cart';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { MenuService } from '../../services/menu.service';
 import { OrderDetails } from '../../modules/orderDetails';
+import { Order } from '../../modules/order';
 
 @Component({
   selector: 'app-menu-generale',
@@ -22,7 +22,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   bevandaArray: Prodotto[] = [];
   dolceArray: Prodotto[] = [];
   counters: number[] = [];
-  carrello: Cart = { cart: [] };
+  carrello: Order = { orderDetails: [] };
 
   private counterSubscription: any;
 
@@ -41,7 +41,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Carica i prodotti selezionati nel carrello
     this.menuService.getCarrelloAsObservable().subscribe(value => {
-      this.carrello.cart = value.orderDetails;
+      this.carrello.orderDetails = value.orderDetails;
       this.aggiornaQuantitaVisuale();
     }, error => {
       alert("I prodotti non sono stati caricati correttamente nel carrello");
@@ -50,7 +50,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
     this.apiService.getProductCibo().subscribe(prodotti => {
       this.ciboArray = prodotti;
       this.ciboArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
@@ -60,7 +60,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
     this.apiService.getProductBevande().subscribe(prodotti => {
       this.bevandaArray = prodotti;
       this.bevandaArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
@@ -70,7 +70,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
     this.apiService.getProductDolci().subscribe(prodotti => {
       this.dolceArray = prodotti;
       this.dolceArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
@@ -81,17 +81,17 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   // Funzione per aggiornare la quantità visiva dei prodotti
   aggiornaQuantitaVisuale(): void {
     this.ciboArray.forEach(prodotto => {
-      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
       prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
     });
   
     this.bevandaArray.forEach(prodotto => {
-      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
       prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
     });
 
     this.dolceArray.forEach(prodotto => {
-      const prodottoNelCarrello = this.carrello.cart.find(c => c.product.name === prodotto.name);
+      const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
       prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
     });
   }
