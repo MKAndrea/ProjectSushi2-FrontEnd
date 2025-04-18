@@ -44,7 +44,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       this.carrello.orderDetails = value.orderDetails;
       this.aggiornaQuantitaVisuale();
     }, error => {
-      alert("I prodotti non sono stati caricati correttamente nel carrello");
+      alert("The products were not loaded correctly into the cart.");
     });
 
     this.apiService.getProductCibo().subscribe(prodotti => {
@@ -54,7 +54,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
-      alert("I cibi non sono stati caricati correttamente");
+      alert("The foods were not loaded correctly.");
     });
 
     this.apiService.getProductBevande().subscribe(prodotti => {
@@ -64,7 +64,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
-      alert("Le bevande non sono state caricate correttamente");
+      alert("The drinks were not loaded correctly.");
     });
 
     this.apiService.getProductDolci().subscribe(prodotti => {
@@ -74,7 +74,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
         prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
       });
     }, error => {
-      alert("I dolci non sono stati caricati correttamente");
+      alert("The desserts were not loaded correctly.");
     });
   }
 

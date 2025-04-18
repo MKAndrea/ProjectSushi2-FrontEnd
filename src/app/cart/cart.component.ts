@@ -34,15 +34,10 @@ export class CartComponent implements OnInit {
 
   counters: number[] = [];
 
-  carrelloSubject: BehaviorSubject<Order> = new BehaviorSubject<Order>({ orderDetails: [] });
   ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
   carrello: Order = { orderDetails: [] };
 
-  orderCart: Order[] = []; //orderHistory
-
-  order: Order = {
-    orderDetails: []
-  }
+  orderHistory: Order[] = []; //orderHistory
 
   isEditing: boolean = false;
 
@@ -67,9 +62,9 @@ export class CartComponent implements OnInit {
     // Visualizza tutti gli elementi contenuti nel carrello
     this.apiService.getProductCart().subscribe(values => {
       values.forEach(value => {
-        this.orderCart.push(value);
+        this.orderHistory.push(value);
       });
-      this.orderCart = [...this.orderCart];
+      this.orderHistory = [...this.orderHistory];
     }, error => {
       alert("The products in the cart were not sent correctly");
     });
@@ -91,30 +86,63 @@ export class CartComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  // Invia l'ordine appena premi il pulsante send order
+  // Invia l'ordine appena premi il pulsante send order(quella originale)
+  // sendOrder(): void {
+  //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+  //     this.carrello.orderDetails = value.orderDetails;
+
+  //     const ORDERDTO: Order = {
+  //       orderDetails: this.carrello.orderDetails
+  //     };
+
+  //     if (confirm(`You are about to send the order, are you sure?`)) {
+  //       this.apiService.sendProductCart(ORDERDTO).subscribe((response: any) => {
+  //         ORDERDTO.id = response.id;
+  //         ORDERDTO.orderDetails = response.orderDetails;
+  //         this.orderCart.push(ORDERDTO);
+  //         this.menuService.resetCart();
+  //         this.carrello.orderDetails = [];
+  //         console.log(this.orderCart);
+  //         alert("Order Sent!");
+  //       }, error => {
+  //         alert("Error")
+  //       });
+  //     }
+  //   });
+  // }
+
   sendOrder(): void {
     this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
-      this.carrello.orderDetails = value.orderDetails;
-
+      const filteredOrderDetails = value.orderDetails.filter(item => item.quantity > 0);
+  
+      if (filteredOrderDetails.length === 0) {
+        alert("There are no products with quantity greater than 0 to send.");
+        this.menuService.resetCart();
+        return;
+      }
+  
+      this.carrello.orderDetails = filteredOrderDetails;
+  
       const ORDERDTO: Order = {
         orderDetails: this.carrello.orderDetails
       };
-
+  
       if (confirm(`You are about to send the order, are you sure?`)) {
         this.apiService.sendProductCart(ORDERDTO).subscribe((response: any) => {
           ORDERDTO.id = response.id;
           ORDERDTO.orderDetails = response.orderDetails;
-          this.orderCart.push(ORDERDTO);
+          this.orderHistory.push(ORDERDTO);
           this.menuService.resetCart();
           this.carrello.orderDetails = [];
-          console.log(this.orderCart);
+          console.log(this.orderHistory);
           alert("Order Sent!");
         }, error => {
-          alert("Error")
+          alert("Error sending the order.");
         });
       }
     });
   }
+
   // modificaOrdine(orderDaModificare: order): void {
 
   //   this.carrello.cart = [...orderDaModificare.orderDetails];
@@ -175,10 +203,10 @@ export class CartComponent implements OnInit {
     this.apiService.updateProductCart(idOrdine, ordineAggiornato)
       .subscribe(() => {
         this.getTotalPrice();
-        const index = this.orderCart.findIndex(o => o.id === idOrdine);
+        const index = this.orderHistory.findIndex(o => o.id === idOrdine);
         if (index !== -1) {
-          this.orderCart[index] = ordineAggiornato;
-          this.orderCart = [...this.orderCart];
+          this.orderHistory[index] = ordineAggiornato;
+          this.orderHistory = [...this.orderHistory];
         }
         alert("Order modified successfully!");
       }, error => {
@@ -198,7 +226,7 @@ export class CartComponent implements OnInit {
   
     this.apiService.deleteOrder(id).subscribe({
       next: () => {
-        this.orderCart = this.orderCart.filter(order => order.id !== id);
+        this.orderHistory = this.orderHistory.filter(order => order.id !== id);
         alert("Order delete successfully");
       },
       error: (err) => {

@@ -85,16 +85,28 @@ export class MenuService {
     this.carrello.next(cartTemp);
   }
 
-  // Rimuove quantità o elimina se quantità arriva a 0
-  decrementCounter(prodotto: Prodotto): void {
+  // Rimuove quantità o elimina se quantità arriva a 0 (decrement originale)
+  // decrementCounter(prodotto: Prodotto): void {
+  //   const cartTemp = this.carrello.getValue();
+  //   const index = cartTemp.orderDetails.findIndex(item => item.product.id === prodotto.id);
+
+  //   if (index !== -1) {
+  //     if (cartTemp.orderDetails[index].quantity > 1) {
+  //       cartTemp.orderDetails[index].quantity -= 1;
+  //     } else {
+  //       cartTemp.orderDetails.splice(index, 1);
+  //     }
+  //     this.carrello.next(cartTemp);
+  //   }
+  // }
+
+  decrementCounter(prodotto: Prodotto): void {//di prova
     const cartTemp = this.carrello.getValue();
     const index = cartTemp.orderDetails.findIndex(item => item.product.id === prodotto.id);
 
     if (index !== -1) {
-      if (cartTemp.orderDetails[index].quantity > 1) {
+      if (cartTemp.orderDetails[index].quantity > 0) {
         cartTemp.orderDetails[index].quantity -= 1;
-      } else {
-        cartTemp.orderDetails.splice(index, 1);
       }
       this.carrello.next(cartTemp);
     }

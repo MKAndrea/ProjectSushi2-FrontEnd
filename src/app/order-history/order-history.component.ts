@@ -33,7 +33,7 @@ export class OrderHistoryComponent implements OnInit {
         this.orderCart = values;
       },
       error: () => {
-        alert("Errore nel caricamento degli ordini.");
+        alert("Error loading the orders.");
       }
     });
   }
@@ -46,15 +46,15 @@ export class OrderHistoryComponent implements OnInit {
   }
 
   deleteOrder(id: number): void {
-    if (!confirm("Sei sicuro di voler eliminare questo ordine?")) return;
+    if (!confirm("Are you sure you want to delete this order?")) return;
 
     this.apiService.deleteOrder(id).subscribe({
       next: () => {
         this.orderCart = this.orderCart.filter(order => order.id !== id);
-        alert("Ordine eliminato con successo");
+        alert("Order deleted successfully.");
       },
       error: () => {
-        alert("Errore durante l'eliminazione dell'ordine");
+        alert("Error while deleting the order.");
       }
     });
   }
