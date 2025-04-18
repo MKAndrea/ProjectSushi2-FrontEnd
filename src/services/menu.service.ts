@@ -110,8 +110,8 @@ export class MenuService {
   // Facoltativo: invio ordine fittizio (esempio)
   sendOrder(prezzoTotale: number): void {
     const carTemp = this.carrello.getValue();
-    if (confirm(`Stai per inviare l'ordine sei sicuro?\nIl prezzo totale è di ${prezzoTotale}€`)) {
-      alert("Ordine inviato!");
+    if (confirm(`You are about to submit the order. Are you sure? The total price is ${prezzoTotale}$.`)) {
+      alert("Order sent!");
       carTemp.orderDetails = [];
       this.carrello.next(carTemp);
     }
