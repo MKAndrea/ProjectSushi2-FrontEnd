@@ -44,7 +44,8 @@
 
 .button{
     border: none;
-    background-color: gray;
+    background-color: rgb(69, 69, 69);
     color: white;
     font-weight: bold;
+    padding: 5px 10px;
 }
