@@ -1,8 +1,13 @@
 <div class="container">
-    <div>
-      <h2>Name: {{ item.product.name }}</h2>
-      <p>Price: {{ item.product.price }}$</p>
-      <button class="button" (click)="removeProduct()">Remove</button>
+    <div class="container-product">
+      <div class="container-img">
+        <img class="image" [src]="'http://localhost:8080/images/' + item.product.productImage" alt="{{ item.product.name }}">
+      </div>
+      <div class="container-details">
+        <h2>Name: {{ item.product.name }}</h2>
+        <p>Price: {{ item.product.price }}$</p>
+        <button class="button" (click)="removeProduct()">Remove</button>
+      </div>
     </div>
     <div class="container-number">
       <button class="button" (click)="decrementCounter()">-</button>

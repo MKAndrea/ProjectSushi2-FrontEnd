@@ -4,18 +4,37 @@
     align-items: center;
     justify-content: space-around;
     background-color: black;
+    box-sizing: border-box;
     color: white;
-    padding-bottom: 20px;
     margin-bottom: 20px;
 }
 
+.container-product{
+    width: 70%;
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.container-img{
+    width: 50%;
+}
+
+.container-details{
+    width: 50%;
+}
+
+.image{
+    width: 15em;
+}
 
 .container-number{
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2em;
-    width: 50%;
+    width: 30%;
 }
 
 .button{

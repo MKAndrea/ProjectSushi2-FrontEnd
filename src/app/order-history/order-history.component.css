@@ -2,6 +2,10 @@ h2 {
     text-align: center;
   }
 
+  .image{
+    width: 8em;
+  }
+
   .order-title{
     font-size: 4em;
     color: rgb(233, 233, 0);
@@ -31,6 +35,7 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 5%;
   }
 
   .product-order-container{
@@ -51,8 +56,20 @@ h2 {
   }
 
   .product{
+    display: flex;
     width: 50%;
     border: 1px solid blue;
+  }
+
+  .container-img{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container-details{
+    width: 60%;
   }
 
   button {

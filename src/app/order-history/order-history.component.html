@@ -10,9 +10,14 @@
           <div class="product-container">
             @for (item of order.orderDetails; track item.product.id) {
               <div class="product">
-                <p><span class="color-detail">Name:</span> {{ item.product.name }}</p>
-                <p><span class="color-detail">Price:</span> {{ item.product.price }}$</p>
-                <p><span class="color-detail">Quantity:</span> {{ item.quantity }}</p>
+                <div class="container-img">
+                  <img class="image" [src]="'http://localhost:8080/images/' + item.product.productImage" alt="{{ item.product.name }}">
+                </div>
+                <div class="container-details">
+                  <p><span class="color-detail">Name:</span> {{ item.product.name }}</p>
+                  <p><span class="color-detail">Price:</span> {{ item.product.price }}$</p>
+                  <p><span class="color-detail">Quantity:</span> {{ item.quantity }}</p>
+                </div>
               </div>
             }
           </div>

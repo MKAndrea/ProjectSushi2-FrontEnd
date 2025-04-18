@@ -18,6 +18,8 @@ export class OrderHistoryComponent implements OnInit {
 
   orderCart: Order[] = [];
 
+  totalPrice: number = 0;
+
   constructor(
     private router: Router,
     private apiService: ApiService,
