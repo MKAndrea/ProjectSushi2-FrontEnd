@@ -14,6 +14,7 @@ import { AdminComponent } from "../admin/admin.component";
 import { Category } from '../apiCatalog/category';
 import { MenuService } from '../../services/menu.service';
 import { response } from 'express';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -28,10 +29,11 @@ export class MenuComponent implements OnInit{
   dropdownPosition = { top: '0px', left: '0px' };
   isReadOnly: boolean[] = [];
   solidBorder: string[] = [];
+  isEdit: boolean[] = [];
+  originalCiboArray: Prodotto[] = [];
   border: string = "";
-  isOpen = false;
+  isOpen: boolean = false;
   isAdmin: boolean = false;
-  changeButton = false;
 
   createProduct: Prodotto = {
     name: "",
@@ -51,8 +53,13 @@ export class MenuComponent implements OnInit{
     //Riceve tutti i prodotti contenuti nel DB
     this.apiService.getProduct().subscribe(prodottiCibo => {
       this.ciboArray = prodottiCibo;
+
+      //Attiva o disattiva la modifica nel menu
+      this.isReadOnly = this.ciboArray.map(() => true)
+      this.isEdit = this.ciboArray.map(() => true)
+      this.solidBorder = this.ciboArray.map(() => "none")
     }, error => {
-      alert("I prodotti non sono stati caricati correttamente")
+      alert("The products were not loaded correctly.")
     })
     this.editDeleteService.isDropdownVisible$.subscribe(visible => {
       this.isDropDownVisible = visible;
@@ -61,12 +68,9 @@ export class MenuComponent implements OnInit{
     this.editDeleteService.dropdownPosition$.subscribe(position => {
       this.dropdownPosition = position;
     });
-    //Attiva o disattiva la modifica nel menu
-    this.isReadOnly = this.ciboArray.map(() => true)
-    this.solidBorder = this.ciboArray.map(() => "none")
   }
 
-  constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService, private menuService: MenuService){}
+  constructor(private router: Router, private apiService: ApiService, private editDeleteService: EditDeleteService, private menuService: MenuService, private cdRef: ChangeDetectorRef){}
 
   //Al click porta alla sezione dedicata
   navigateToProduct(section: string): void{
@@ -79,16 +83,28 @@ export class MenuComponent implements OnInit{
 
   //Cambia la visualizzazione degli input al click del pulsante modifica
   changeInput(index: number): void {
-    if(this.isReadOnly[index]){
-      this.isReadOnly[index] = !this.isReadOnly[index];
+    if (this.isReadOnly[index] && this.isEdit[index]) {
+      // Copia manuale dei valori da salvare (senza JSON)
+      const original = this.ciboArray[index];
+      this.originalCiboArray[index] = Object.assign({}, this.ciboArray[index]);
+      this.isReadOnly[index] = false;
       this.border = "1px solid black";
       this.solidBorder[index] = this.border;
-      this.changeButton = true
+      this.isEdit[index] = false;
     }
-    else{
-      this.isReadOnly[index] = !this.isReadOnly[index];
+  }
+
+  goBack(index: number): void {
+    if (!this.isEdit[index]) {
+      const original = this.originalCiboArray[index];
+      if (original) {
+        Object.assign(this.ciboArray[index], original);
+      }
+  
+      this.isReadOnly[index] = true;
       this.border = "none";
       this.solidBorder[index] = this.border;
+      this.isEdit[index] = true;
     }
   }
 
@@ -105,7 +121,7 @@ export class MenuComponent implements OnInit{
           category: Category.CIBO
         };
       }, error => {
-        alert("Il prodotto non è stato aggiunto correttamente, riprova")
+        alert("The product was not added correctly, please try again.")
       });
     }
 
@@ -141,23 +157,31 @@ export class MenuComponent implements OnInit{
             this.ciboArray = [...dolci, ...bevande, ...cibo];
           });
     
-          alert("Prodotto rimosso");
+          alert("Product removed!");
     
         }, error => {
-          alert("Il prodotto non è stato cancellato correttamente");
+          alert("The product was not deleted successfully.");
         });
       }
     }
 
     //Aggiorna un prodotto dal DB
-    updateProduct(id: number, body: Prodotto): void{
-      this.isReadOnly[id] = !this.isReadOnly[id];
-      this.border = "none";
-      this.solidBorder[id] = this.border;
-      this.apiService.updateProductById(id, body).subscribe(() => {
-      }, error => {
-        alert("Il prodotto non è stato aggiornato correttamente")
-      })
+    updateProduct(index: number, id: number, body: Prodotto): void {
+      if(confirm("Are you sure you want to update this product?")){
+        this.apiService.updateProductById(id, body).subscribe(() => {
+          this.isReadOnly[index] = true;
+          this.isEdit[index] = true;
+          this.border = "none";
+          this.solidBorder[index] = this.border;
+          this.cdRef.detectChanges();
+        }, error => {
+          alert("The product was not updated correctly.");
+        });
+      }
+      else{
+        alert("Operation cancelled.")
+      }
+      alert("Product updated successfully.");
     }
 
   //Apre e chiude la tendina "Modifica ed Elimina prodotti contenuto nel menu principale"

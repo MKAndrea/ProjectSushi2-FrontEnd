@@ -34,9 +34,14 @@
                         <input [ngStyle]="{'border': solidBorder[i]}" [name]="'category'" class="input" type="text" [(ngModel)]="cibo.category" [readOnly]="isReadOnly[i]">
                         <input [ngStyle]="{'border': solidBorder[i]}" [name]="'price'" class="input" type="text" [(ngModel)]="cibo.price" [readOnly]="isReadOnly[i]">
                         <div class="button-container">
-                            <button class="button" (click)="changeInput(i)">Modifica</button>
-                            <button class="button" (click)="deleteProduct(cibo.id!)">Elimina</button>
-                            <button class="button" (click)="updateProduct(cibo.id!, cibo)">Salva</button>
+                            @if (isEdit[i]) {
+                                <button class="button" (click)="changeInput(i)">Edit</button>
+                                <button class="button" (click)="deleteProduct(cibo.id!)">Delete</button>
+                            }
+                            @else if(!isEdit[i]){
+                                <button class="button" (click)="goBack(i)">Back</button>
+                                <button class="button" (click)="updateProduct(i, cibo.id!, cibo)">Save</button>
+                            }
                         </div>
                     </div>
                 }
