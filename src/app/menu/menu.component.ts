@@ -123,6 +123,7 @@ export class MenuComponent implements OnInit{
       }, error => {
         alert("The product was not added correctly, please try again.")
       });
+      alert("Product Added!");
     }
 
     // deleteProduct(id: number): void{
