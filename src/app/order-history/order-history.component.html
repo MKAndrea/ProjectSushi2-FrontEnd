@@ -18,8 +18,12 @@
                   <p><span class="color-detail">Price:</span> {{ item.product.price }}$</p>
                   <p><span class="color-detail">Quantity:</span> {{ item.quantity }}</p>
                 </div>
+                <!-- <p>Total Price Product: {{item.quantity! * item.product.price!}}$</p> -->
               </div>
             }
+            <div class="total-price-container">
+              <p><span class="color-detail">Total Price:</span> {{getTotalOfOrder(order)}}$</p>
+            </div>
           </div>
           <div class="order-actions">
             <button (click)="editOrder(order)">Edit</button>

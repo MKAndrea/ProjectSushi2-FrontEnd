@@ -18,8 +18,6 @@ export class OrderHistoryComponent implements OnInit {
 
   orderCart: Order[] = [];
 
-  totalPrice: number = 0;
-
   constructor(
     private router: Router,
     private apiService: ApiService,
@@ -41,7 +39,8 @@ export class OrderHistoryComponent implements OnInit {
   editOrder(order: Order): void {
     this.menuService.setCart({ orderDetails: [...order.orderDetails] });
     this.storageService.setItem('ordineInModificaId', String(order.id));
-    this.menuService.setIsEditing(true);
+    // this.menuService.setIsEditing(true);
+    this.menuService.setIsEdit(true)
     this.router.navigate(['/cart']);
   }
 
@@ -58,5 +57,12 @@ export class OrderHistoryComponent implements OnInit {
       }
     });
   }
+
+    //Visualizza il prezzo totale 
+    getTotalOfOrder(order: any): number {
+      return order.orderDetails.reduce((sum: number, item: any) => {
+        return sum + (item.product.price * item.quantity);
+      }, 0);
+    }
 }
 

@@ -95,4 +95,12 @@ h2 {
   .container-box p {
     margin: 5px 0;
   }
+
+  .total-price-container{
+    border: 1px solid red;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   

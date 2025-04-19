@@ -19,8 +19,10 @@ export class MenuService {
 
   counters: number[] = Array(this.ciboArray.length).fill(0);
 
-  private isEditingSubject = new BehaviorSubject<boolean>(false);
-  public isEditing$ = this.isEditingSubject.asObservable();
+  // private isEditingSubject = new BehaviorSubject<boolean>(false);
+  // public isEditing$ = this.isEditingSubject.asObservable();
+
+  private isEdit = false;
 
   private isAdmin = new BehaviorSubject<boolean>(false);
   public isAdmin$ = this.isAdmin.asObservable();
@@ -42,15 +44,23 @@ export class MenuService {
         return this.isAdmin.value;
       }
 
+      setIsEdit(value: boolean): void{
+        this.isEdit = value;
+      }
+
+      getIsEdit(): boolean{
+        return this.isEdit;
+      }
+
     // Funzione per settare isEditing
-    setIsEditing(value: boolean): void {
-      this.isEditingSubject.next(value);
-    }
+    // setIsEditing(value: boolean): void {
+    //   this.isEditingSubject.next(value);
+    // }
   
-    // Funzione per ottenere il valore corrente di isEditing
-    getIsEditing(): boolean {
-      return this.isEditingSubject.value;
-    }
+    // // Funzione per ottenere il valore corrente di isEditing
+    // getIsEditing(): boolean {
+    //   return this.isEditingSubject.value;
+    // }
 
   // Restituisce un observable del carrello
   getCarrelloAsObservable(): Observable<Order> {
@@ -133,4 +143,6 @@ export class MenuService {
   setCart(nuovoCarrello: Order): void {
     this.carrello.next(nuovoCarrello); 
   }
+
+
 }

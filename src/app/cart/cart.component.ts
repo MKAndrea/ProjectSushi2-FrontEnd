@@ -45,10 +45,12 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.menuService.isEditing$.subscribe(isEditing => {
-      this.isEditing = isEditing;
-      this.cdr.detectChanges();
-    });
+    // this.menuService.isEditing$.subscribe(isEditing => {
+    //   this.isEditing = isEditing;
+    //   this.cdr.detectChanges();
+    // });
+
+    this.isEditing = this.menuService.getIsEdit();
     
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       console.log('Dati del carrello ricevuti:', value);
@@ -173,6 +175,8 @@ export class CartComponent implements OnInit {
     this.getTotalPrice();
   
     this.isEditing= true;
+    this.menuService.setIsEdit(true);
+    // this.menuService.setIsEditing(true);
   
     this.ordineInModificaId.next(orderDaModificare.id ?? null);
     this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
@@ -216,7 +220,8 @@ export class CartComponent implements OnInit {
     this.menuService.resetCart();
     this.carrello.orderDetails = [];
     this.isEditing = false;
-    this.menuService.setIsEditing(false);
+    this.menuService.setIsEdit(false);
+    // this.menuService.setIsEditing(false);
     this.ordineInModificaId.next(null);
   }
   
@@ -235,10 +240,21 @@ export class CartComponent implements OnInit {
     });
   }
   
+  private resetLogicButtons(): void{
+    if (this.isEditing && this.carrello.orderDetails.length === 0) {
+      this.isEditing = false;
+      this.menuService.setIsEdit(false);
+      this.ordineInModificaId.next(null);
+      this.storageService.removeItem('ordineInModificaId');
+      console.log('Modalità modifica disattivata perché il carrello è stato svuotato.');
+    }
+  }
 
   // Rimuovi il prodotto dal carrello
   removeProduct(product: OrderDetails): void {
     this.menuService.removeCibo(product);
+    this.getTotalPrice();
+    this.resetLogicButtons(); // Controlla se il carrello è vuoto e disattiva modifica
   }
 
   // Somma del prezzo totale dei prodotti contenuti nel carrello
