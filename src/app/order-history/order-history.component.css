@@ -44,21 +44,24 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 3px solid black;
+    border-top: 3px solid black;
   }
 
   .product-container{
-    width: 80%;
+    width: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    border: 3px solid black;
+    box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
   }
 
   .product{
     display: flex;
-    width: 50%;
-    border: 1px solid blue;
+    width: 100%;
+    border-bottom: 1px solid rgb(233, 233, 0);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   }
 
   .container-img{
@@ -97,8 +100,7 @@ h2 {
   }
 
   .total-price-container{
-    border: 1px solid red;
-    width: 50%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
