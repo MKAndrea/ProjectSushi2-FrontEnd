@@ -118,6 +118,9 @@ export class GestioneProdottiComponent {
           productImage: "",
           category: Category.CIBO
         };
+        this.isReadOnly = this.ciboArray.map(() => true);
+        this.isEdit = this.ciboArray.map(() => true);
+        this.solidBorder = this.ciboArray.map(() => "none");
         alert("Product Added!");
       },
       error: (error) => {
