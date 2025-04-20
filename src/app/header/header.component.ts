@@ -18,12 +18,15 @@ export class HeaderComponent implements OnInit{
 
   generalCounter: number = 0;
 
+  isLogged = false;
+
   ngOnInit(): void {
     //Aumenta il counter del carrello contenuto nell'header
     this.menuService.getCarrelloAsObservable().subscribe(value => {
       this.generalCounter = 0;
       value.orderDetails.forEach(cibo => this.generalCounter += cibo.quantity!)
     })
+    this.isLogged = this.menuService.getIslogged();
   }
 
   //Quando clicchi su un buttone ti porta ad un'altra pagina

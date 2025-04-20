@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MenuService } from '../../services/menu.service';
 import { HeaderComponent } from "../header/header.component";
@@ -10,13 +10,19 @@ import { Router } from '@angular/router';
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.css'
 })
-export class AdminComponent {
+export class AdminComponent implements OnInit{
   username: string = '';
   password: string = '';
+  isLogged = false;
 
   constructor(private menuService: MenuService, private router: Router){
 
   }
+
+  ngOnInit(): void {
+    this.isLogged = this.menuService.getIslogged();
+  }
+
   onSubmit() {
     console.log('Username:', this.username);
     console.log('Password:', this.password);
@@ -27,6 +33,8 @@ export class AdminComponent {
       alert("Password and Username correct!")
       this.username = "";
       this.password = "";
+      this.isLogged = true;
+      this.menuService.setIslogged(true);
     }
     else{
       //console.log("Wrong Password!");

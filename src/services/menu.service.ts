@@ -24,6 +24,8 @@ export class MenuService {
 
   private isEdit = false;
 
+  private isLogged = false;
+
   private isAdmin = new BehaviorSubject<boolean>(false);
   public isAdmin$ = this.isAdmin.asObservable();
 
@@ -61,6 +63,14 @@ export class MenuService {
     // getIsEditing(): boolean {
     //   return this.isEditingSubject.value;
     // }
+
+    getIslogged(): boolean{
+      return this.isLogged;
+    }
+
+    setIslogged(value: boolean): void{
+      this.isLogged = value
+    }
 
   // Restituisce un observable del carrello
   getCarrelloAsObservable(): Observable<Order> {
