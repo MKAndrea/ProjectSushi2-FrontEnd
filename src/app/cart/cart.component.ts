@@ -52,23 +52,29 @@ export class CartComponent implements OnInit {
 
     this.isEditing = this.menuService.getIsEdit();
     
-    this.menuService.getCarrelloAsObservable().subscribe(value => {
-      console.log('Dati del carrello ricevuti:', value);
-      this.carrello.orderDetails = value.orderDetails;
-      console.log(this.carrello.orderDetails);
-      this.getTotalPrice();
-    }, error => {
-      alert("The products in the cart were not sent correctly");
+    this.menuService.getCarrelloAsObservable().subscribe({
+      next: (value) => {
+        console.log('Dati del carrello ricevuti:', value);
+        this.carrello.orderDetails = value.orderDetails;
+        console.log(this.carrello.orderDetails);
+        this.getTotalPrice();
+      },
+      error: (error) => {
+        alert("The products in the cart were not sent correctly");
+      },
     });
 
     // Visualizza tutti gli elementi contenuti nel carrello
-    this.apiService.getProductCart().subscribe(values => {
-      values.forEach(value => {
-        this.orderHistory.push(value);
-      });
-      this.orderHistory = [...this.orderHistory];
-    }, error => {
-      alert("The products in the cart were not sent correctly");
+    this.apiService.getProductCart().subscribe({
+      next: (values) => {
+        values.forEach(value => {
+          this.orderHistory.push(value);
+        });
+        this.orderHistory = [...this.orderHistory];
+      },
+      error: (error) => {
+        alert("The products in the cart were not sent correctly");
+      }
     });
 
     const savedId = this.storageService.getItem('ordineInModificaId');
@@ -234,8 +240,8 @@ export class CartComponent implements OnInit {
         this.orderHistory = this.orderHistory.filter(order => order.id !== id);
         alert("Order delete successfully");
       },
-      error: (err) => {
-        console.error('Errore durante l\'eliminazione dell\'ordine:', err);
+      error: (error) => {
+        console.error('Error deleting order:', error);
       }
     });
   }

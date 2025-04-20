@@ -51,16 +51,19 @@ export class MenuComponent implements OnInit{
     })
 
     //Riceve tutti i prodotti contenuti nel DB
-    this.apiService.getProduct().subscribe(prodottiCibo => {
-      this.ciboArray = prodottiCibo;
-
-      //Attiva o disattiva la modifica nel menu
-      this.isReadOnly = this.ciboArray.map(() => true)
-      this.isEdit = this.ciboArray.map(() => true)
-      this.solidBorder = this.ciboArray.map(() => "none")
-    }, error => {
-      alert("The products were not loaded correctly.")
-    })
+    // this.apiService.getProduct().subscribe({
+    //   next: (prodottiCibo) => {
+    //     this.ciboArray = prodottiCibo;
+    
+    //     // Attiva o disattiva la modifica nel menu
+    //     this.isReadOnly = this.ciboArray.map(() => true);
+    //     this.isEdit = this.ciboArray.map(() => true);
+    //     this.solidBorder = this.ciboArray.map(() => "none");
+    //   },
+    //   error: (error) => {
+    //     alert("The products were not loaded correctly.");
+    //   }
+    // });
     this.editDeleteService.isDropdownVisible$.subscribe(visible => {
       this.isDropDownVisible = visible;
     });

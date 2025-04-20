@@ -40,42 +40,58 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // Carica i prodotti selezionati nel carrello
-    this.menuService.getCarrelloAsObservable().subscribe(value => {
-      this.carrello.orderDetails = value.orderDetails;
-      this.aggiornaQuantitaVisuale();
-    }, error => {
-      alert("The products were not loaded correctly into the cart.");
+    this.menuService.getCarrelloAsObservable().subscribe({
+      next: (value) => {
+        this.carrello.orderDetails = value.orderDetails;
+        this.aggiornaQuantitaVisuale();
+      },
+      error: (error) => {
+        alert("The products were not loaded correctly into the cart.");
+      }
     });
+    
 
-    this.apiService.getProductCibo().subscribe(prodotti => {
-      this.ciboArray = prodotti;
-      this.ciboArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
-        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
-      });
-    }, error => {
-      alert("The foods were not loaded correctly.");
+    this.apiService.getProductCibo().subscribe({
+      next: (prodotti) => {
+        this.ciboArray = prodotti;
+        this.ciboArray.forEach(prodotto => {
+          const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
+          prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+        });
+      },
+      error: (error) => {
+        alert("The foods were not loaded correctly.");
+      }
     });
+    
 
-    this.apiService.getProductBevande().subscribe(prodotti => {
-      this.bevandaArray = prodotti;
-      this.bevandaArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
-        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
-      });
-    }, error => {
-      alert("The drinks were not loaded correctly.");
+    this.apiService.getProductBevande().subscribe({
+      next: (prodotti) => {
+        this.bevandaArray = prodotti;
+        this.bevandaArray.forEach(prodotto => {
+          const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
+          prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+        });
+      },
+      error: (error) => {
+        alert("The drinks were not loaded correctly.");
+      }
     });
+    
 
-    this.apiService.getProductDolci().subscribe(prodotti => {
-      this.dolceArray = prodotti;
-      this.dolceArray.forEach(prodotto => {
-        const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
-        prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
-      });
-    }, error => {
-      alert("The desserts were not loaded correctly.");
+    this.apiService.getProductDolci().subscribe({
+      next: (prodotti) => {
+        this.dolceArray = prodotti;
+        this.dolceArray.forEach(prodotto => {
+          const prodottoNelCarrello = this.carrello.orderDetails.find(c => c.product.name === prodotto.name);
+          prodotto.quantity = prodottoNelCarrello ? prodottoNelCarrello.quantity : 0;
+        });
+      },
+      error: (error) => {
+        alert("The desserts were not loaded correctly.");
+      }
     });
+    
   }
 
   // Funzione per aggiornare la quantità visiva dei prodotti
