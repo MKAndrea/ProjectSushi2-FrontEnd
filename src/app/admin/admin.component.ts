@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit{
     if(this.username == "admin" && this.password == "adminpass"){
       //console.log("Password corretta e username corretto")
       this.menuService.setIsAdmin(true);
-      this.router.navigate(['']);
+      this.router.navigate(['/gestione']);
       alert("Password and Username correct!")
       this.username = "";
       this.password = "";

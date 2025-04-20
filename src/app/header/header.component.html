@@ -7,6 +7,10 @@
         @if (!isLogged) {
             <p class="navigation" (click)="onClick('login')">Login</p>
         }
+        @else if(isLogged){
+            <p class="navigation" (click)="onClick('gestione')">Admin</p>
+        }
+        <p class="navigation" (click)="onClick('menu')">Menu</p>
         <p class="navigation" (click)="onClick('about')">About</p>
         <div class="cart">
             <p class="navigation" (click)="onClick('cart')">Cart</p>

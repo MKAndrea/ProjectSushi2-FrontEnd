@@ -1,0 +1,39 @@
+<app-header></app-header>
+<div class="container-edit-delete">
+    @if(isAdmin){
+        <h2 class="ordina-text" (click)="toggleMEnu()">Edit and Delete products</h2>
+            @for (cibo of ciboArray; track $index; let i = $index) {
+                <div class="larghezza" (click)="showTendina($event)">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'name'" class="input" type="text" [(ngModel)]="cibo.name" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'description'" class="input" type="text" [(ngModel)]="cibo.description" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'ingredients'" class="input" type="text" [(ngModel)]="cibo.ingredients" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'productImage'" class="input" type="text" [(ngModel)]="cibo.productImage" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'category'" class="input" type="text" [(ngModel)]="cibo.category" [readOnly]="isReadOnly[i]">
+                    <input [ngStyle]="{'border': solidBorder[i]}" [name]="'price'" class="input" type="text" [(ngModel)]="cibo.price" [readOnly]="isReadOnly[i]">
+                    <div class="button-container">
+                        @if (isEdit[i]) {
+                            <button class="button" (click)="changeInput(i)">Edit</button>
+                            <button class="button" (click)="deleteProduct(cibo.id!)">Delete</button>
+                        }
+                        @else if(!isEdit[i]){
+                            <button class="button" (click)="goBack(i)">Back</button>
+                            <button class="button" (click)="updateProduct(i, cibo.id!, cibo)">Save</button>
+                        }
+                    </div>
+                </div>
+            }
+            <div>
+                <h2>Add Product</h2>
+                <form (ngSubmit)="addProduct()">
+                    <input type="text" placeholder="name" name="name" [(ngModel)]="createProduct.name">
+                    <input type="text" placeholder="ingredients" name="ingredients" [(ngModel)]="createProduct.ingredients">
+                    <input type="text" placeholder="description" name="description" [(ngModel)]="createProduct.description">
+                    <input type="text" placeholder="price" name="price" [(ngModel)]="createProduct.price">
+                    <input type="text" placeholder="productImage" name="productImage" [(ngModel)]="createProduct.productImage">
+                    <input type="text" placeholder="category" name="category" [(ngModel)]="createProduct.category">
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
+    }
+    <!-- <app-tendina></app-tendina> -->
+</div>
