@@ -7,6 +7,7 @@ import { ApiService } from '../../services/api.service';
 import { MenuService } from '../../services/menu.service';
 import { OrderDetails } from '../../modules/orderDetails';
 import { Order } from '../../modules/order';
+import { forkJoin, take } from 'rxjs';
 
 @Component({
   selector: 'app-menu-generale',
@@ -23,17 +24,68 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
   dolceArray: Prodotto[] = [];
   counters: number[] = [];
   carrello: Order = { orderDetails: [] };
+  isDataLoaded = true;
 
   private counterSubscription: any;
 
   // Scorrimento automatico alla sezione con fragment
-  ngAfterViewChecked() {
-    this.route.fragment.subscribe(fragment => {
+
+  // ngAfterViewChecked() {
+  //   this.route.fragment.subscribe(fragment => {
+  //     if (fragment) {
+  //       const element = document.getElementById(fragment);
+  //       if (element) {
+  //         element.scrollIntoView({ behavior: 'smooth' });
+  //       }
+  //     }
+  //   });
+  // }
+
+  // ngAfterViewChecked(): void {
+  //   this.route.fragment.subscribe(fragment => {
+  //     if (fragment && this.isDataLoaded) { // Assicurati che i dati siano caricati
+  //       const element = document.getElementById(fragment);
+  //       if (element) {
+  //         setTimeout(() => {
+  //           element.scrollIntoView({ behavior: 'smooth' });
+  //         }, 100); // Aspetta un piccolo timeout per garantire che il DOM sia stato aggiornato
+  //       }
+  //     }
+  //   });
+  // }
+
+  scrollToFragment() {
+    this.route.fragment.pipe(take(1)).subscribe(fragment => {
       if (fragment) {
-        const element = document.getElementById(fragment);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+        setTimeout(() => {
+          const el = document.getElementById(fragment);
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+    });
+  }
+
+  loadData(): void {
+    forkJoin([
+      this.apiService.getProductCibo(),
+      this.apiService.getProductBevande(),
+      this.apiService.getProductDolci()
+    ]).subscribe({
+      next: ([cibo, bevande, dolci]) => {
+        this.ciboArray = cibo;
+        this.bevandaArray = bevande;
+        this.dolceArray = dolci;
+        this.isDataLoaded = true;
+  
+        // Scroll alla sezione dopo il caricamento
+        setTimeout(() => {
+          this.scrollToFragment();
+        }, 0);
+      },
+      error: (err) => {
+        console.error("Errore nel caricamento:", err);
       }
     });
   }
@@ -92,6 +144,7 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
       }
     });
     
+    this.loadData();
   }
 
   // Funzione per aggiornare la quantità visiva dei prodotti
