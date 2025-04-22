@@ -3,6 +3,10 @@
        <!--Immagine-->
        <h3 class="title"(click)="onClick('')">Sushi World</h3>
     </div>
+    <div>
+        <input type="text" placeholder="Cerca Prodotto" [(ngModel)]="searchProduct">
+        <button (click)="filteredProducts()">Search</button>
+    </div>
     <div class="second-container">
         @if (!isLogged) {
             <p class="navigation" (click)="onClick('login')">Login</p>
