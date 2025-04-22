@@ -136,16 +136,21 @@ export class CartComponent implements OnInit {
       };
   
       if (confirm(`You are about to send the order, are you sure?`)) {
-        this.apiService.sendProductCart(ORDERDTO).subscribe((response: any) => {
-          ORDERDTO.id = response.id;
-          ORDERDTO.orderDetails = response.orderDetails;
-          this.orderHistory.push(ORDERDTO);
-          this.menuService.resetCart();
-          this.carrello.orderDetails = [];
-          console.log(this.orderHistory);
-          alert("Order Sent!");
-        }, error => {
-          alert("Error sending the order.");
+        this.apiService.sendProductCart(ORDERDTO).subscribe({
+          next: (response: any) => {
+            ORDERDTO.id = response.id;
+            ORDERDTO.orderDetails = response.orderDetails;
+      
+            this.orderHistory.push(ORDERDTO);
+            this.menuService.resetCart();
+            this.carrello.orderDetails = [];
+      
+            console.log(this.orderHistory);
+            alert("Order Sent!");
+          },
+          error: (error) => {
+            alert("Error sending the order.");
+          }
         });
       }
     });
@@ -210,18 +215,23 @@ export class CartComponent implements OnInit {
       orderDetails: prodottiValidi
     };
   
-    this.apiService.updateProductCart(idOrdine, ordineAggiornato)
-      .subscribe(() => {
+    this.apiService.updateProductCart(idOrdine, ordineAggiornato).subscribe({
+      next: () => {
         this.getTotalPrice();
+    
         const index = this.orderHistory.findIndex(o => o.id === idOrdine);
         if (index !== -1) {
           this.orderHistory[index] = ordineAggiornato;
           this.orderHistory = [...this.orderHistory];
         }
+    
         alert("Order modified successfully!");
-      }, error => {
+      },
+      error: (error) => {
+        console.error("Update order error:", error);
         alert("Error updating order.");
-      });
+      }
+    });
   
     this.menuService.resetCart();
     this.carrello.orderDetails = [];
