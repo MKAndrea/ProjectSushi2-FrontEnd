@@ -78,6 +78,8 @@ export class MenuGeneraleComponent implements OnInit, OnDestroy {
         this.bevandaArray = bevande;
         this.dolceArray = dolci;
         this.isDataLoaded = true;
+
+        this.aggiornaQuantitaVisuale(); 
   
         // Scroll alla sezione dopo il caricamento
         setTimeout(() => {
