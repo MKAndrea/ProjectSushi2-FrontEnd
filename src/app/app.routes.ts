@@ -16,5 +16,5 @@ export const routes: Routes = [
     {path:"menu", component: MenuGeneraleComponent},
     {path:"about", component: AboutComponent},
     {path: "order-history", component: OrderHistoryComponent},
-    {path:"cart", component: CartComponent}
+    {path:"cart", component: CartComponent},
 ];

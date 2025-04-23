@@ -22,5 +22,19 @@
                 <p class="number">{{generalCounter}}</p>
             </div>
         </div>
+        @if (isLogged) {
+            <p class="navigation" (click)="logOut()">Logout</p>
+            @if (showLogOut) {
+                <div class="logout-screen">
+                    <div class="card-logout">
+                        <p class="p-confirm">Sei sicuro di voler uscire?</p>
+                        <div class="buttons-confirm">
+                            <button class="confirm-button" (click)="confirmLogOut()">Si</button>
+                            <button class="back-button">No</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </header>

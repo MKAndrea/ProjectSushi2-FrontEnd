@@ -58,4 +58,54 @@
     color: white;
 }
 
+.logout-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
 
+.card-logout{
+    width: 30%;
+    height: 30%;
+    background-color: white;
+    border-radius: 12px;
+    z-index: 201;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.p-confirm{
+    font-size: 1.3rem;
+    color: black;
+}
+
+.buttons-confirm{
+    border: 1px solid red;
+    display: flex;
+    gap: 2em;
+}
+
+.confirm-button{
+    padding: 10px 20px;
+    background-color: red;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.back-button{
+    padding: 10px 20px;
+    background-color: green;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}

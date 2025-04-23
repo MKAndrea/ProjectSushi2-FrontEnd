@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit{
 
   isLogged = false;
 
+  showLogOut = false;
+
   ngOnInit(): void {
     //Aumenta il counter del carrello contenuto nell'header
     this.menuService.getCarrelloAsObservable().subscribe(value => {
@@ -63,4 +65,24 @@ export class HeaderComponent implements OnInit{
     }
     return filteredArray;
   }
+
+  logOut(){
+    this.showLogOut = true;
+    document.body.style.overflow = "hidden";
+  }
+
+  confirmLogOut(){
+    if(confirm("Sei sicuro di voler fare il logout?")){
+      this.showLogOut = false;
+      this.isLogged = false;
+      this.menuService.setIslogged(false);
+      document.body.style.overflow = "auto";
+      this.router.navigate([""]);
+    }
+  }
+
+  goBack(){
+    this.showLogOut = false;
+  }
+
 }
