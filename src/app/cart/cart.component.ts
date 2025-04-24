@@ -56,6 +56,7 @@ export class CartComponent implements OnInit {
       next: (value) => {
         console.log('Dati del carrello ricevuti:', value);
         this.carrello.orderDetails = value.orderDetails;
+        //this.carrello = value;
         console.log(this.carrello.orderDetails);
         this.getTotalPrice();
       },
