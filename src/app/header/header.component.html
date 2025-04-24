@@ -3,8 +3,8 @@
        <!--Immagine-->
        <h3 class="title"(click)="onClick('')">Sushi World</h3>
     </div>
-    <div>
-        <input type="text" placeholder="Cerca Prodotto" [(ngModel)]="searchProduct">
+    <div class="searchbar-container">
+        <input class="input-search" type="text" placeholder="Cerca Prodotto" [(ngModel)]="searchProduct">
         <button (click)="filteredProducts()">Search</button>
     </div>
     <div class="second-container">

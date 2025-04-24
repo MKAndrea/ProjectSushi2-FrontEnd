@@ -109,3 +109,11 @@
     color: white;
     border-radius: 5px;
 }
+
+.searchbar-container{
+    width: 40%;
+}
+
+.input-search{
+    width: 80%;
+}
