@@ -19,7 +19,7 @@
 
   @if (carrello.orderDetails.length !== 0) {
     <div class="total-order-container">
-      @if (isEditing) {
+      @if (carrello.id) {
         <button id="send-order" (click)="orderUpdate()">Update Order</button>
       }
       @else {

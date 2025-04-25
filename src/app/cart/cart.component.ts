@@ -34,12 +34,12 @@ export class CartComponent implements OnInit {
 
   counters: number[] = [];
 
-  ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+  // ordineInModificaId: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
   carrello: Order = { orderDetails: [] };
 
   orderHistory: Order[] = []; //orderHistory
 
-  isEditing: boolean = false;
+  // isEditing: boolean = false;
 
   totalPrice: number = 0;
 
@@ -50,14 +50,14 @@ export class CartComponent implements OnInit {
     //   this.cdr.detectChanges();
     // });
 
-    this.isEditing = this.menuService.getIsEdit();
+    // this.isEditing = this.menuService.getIsEdit();
     
     this.menuService.getCarrelloAsObservable().subscribe({
       next: (value) => {
         console.log('Dati del carrello ricevuti:', value);
-        this.carrello.orderDetails = value.orderDetails;
-        //this.carrello = value;
-        console.log(this.carrello.orderDetails);
+        // this.carrello.orderDetails = value.orderDetails;
+        this.carrello = value;
+        console.log(this.carrello);
         this.getTotalPrice();
       },
       error: (error) => {
@@ -78,10 +78,10 @@ export class CartComponent implements OnInit {
       }
     });
 
-    const savedId = this.storageService.getItem('ordineInModificaId');
-    if (savedId) {
-      this.ordineInModificaId.next(Number(savedId));
-    }
+    // const savedId = this.storageService.getItem('ordineInModificaId');
+    // if (savedId) {
+    //   this.ordineInModificaId.next(Number(savedId));
+    // }
   }
 
   // Incrementa il counter presente nella scheda menu-component
@@ -127,6 +127,7 @@ export class CartComponent implements OnInit {
       if (filteredOrderDetails.length === 0) {
         alert("There are no products with quantity greater than 0 to send.");
         this.menuService.resetCart();
+        this.carrello = { id: 0, orderDetails: [] };
         return;
       }
   
@@ -141,21 +142,58 @@ export class CartComponent implements OnInit {
           next: (response: any) => {
             ORDERDTO.id = response.id;
             ORDERDTO.orderDetails = response.orderDetails;
-      
+  
             this.orderHistory.push(ORDERDTO);
             this.menuService.resetCart();
-            this.carrello.orderDetails = [];
-      
-            console.log(this.orderHistory);
+            this.carrello = { id: 0, orderDetails: [] };
+            this.totalPrice = 0;
+  
             alert("Order Sent!");
           },
-          error: (error) => {
+          error: () => {
             alert("Error sending the order.");
           }
         });
       }
     });
   }
+
+  // sendOrder(): void {
+  //   this.menuService.getCarrelloAsObservable().pipe(take(1)).subscribe(value => {
+  //     const filteredOrderDetails = value.orderDetails.filter(item => item.quantity > 0);
+  
+  //     if (filteredOrderDetails.length === 0) {
+  //       alert("There are no products with quantity greater than 0 to send.");
+  //       this.menuService.resetCart();
+  //       return;
+  //     }
+  
+  //     this.carrello.orderDetails = filteredOrderDetails;
+  
+  //     const ORDERDTO: Order = {
+  //       orderDetails: this.carrello.orderDetails
+  //     };
+  
+  //     if (confirm(`You are about to send the order, are you sure?`)) {
+  //       this.apiService.sendProductCart(ORDERDTO).subscribe({
+  //         next: (response: any) => {
+  //           ORDERDTO.id = response.id;
+  //           ORDERDTO.orderDetails = response.orderDetails;
+      
+  //           this.orderHistory.push(ORDERDTO);
+  //           this.menuService.resetCart();
+  //           this.carrello.orderDetails = [];
+      
+  //           console.log(this.orderHistory);
+  //           alert("Order Sent!");
+  //         },
+  //         error: (error) => {
+  //           alert("Error sending the order.");
+  //         }
+  //       });
+  //     }
+  //   });
+  // }
 
   // modificaOrdine(orderDaModificare: order): void {
 
@@ -181,19 +219,41 @@ export class CartComponent implements OnInit {
   //   this.isEditing = true;
   // }
 
+  // editOrder(orderDaModificare: Order): void {
+  //   this.carrello.orderDetails = [...orderDaModificare.orderDetails];
+  //   this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
+  //   this.getTotalPrice();
+  
+  //   this.isEditing= true;
+  //   this.menuService.setIsEdit(true);
+  //   // this.menuService.setIsEditing(true);
+  
+  //   this.ordineInModificaId.next(orderDaModificare.id ?? null);
+  //   this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
+  
+  //   console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.orderDetails);
+  // }
+
   editOrder(orderDaModificare: Order): void {
-    this.carrello.orderDetails = [...orderDaModificare.orderDetails];
-    this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
+    // this.carrello.orderDetails = [...orderDaModificare.orderDetails];
+    // this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
+    // this.getTotalPrice();
+    // this.ordineInModificaId.next(orderDaModificare.id ?? null);
+    // this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
+
+    // associo gli elementi ad id e orderDetails
+    this.carrello = { 
+      id: orderDaModificare.id, 
+      orderDetails: [...orderDaModificare.orderDetails] 
+    };
+  
+    // Aggiorna lo stato del carrello nel servizio
+    this.menuService.setCart(this.carrello);
+  
+    // Calcola il prezzo totale aggiornato
     this.getTotalPrice();
   
-    this.isEditing= true;
-    this.menuService.setIsEdit(true);
-    // this.menuService.setIsEditing(true);
-  
-    this.ordineInModificaId.next(orderDaModificare.id ?? null);
-    this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
-  
-    console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.orderDetails);
+    console.log('Modifica ordine attiva. Ordine ID:', this.carrello.id, 'Dettagli:', this.carrello.orderDetails);
   }
   
   
@@ -201,31 +261,37 @@ export class CartComponent implements OnInit {
     this.router.navigate(['/order-history'])
   }
   
-
   orderUpdate(): void {
-    const idOrdine = this.ordineInModificaId.value;
+
+    // const idOrdine = this.ordineInModificaId.value;
   
-    if (!idOrdine) {
-      alert("Error ID.");
+    // if (!idOrdine) {
+    //   alert("Error ID.");
+    //   return
+    // }
+    
+    if (!this.carrello.id) {
+      alert("Missing order ID.");
       return;
     }
   
     const prodottiValidi = this.carrello.orderDetails.filter(item => item.quantity > 0);
     const ordineAggiornato: Order = {
-      id: idOrdine,
+      // id: idOrdine,
+      id: this.carrello.id,
       orderDetails: prodottiValidi
     };
   
-    this.apiService.updateProductCart(idOrdine, ordineAggiornato).subscribe({
+    this.apiService.updateProductCart(this.carrello.id, ordineAggiornato).subscribe({
       next: () => {
         this.getTotalPrice();
-    
-        const index = this.orderHistory.findIndex(o => o.id === idOrdine);
+  
+        const index = this.orderHistory.findIndex(o => o.id === this.carrello.id);
         if (index !== -1) {
           this.orderHistory[index] = ordineAggiornato;
           this.orderHistory = [...this.orderHistory];
         }
-    
+  
         alert("Order modified successfully!");
       },
       error: (error) => {
@@ -233,14 +299,54 @@ export class CartComponent implements OnInit {
         alert("Error updating order.");
       }
     });
-  
-    this.menuService.resetCart();
-    this.carrello.orderDetails = [];
-    this.isEditing = false;
-    this.menuService.setIsEdit(false);
+    // this.carrello.orderDetails = [];
+    // this.isEditing = false;
+    // this.menuService.setIsEdit(false);
     // this.menuService.setIsEditing(false);
-    this.ordineInModificaId.next(null);
+    // this.ordineInModificaId.next(null);
+    this.menuService.resetCart();
+    this.carrello = { id: 0, orderDetails: [] };
+    this.totalPrice = 0;
   }
+  // orderUpdate(): void {
+  //   const idOrdine = this.ordineInModificaId.value;
+  
+  //   if (!idOrdine) {
+  //     alert("Error ID.");
+  //     return;
+  //   }
+  
+  //   const prodottiValidi = this.carrello.orderDetails.filter(item => item.quantity > 0);
+  //   const ordineAggiornato: Order = {
+  //     id: idOrdine,
+  //     orderDetails: prodottiValidi
+  //   };
+  
+  //   this.apiService.updateProductCart(idOrdine, ordineAggiornato).subscribe({
+  //     next: () => {
+  //       this.getTotalPrice();
+    
+  //       const index = this.orderHistory.findIndex(o => o.id === idOrdine);
+  //       if (index !== -1) {
+  //         this.orderHistory[index] = ordineAggiornato;
+  //         this.orderHistory = [...this.orderHistory];
+  //       }
+    
+  //       alert("Order modified successfully!");
+  //     },
+  //     error: (error) => {
+  //       console.error("Update order error:", error);
+  //       alert("Error updating order.");
+  //     }
+  //   });
+  
+  //   this.menuService.resetCart();
+  //   this.carrello.orderDetails = [];
+  //   this.isEditing = false;
+  //   this.menuService.setIsEdit(false);
+  //   // this.menuService.setIsEditing(false);
+  //   this.ordineInModificaId.next(null);
+  // }
   
   
   deleteOrder(id: number) {
@@ -257,21 +363,32 @@ export class CartComponent implements OnInit {
     });
   }
   
-  private resetLogicButtons(): void{
-    if (this.isEditing && this.carrello.orderDetails.length === 0) {
-      this.isEditing = false;
-      this.menuService.setIsEdit(false);
-      this.ordineInModificaId.next(null);
-      this.storageService.removeItem('ordineInModificaId');
-      console.log('Modalità modifica disattivata perché il carrello è stato svuotato.');
-    }
-  }
+  // private resetLogicButtons(): void{
+  //   if (this.isEditing && this.carrello.orderDetails.length === 0) {
+  //     this.isEditing = false;
+  //     this.menuService.setIsEdit(false);
+  //     this.ordineInModificaId.next(null);
+  //     this.storageService.removeItem('ordineInModificaId');
+  //     console.log('Modalità modifica disattivata perché il carrello è stato svuotato.');
+  //   }
+  // }
 
   // Rimuovi il prodotto dal carrello
+  // removeProduct(product: OrderDetails): void {
+  //   this.menuService.removeCibo(product);
+  //   this.getTotalPrice();
+  //   this.resetLogicButtons(); // Controlla se il carrello è vuoto e disattiva modifica
+  // }
+
   removeProduct(product: OrderDetails): void {
     this.menuService.removeCibo(product);
     this.getTotalPrice();
-    this.resetLogicButtons(); // Controlla se il carrello è vuoto e disattiva modifica
+    // this.resetLogicButtons(); // Controlla se il carrello è vuoto e disattiva modifica
+  
+    if (this.carrello.orderDetails.length === 0 && this.carrello.id) {
+      this.menuService.resetCart();
+      console.log("Cart emptied. Exiting edit mode.");
+    }
   }
 
   // Somma del prezzo totale dei prodotti contenuti nel carrello

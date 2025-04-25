@@ -36,11 +36,17 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
 
+  // editOrder(order: Order): void {
+  //   this.menuService.setCart({ orderDetails: [...order.orderDetails] });
+  //   // this.storageService.setItem('ordineInModificaId', String(order.id));
+  //   // this.menuService.setIsEditing(true);
+  //   // this.menuService.setIsEdit(true)
+  //   this.router.navigate(['/cart']);
+  // }
+
   editOrder(order: Order): void {
-    this.menuService.setCart({ orderDetails: [...order.orderDetails] });
-    this.storageService.setItem('ordineInModificaId', String(order.id));
-    // this.menuService.setIsEditing(true);
-    this.menuService.setIsEdit(true)
+    // Imposta il carrello con i dettagli dell'ordine da modificare
+    this.menuService.setCart({ orderDetails: [...order.orderDetails], id: order.id });
     this.router.navigate(['/cart']);
   }
 
