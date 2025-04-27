@@ -72,13 +72,11 @@ export class HeaderComponent implements OnInit{
   }
 
   confirmLogOut(){
-    if(confirm("Sei sicuro di voler fare il logout?")){
       this.showLogOut = false;
       this.isLogged = false;
       this.menuService.setIslogged(false);
       document.body.style.overflow = "auto";
       this.router.navigate([""]);
-    }
   }
 
   goBack(){
