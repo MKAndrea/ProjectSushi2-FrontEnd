@@ -6,6 +6,7 @@
     justify-content: space-evenly;
     flex-direction: column;
     box-sizing: border-box;
+    margin-bottom: 2%;
 }
 
 .border{
