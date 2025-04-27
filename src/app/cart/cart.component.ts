@@ -219,7 +219,7 @@ export class CartComponent implements OnInit {
   //   this.isEditing = true;
   // }
 
-  // editOrder(orderDaModificare: Order): void {
+  // editOrder(orderDaModificare: Order): void { (non serve più perchè utiliziamo il tutto in orderhistory)
   //   this.carrello.orderDetails = [...orderDaModificare.orderDetails];
   //   this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
   //   this.getTotalPrice();
@@ -234,27 +234,27 @@ export class CartComponent implements OnInit {
   //   console.log('Modalità modifica attiva. Carrello aggiornato con ordine esistente:', this.carrello.orderDetails);
   // }
 
-  editOrder(orderDaModificare: Order): void {
-    // this.carrello.orderDetails = [...orderDaModificare.orderDetails];
-    // this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
-    // this.getTotalPrice();
-    // this.ordineInModificaId.next(orderDaModificare.id ?? null);
-    // this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
+  // editOrder(orderDaModificare: Order): void {
+  //   // this.carrello.orderDetails = [...orderDaModificare.orderDetails];
+  //   // this.menuService.setCart({ orderDetails: [...orderDaModificare.orderDetails] });
+  //   // this.getTotalPrice();
+  //   // this.ordineInModificaId.next(orderDaModificare.id ?? null);
+  //   // this.storageService.setItem('ordineInModificaId', String(orderDaModificare.id));
 
-    // associo gli elementi ad id e orderDetails
-    this.carrello = { 
-      id: orderDaModificare.id, 
-      orderDetails: [...orderDaModificare.orderDetails] 
-    };
+  //   // associo gli elementi ad id e orderDetails
+  //   this.carrello = { 
+  //     id: orderDaModificare.id, 
+  //     orderDetails: [...orderDaModificare.orderDetails] 
+  //   };
   
-    // Aggiorna lo stato del carrello nel servizio
-    this.menuService.setCart(this.carrello);
+  //   // Aggiorna lo stato del carrello nel servizio
+  //   this.menuService.setCart(this.carrello);
   
-    // Calcola il prezzo totale aggiornato
-    this.getTotalPrice();
+  //   // Calcola il prezzo totale aggiornato
+  //   this.getTotalPrice();
   
-    console.log('Modifica ordine attiva. Ordine ID:', this.carrello.id, 'Dettagli:', this.carrello.orderDetails);
-  }
+  //   console.log('Modifica ordine attiva. Ordine ID:', this.carrello.id, 'Dettagli:', this.carrello.orderDetails);
+  // }
   
   
   navigateToShowOrder(){
@@ -277,7 +277,6 @@ export class CartComponent implements OnInit {
   
     const prodottiValidi = this.carrello.orderDetails.filter(item => item.quantity > 0);
     const ordineAggiornato: Order = {
-      // id: idOrdine,
       id: this.carrello.id,
       orderDetails: prodottiValidi
     };
