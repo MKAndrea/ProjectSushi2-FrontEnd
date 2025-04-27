@@ -122,3 +122,25 @@
     outline: none;
     font-size: 1em;
 }
+
+.add-products-container{
+    width: 50%;
+    border: 3px solid black;
+    box-sizing: border-box;
+    padding: 2em;
+    text-align: center;
+}
+
+.add-products-grid{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-products-grid input{
+    width: 50%;
+    padding: 10px 5px;
+    border: 1px solid black;
+}

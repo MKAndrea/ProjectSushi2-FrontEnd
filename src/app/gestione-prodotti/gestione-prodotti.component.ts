@@ -107,6 +107,18 @@ export class GestioneProdottiComponent {
 
   //Aggiunge un prodotto al DB
   addProduct(): void {
+    if (
+      !this.createProduct.name ||
+      !this.createProduct.ingredients ||
+      !this.createProduct.description ||
+      !this.createProduct.price ||
+      !this.createProduct.productImage ||
+      !this.createProduct.category
+    ) {
+      alert("Please fill in all the fields before adding a product.");
+      return;
+    }
+    
     this.apiService.addProduct(this.createProduct).subscribe({
       next: (newProduct: Prodotto) => {
         this.ciboArray.push(newProduct);

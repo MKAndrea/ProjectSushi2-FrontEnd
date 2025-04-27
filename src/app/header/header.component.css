@@ -74,22 +74,22 @@
 .card-logout{
     width: 30%;
     height: 30%;
-    background-color: white;
+    background-color: rgb(73, 73, 73);
     border-radius: 12px;
     z-index: 201;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    color: white;
 }
 
 .p-confirm{
     font-size: 1.3rem;
-    color: black;
+    color: white;
 }
 
 .buttons-confirm{
-    border: 1px solid red;
     display: flex;
     gap: 2em;
 }
@@ -112,8 +112,25 @@
 
 .searchbar-container{
     width: 40%;
+    display: flex;
+    gap: 2px;
 }
 
 .input-search{
     width: 80%;
+    padding: 5px 5px;
+    border: none;
+}
+
+.search-button{
+    box-sizing: border-box;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.search-button:hover{
+    background-color: black;
+    color: white;
+    border: 1px solid rgba(233, 233, 0);
 }

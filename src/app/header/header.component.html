@@ -4,8 +4,8 @@
        <h3 class="title"(click)="onClick('')">Sushi World</h3>
     </div>
     <div class="searchbar-container">
-        <input class="input-search" type="text" placeholder="Cerca Prodotto" [(ngModel)]="searchProduct">
-        <button (click)="filteredProducts()">Search</button>
+        <input class="input-search" type="text" placeholder="Find Product" [(ngModel)]="searchProduct">
+        <button class="search-button" (click)="filteredProducts()">Search</button>
     </div>
     <div class="second-container">
         @if (!isLogged) {
@@ -29,8 +29,8 @@
                     <div class="card-logout">
                         <p class="p-confirm">Sei sicuro di voler uscire?</p>
                         <div class="buttons-confirm">
-                            <button class="confirm-button" (click)="confirmLogOut()">Si</button>
                             <button class="back-button" (click)="goBack()">No</button>
+                            <button class="confirm-button" (click)="confirmLogOut()">Si</button>
                         </div>
                     </div>
                 </div>
