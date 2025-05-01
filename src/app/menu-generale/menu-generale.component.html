@@ -1,10 +1,10 @@
 <app-header></app-header>
 <div class="menu-generale-container">
-    <section id="cibi" fragment="section1"> 
+    <section id="cibi" fragment="section1">
         <h2 class="title-section">Foods:</h2>
         @for (cibo of ciboArray; track $index; let i = $index) {
            <div class="container">
-               <div>
+               <div class="try">
                    <h2 class="title">{{cibo.name}}</h2>
                    <h3>Ingredients: {{cibo.ingredients}}</h3>
                    <p>Description: {{cibo.description}}</p>

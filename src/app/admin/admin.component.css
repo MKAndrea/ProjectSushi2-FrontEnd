@@ -1,4 +1,4 @@
-.container{
+/* .container{
     width: 100%;
     height: 100%;
     display: flex;
@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 1em;
-    background-color: white;
+    background-color: #1e1e1e;
 }
 
 .login-form{
@@ -18,6 +18,7 @@
     justify-content: center;
     flex-direction: column;
     gap: 1em;
+    background-color:gray;
 }
 
 .container-button{
@@ -62,4 +63,98 @@
 .button:hover{
     background-color: black;
     color: white;
+} */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #1e1e1e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form {
+  background-color: #2A2A2A;
+  padding: 3.5em 4em; /* aumentato */
+  border-radius: 24px;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
+  width: 40%; /* aumentata */
+  height: 30%;
+  max-width: 90vw;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.log-in {
+  font-size: 3.5em;
+  color: #e9e900;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+
+.container-input {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-bottom: 1.5em;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+}
+
+.input {
+  padding: 1em;
+  font-size: 1.1em;
+  border-radius: 10px;
+  border: none;
+  background-color: #f2f2f2;
+  text-align: center;
+  width: 75%;
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: 0 0 8px #e9e900;
+}
+
+.container-button {
+  display: flex;
+  justify-content: center; /* centra i bottoni */
+  align-items: center;
+  gap: 1.5em; /* spazio tra i due bottoni */
+  margin-top: 1.5em;
+}
+
+.button {
+  width: 120px;               /* larghezza fissa */
+  height: 40px;               /* altezza fissa */
+  border: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+
+.button:hover {
+  background-color: rgb(233, 233, 0);
+  color: black;
+  transform: scale(1.05);
 }
